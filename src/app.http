@@ -63,7 +63,7 @@ POST http://localhost:4500/posts/createComment
 Content-Type: application/json
 
 {
-    "post_id": "fb538648-f33a-41cc-8ecd-46001d5b2da9",
+    "post_id": "7b04de59-79dc-45eb-8042-85485b60defc",
     "user_id": "1",
     "body": "This is my very first comment"
 }
@@ -71,7 +71,7 @@ Content-Type: application/json
 
 ###
 #fetch single post
-GET  http://localhost:4500/posts/viewSinglePost/fb538648-f33a-41cc-8ecd-46001d5b2da9
+GET  http://localhost:4500/posts/viewSinglePost/7b04de59-79dc-45eb-8042-85485b60defc
 Content-Type: application/json
 
 
@@ -82,7 +82,7 @@ POST  http://localhost:4500/posts/createSubComment
 Content-Type: application/json
 
 {
-    "comment_id": "3",
+    "comment_id": "2",
     "user_id": "1",
     "body": "This is my very second sub comment"
 }

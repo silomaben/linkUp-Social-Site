@@ -119,19 +119,15 @@ const deletePost = async(req,res)=>{
 
 
 
-// view all posts
+// view all posts based on perfomance score 
 
-const fetchAllNotes = async (req,res)=>{
-    try {
 
-        const pool = await (mssql.connect(sqlConfig))
+// fetch all post based on time uploaded
 
-        const notebook = (await pool.request().execute('fetchAllNotes')).recordset
-        res.json({Your_Notebook: notebook})
-    } catch (error) {
-        return res.json({error})
-    }
-}
+
+
+
+
 
 
 
@@ -195,10 +191,10 @@ const fetchAllNotes = async (req,res)=>{
 
 // archive post (for user)
 
+
+
 // cron job
 // rank posts(for admin)=>{query all posts for number of likes and comments and on a give the post with the highest engagement ratio a rank from 1 to 10 }
-
-
 const rankPostEngagement= async (req,res)=>{
     try {
 
@@ -219,8 +215,6 @@ const rankPostEngagement= async (req,res)=>{
                 //loop through the post engagement list and fetch the perfomance number and use for engament score calculation.
                 // save the posts which post perfomance/engagemrnt have been calculated and saved successfully
                 
-            let postsUpdatedCounter = 0;
-
             for (const post of posts_list){
                 const likeWeight = 1;          
                     const commentWeight = 2;       
@@ -252,15 +246,15 @@ const rankPostEngagement= async (req,res)=>{
         }
 
 
-        if(postsupdated.length==posts_details.length){
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        if(postsupdated.length==posts_list.length){
+            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // log using winston when all posts engagement has been updated
             return res.json({message: "all post perfomance score have been updated"})
         }else{
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             // log using winston when all posts engagement has been updated
             //  email admin when this happens can be made optional only when its not 100% successfull
-            return res.json({message: `${postsupdated.length} out of ${posts_details.length} posts perfomanceScore updated`})
+            return res.json({message: `${postsupdated.length} out of ${posts_list.length} posts perfomanceScore updated`})
 
         }
 
@@ -368,7 +362,10 @@ const createComment = async (req,res)=>{
 
 const createSubcomment = async (req, res) => {
     try {
-        const timeposted = new Date();
+        
+        const options = { timeZone: 'Africa/Nairobi' };
+        const timeposted = new Date().toLocaleString('en-US', options);
+        
         const { comment_id, user_id, body } = req.body;
 
         const pool = await mssql.connect(sqlConfig);
