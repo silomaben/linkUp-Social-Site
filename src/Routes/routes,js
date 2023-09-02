@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost } = require('../Controllers/postsController');
+const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, rankPostEngagement } = require('../Controllers/postsController');
 
 linkUpPostsRouter = Router();
 
@@ -11,6 +11,7 @@ linkUpPostsRouter.post('/unlikepost',unlikePost);
 linkUpPostsRouter.post('/createComment',createComment);
 linkUpPostsRouter.get('/viewSinglePost/:id',viewSinglePost);
 linkUpPostsRouter.post('/createSubComment',createSubcomment);
+linkUpPostsRouter.get('/rankPostEngagement',rankPostEngagement);
 // linkUp.get('/', viewAllProjects);
 // linkUp.get('/:id',viewOneProject);
 // linkUp.put('/:id', verifyToken,updateProject);
