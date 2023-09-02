@@ -9,4 +9,6 @@ CREATE TABLE Comments (
 );
 
 
+
+
 drop table Comments

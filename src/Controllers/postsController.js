@@ -190,6 +190,36 @@ const fetchAllNotes = async (req,res)=>{
 // reset password(send otp and after successful assertion allow to write password and confirm then save.)
 
 
+// suspend post(for admin)
+
+
+// archive post (for user)
+
+// cron job
+// rank posts(for admin)=>{query all posts for number of likes and comments and on a give the post with the highest engagement ratio a rank from 1 to 10 }
+
+
+const rankPostEngagement= async (req,res)=>{
+    try {
+        // get posts and store in a list
+            
+
+
+        // loop over each post calculating its engagement score 
+
+
+        // save the engagement score to the database it to the database
+        
+
+        // return or log every time posts are rank and email admin every time when done.
+
+
+    } catch (error) {
+        return res.json({error})
+    }
+}
+
+
 
 
 
@@ -367,5 +397,5 @@ module.exports = {
     unlikePost,
     createComment ,
     viewSinglePost,
-    createSubcomment
+    createSubcomment,
 }
