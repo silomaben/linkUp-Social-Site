@@ -1,0 +1,90 @@
+#create a post
+POST http://localhost:4500/posts/createpost
+Content-Type: application/json
+
+{
+    "user_id": "1",
+    "image": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg",
+    "body": "today I did it 3!",
+    "tagged": "1"
+}
+
+
+###
+#edit a post
+PUT http://localhost:4500/posts/editpost
+Content-Type: application/json
+
+{
+    "user_id": "1",
+    "post_id": "258284b4-0480-42cf-ba7d-517861355400",
+    "body": "done",
+    "tagged": "1"
+}
+
+
+###
+#delete a post
+PUT http://localhost:4500/posts/deletepost/01d088fa-2162-47d6-813b-3be210380be3
+Content-Type: application/json
+
+{
+    "user_id": "1"
+}
+
+
+###
+#like post
+POST http://localhost:4500/posts/likepost
+Content-Type: application/json
+
+{
+    "user_id": "2",
+    "post_id": "fb538648-f33a-41cc-8ecd-46001d5b2da9"
+}
+
+
+
+###
+#unlike post
+POST http://localhost:4500/posts/unlikepost
+Content-Type: application/json
+
+{
+    "user_id": "1",
+    "post_id": "e"
+}
+
+
+
+###
+#comment on post
+POST http://localhost:4500/posts/createComment
+Content-Type: application/json
+
+{
+    "post_id": "fb538648-f33a-41cc-8ecd-46001d5b2da9",
+    "user_id": "1",
+    "body": "This is my very first comment"
+}
+
+
+###
+#fetch single post
+GET  http://localhost:4500/posts/viewSinglePost/fb538648-f33a-41cc-8ecd-46001d5b2da9
+Content-Type: application/json
+
+
+
+###
+#create subcomment post
+POST  http://localhost:4500/posts/createSubComment
+Content-Type: application/json
+
+{
+    "comment_id": "3",
+    "user_id": "1",
+    "body": "This is my very second sub comment"
+}
+
+
