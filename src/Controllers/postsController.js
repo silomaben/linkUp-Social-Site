@@ -120,26 +120,113 @@ const deletePost = async(req,res)=>{
 
 
 // view all posts based on perfomance score 
+const fetchPostsBasedOnPerfomance = async (req,res)=>{
+    try {
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const posts = await pool.request()
+            .execute('fetchPostsBasedOnPerfomanceProc')
+            
+
+        return res.json({
+            posts: posts.recordset
+        })
+
+        }
+        
+    } catch (error) {
+        return res.json({error})
+    }
+}
 
 
 // fetch all post based on time uploaded
+const fetchRecentPosts = async (req,res)=>{
+    try {
+        const pool = await mssql.connect(sqlConfig)
 
+        if(pool.connected){
+            const posts = await pool.request()
+            .execute('fetchRecentPosts')
+            
 
+        return res.json({
+            posts: posts.recordset
+        })
 
-
-
-
-
-
+        }
+        
+    } catch (error) {
+        return res.json({error})
+    }
+}
 
 // update comment
+const updateComment = async (req,res)=>{
+    try {
+        const {post_id,user_id,body} = req.body
+
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('post_id',mssql.VarChar, post_id)
+            .input('user_id',mssql.VarChar, user_id)
+            .input('body', mssql.Text, body)
+            .execute('updateCommentProc')
+            
+
+            if(result.rowsAffected==1){
+                return res.json({
+                    message: "comment updated"
+                })
+            }else{
+                return res.json({message: "comment updating failed"})
+            }
+
+        }
+        
+    } catch (error) {
+        return res.json({error})
+    }
+}
 
 
 
 // update subcomment
 
 
+const updateSubcomment = async (req, res) => {
+    try {
+        const { subcomment_id,comment_id, user_id, body } = req.body;
+
+        const pool = await mssql.connect(sqlConfig);
+
+        if (pool.connected) {
+            const result = await pool.request()
+                .input('subcomment_id', mssql.Int, subcomment_id)
+                .input('comment_id', mssql.Int, comment_id)
+                .input('user_id', mssql.VarChar, user_id)
+                .input('body', mssql.Text, body)
+                .execute('updateSubcommentProc');
+
+            if (result.rowsAffected == 1) {
+                return res.json({
+                    message: "subcomment updated"
+                });
+            } else {
+                return res.json({ message: "subcomment updating failed" });
+            }
+        }
+    } catch (error) {
+        return res.json({ error });
+    }
+}
+
 // delete comment
+
+
 
 
 // delete subcomment
@@ -327,6 +414,8 @@ const unlikePost = async (req,res)=>{
 
 
 
+
+
 const createComment = async (req,res)=>{
     try {
         const timeposted = new Date().toLocaleString('en-US', { timeZone: 'Africa/Nairobi' });
@@ -446,5 +535,9 @@ module.exports = {
     unlikePost,
     createComment,
     createSubcomment,
-    rankPostEngagement
+    rankPostEngagement,
+    fetchPostsBasedOnPerfomance,
+    fetchRecentPosts,
+    updateComment,
+    updateSubcomment
 }

@@ -69,6 +69,20 @@ Content-Type: application/json
 }
 
 
+
+###
+#update comment
+POST http://localhost:4500/posts/updateComment
+Content-Type: application/json
+
+{
+    "comment_id": "2",
+    "post_id": "7b04de59-79dc-45eb-8042-85485b60defc",
+    "user_id": "1",
+    "body": "comment updated bruv"
+}
+
+
 ###
 #fetch single post
 GET  http://localhost:4500/posts/viewSinglePost/7b04de59-79dc-45eb-8042-85485b60defc
@@ -77,7 +91,7 @@ Content-Type: application/json
 
 
 ###
-#create subcomment post
+#create subcomment 
 POST  http://localhost:4500/posts/createSubComment
 Content-Type: application/json
 
@@ -89,10 +103,41 @@ Content-Type: application/json
 
 
 
+###
+#update subcomment 
+POST  http://localhost:4500/posts/updateSubcomment
+Content-Type: application/json
+
+{
+    "subcomment_id": "1",
+    "comment_id": "2",
+    "user_id": "1",
+    "body": "subcomment updated"
+}
+
+
+
 
 ###
 #rank posts
 GET  http://localhost:4500/posts/rankPostEngagement
 Content-Type: application/json
+
+
+
+###
+#fetch posts based on engagement perfomance
+GET  http://localhost:4500/posts/fetchPostsBasedOnPerfomance
+Content-Type: application/json
+
+
+
+
+###
+#fetch recent posts
+GET  http://localhost:4500/posts/fetchRecentPosts
+Content-Type: application/json
+
+
 
 
