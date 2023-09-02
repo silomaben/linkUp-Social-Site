@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Feed</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Montserrat:wght@300&family=Poppins:wght@300;400&family=Prosto+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="navbar">
+        <div class="logo">
+            <img src="/img/logo.png" alt="">
+        </div>
+        <div class="navig">
+            <p>Home</p>
+            <p>About</p>
+            <p>Contact</p>
+        </div>
+        <div class="nav-profile">
+            <img src="/img/test_profile.jpg" alt="">
+            <div class="hamburger-click">
+                <p class="">silomaben</p>
+                <div class="humburger" id="hamburger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m7 10l5 5l5-5z"/></svg>
+                </div>
+            </div>
+            <div class="menu-options">
+                <p class="navig-page">Home</p>
+                <p class="navig-page">About</p>
+                <p class="navig-page">Contact</p>
+                <p>View-profile</p>
+                <p>Logout</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="body-container">
+        <div class="profile-header">
+            <div class="dp">
+                <img src="/img/test_profile.jpg" alt="">
+            </div>
+            <div class="profile-details">
+                <div class="top-profile-details">
+                    <h2>Silomaben</h2>
+                    <button><i class="fa-solid fa-pen-to-square"></i> edit profile</button>
+                </div>
+                <div class="mid-profile-details">
+                    <h4>19 posts</h4>
+                    <h4>190 followers</h4>
+                    <h4>190 following</h4>
+                </div>
+                <h3 id="users-name">Benard Siloma</h3>
+                <p id="user-bio">Django magician 🎩 | Crafting web wonders with code ✨ | 
+                    Turning caffeine into code ☕ | Exploring bytes and beyond 🚀
+                </p>
+                <div class="social-links">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    
+                    <!-- Gmail -->
+                    <a href="mailto:youremail@example.com">
+                        <i class="far fa-envelope"></i>
+                    </a>
+
+                    <a href="mailto:youremail@example.com">
+                        <i class="far fa-discord"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="body-container">
+        <br>
+        <br>
+        <h3>following</h3>
+        <br>
+        <div class="search-users">
+            <input type="text">
+            <button>search</button>
+        </div>
+        <div class="single-user">
+            <div class="single-user-details">
+                <div>
+                    <img src="/img/test_profile.jpg" alt="">
+                    <h3>unregister3d_user</h3>
+                </div>
+                <h4>unregistered user</h4>
+            </div>
+            
+            <p>view profile</p>
+        </div>
+    </section>
+
+    <br><br>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo-pnb" style="">
+                <img class="footer-shopie-logo" src="/img/logo.png" alt="">
+            </div>
+            <div class="company-container">
+                <h4 class="">Company</h4>
+                <a class="btn-link" href="">Home</a>
+                <a class="btn-link" href="">About Us</a>
+                <a class="btn-link" href="">Contact Us</a>
+            </div>
+            <div class="contact-us">
+                <h4 class="">Contact</h4>
+                <p class=""><i class="fa fa-map-marker-alt me-3"></i> Nyeri-Town, Kenya</p>
+                <p class=""><i class="fa fa-phone-alt me-3"></i> +254791483840, +254757255894</p>
+                <p class=""><i class="fa fa-envelope me-3"></i> info@paulnbenonlinestore.com</p>
+                <div class="footer-icons">
+                    <a class="" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="" href=""><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; <a class="border-bottom" href="#">LinkUp Social </a>, All Right Reserved.
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // const hamburger = document.getElementsByClassName("hamburger-click")
+            const menuOptions = document.querySelector(".menu-options");
+             
+            document.querySelector(".hamburger-click").addEventListener('click',()=>{
+                if (menuOptions.style.display === "block") {
+                    menuOptions.style.display = "none";
+                } else {
+                    menuOptions.style.display = "block";
+                }  
+            })
+            
+        });
+        
+        
+    </script>
+
+    <script>
+        // Get the navigation element
+        const nav = document.querySelector('.navbar');
+
+        // Define the scroll threshold after which the navigation becomes sticky
+        const scrollThreshold = 50; // Adjust this value as needed
+
+        // Add a scroll event listener
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= scrollThreshold) {
+                nav.classList.add('sticky');
+            } else {
+                nav.classList.remove('sticky');
+            }
+        });
+    </script>
+
+</body>
+</html>
