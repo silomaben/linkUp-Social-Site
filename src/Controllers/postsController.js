@@ -201,17 +201,72 @@ const fetchAllNotes = async (req,res)=>{
 
 const rankPostEngagement= async (req,res)=>{
     try {
+
         // get posts and store in a list
-            
+        const pool = await mssql.connect(sqlConfig);
+
+        if (pool.connected) {
+            const posts_details = await pool.request()
+                .input('post_id', mssql.VarChar, post_id)
+                .execute('fetchPostsPerfomance');
+
+                
+                
+                //loop through the post engagement list and fetch the perfomance number and use for engament score calculation.
+                // save the posts which post perfomance/engagemrnt have been calculated and saved successfully
+                
+                let postsupdated =[]
+
+                // calculate engagement score for each post and save
+                posts_details.forEach(async (post)=>{
+                    const likeWeight = 1;          
+                    const commentWeight = 2;       
+                    const subcommentWeight = 3;    
+                
+                    
+                    const perfomanceScore = (post.like_count * likeWeight) +
+                                            (post.comment_count * commentWeight) +
+                                            (post.subcomment_count * subcommentWeight);
+                    
+                    // save the engagement score to the database it to the database
+                    if(pool.connected){
+                        const result = await pool.request()
+                        .input('post_id',mssql.VarChar, post.post_id)
+                        .input('perfomanceScore',mssql.VarChar, perfomanceScore)
+                        .query(`UPDATE Posts
+                        SET perfomance_scale = @perfomanceScore
+                        WHERE post_id = @postId;`)
 
 
-        // loop over each post calculating its engagement score 
+                        if(result.rowsAffected == 1){
+                            postsupdated.push(post.id)
+                        }
+
+                    }
+
+                
+
+                    
+                })
+
+        }
 
 
-        // save the engagement score to the database it to the database
         
+       
 
-        // return or log every time posts are rank and email admin every time when done.
+
+        if(postsupdated.length==posts.length){
+            //>>>>>>>>>>>>>>>>>>>>>>>>>to do <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            // log using winston when all posts engagement has been updated
+            return res.json({message: "all post perfomance score have been updated"})
+        }else{
+            //>>>>>>>>>>>>>>>>>>>>>>>>>to do <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            // log using winston when all posts engagement has been updated
+            //  email admin when this happens can be made optional only when its not 100% successfull
+            return res.json({message: `${postsupdated.length} out of ${posts.length} posts perfomanceScore updated`})
+
+        }
 
 
     } catch (error) {
@@ -391,11 +446,11 @@ const viewSinglePost = async (req, res) => {
 
 module.exports = {
     createNewPost,
+    viewSinglePost,
     editPost,
     deletePost,
     likePost,
     unlikePost,
-    createComment ,
-    viewSinglePost,
+    createComment,
     createSubcomment,
 }
