@@ -1,5 +1,5 @@
 CREATE OR ALTER PROCEDURE CreateSubcommentProc
-    @comment_id INT,
+    @comment_id VARCHAR(255),
     @user_id VARCHAR(255),
     @body TEXT,
     @timeposted VARCHAR(50)

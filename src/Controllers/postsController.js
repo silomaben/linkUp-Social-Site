@@ -1,5 +1,6 @@
 const {v4} = require('uuid');
 const mssql = require ('mssql');
+const bcrypt = require('bcrypt')
 // const { createProjectsTable } = require('../Database/Tables/createTables');
 const { sqlConfig } = require('../Config/config');
 
@@ -46,7 +47,6 @@ const createNewPost = async (req,res)=>{
 
 
 // update post
-
 const editPost = async (req,res)=>{
     try {        
         const {user_id,post_id,body,tagged} = req.body
@@ -79,9 +79,6 @@ const editPost = async (req,res)=>{
 
 
 // delete post
-
-
-
 const deletePost = async(req,res)=>{
     try {
         const post_id = req.params.id;
@@ -224,28 +221,6 @@ const updateSubcomment = async (req, res) => {
     }
 }
 
-// delete comment
-
-
-
-
-// delete subcomment
-
-
-// like comment
-
-
-// like subcomment
-
-
-// unlike comment
-
-
-// unlike subcomment
-
-
-// register a user
-
 
 
 // upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
@@ -277,6 +252,85 @@ const updateSubcomment = async (req, res) => {
 
 
 // archive post (for user)
+
+
+// delete comment
+
+
+
+
+// delete subcomment
+
+
+// like comment
+
+
+// like subcomment
+
+
+// unlike comment
+
+
+// unlike subcomment
+
+
+// register a user
+const registerUser = async (req,res)=>{
+    try {
+        console.log('got data');
+        const user_id = v4();
+        
+        const { first_name, last_name, username, email,  password, profile_pic_url } = req.body;
+        
+
+        const pool = await mssql.connect(sqlConfig);
+
+        if(pool.connected){
+            const confirmEmailExists = await pool
+            .request()
+            .input('email', email)
+            .execute('fetchUserByEmailProc')
+
+            console.log('bellowfetch');
+
+            if(confirmEmailExists.recordset.length > 0){
+                return res.status(409).json({error: 'The email provided is already registered.'})
+            }
+
+            const salt = await bcrypt.genSalt(10)
+            const hashedPwd = await bcrypt.hash(password, salt)
+
+            const result =await pool
+            .request()
+            .input('user_id', user_id)
+            .input('first_name', first_name)
+            .input('last_name', last_name)
+            .input('username', username)
+            .input('email', email)
+            .input('profile_pic_url', profile_pic_url)
+            .input('password', hashedPwd)
+            .execute('registerNewUserProc')
+
+            return res.json({
+                        message: "User registration was successful"
+                    })
+                }
+        // if(result.rowsAffected==1){
+        //     return res.json({
+        //         message: "User registration was successful"
+        //     })
+        // }else{
+        //     return res.json({message: "User registration failed"})
+        // }
+        
+
+    } catch (error) {
+        return res.json({Error:error.message})
+    }
+}
+
+            
+
 
 
 
@@ -379,9 +433,10 @@ const likePost = async (req,res)=>{
 
         }
     } catch (error) {
-        return res.json({error})
+        return res.json({error:"already liked"})
     }
 }
+
 
 const unlikePost = async (req,res)=>{
     try {
@@ -402,7 +457,116 @@ const unlikePost = async (req,res)=>{
                     message: "unliked"
                 })
             }else{
-                return res.json({message: "post is not liked"})
+                return res.json({error: "post is not liked"})
+            }
+
+        }
+        
+    } catch (error) {
+        return res.json({error})
+    }
+}
+
+
+const likeComment= async (req,res)=>{
+    try {
+        const {user_id,comment_id} = req.body
+
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('user_id',mssql.VarChar, user_id)
+            .input('comment_id', mssql.VarChar,comment_id)
+            .execute('LikeCommentProc')
+
+            if(result.rowsAffected==1){
+                return res.json({message: "comment was liked"})
+            }else{
+                return res.json({message: "failed to like comment"})
+            }
+
+        }
+    } catch (error) {
+        return res.json({Error:error.message})
+    }
+}
+
+const unlikeComment = async (req,res)=>{
+    try {
+        const {user_id,comment_id} = req.body
+        console.log(user_id,comment_id);
+
+        const pool = await mssql.connect(sqlConfig)
+
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('user_id',mssql.VarChar, user_id)
+            .input('comment_id',comment_id)
+            .execute('UnlikeCommentProc')
+            
+            console.log(result);
+            if(result.rowsAffected==1){
+                return res.json({
+                    message: "unliked comment"
+                })
+            }else{
+                return res.json({error: "comment is not liked"})
+            }
+
+        }
+        
+    } catch (error) {
+        return res.json({error})
+    }
+}
+
+const likeSubcomment= async (req,res)=>{
+    try {
+        const {user_id,subcomment_id} = req.body
+
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('user_id',mssql.VarChar, user_id)
+            .input('subcomment_id', mssql.VarChar,subcomment_id)
+            .execute('likeSubcommentProc')
+
+            if(result.rowsAffected==1){
+                return res.json({message: "subcomment was liked"})
+            }else{
+                return res.json({message: "failed to like subcomment"})
+            }
+
+        }
+    } catch (error) {
+        return res.json({Error:error.message})
+    }
+}
+
+const unlikeSubcomment = async (req,res)=>{
+    try {
+        const {user_id,subcomment_id} = req.body
+        console.log(user_id,subcomment_id);
+
+        const pool = await mssql.connect(sqlConfig)
+
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('user_id',mssql.VarChar, user_id)
+            .input('subcomment_id',subcomment_id)
+            .execute('UnlikeSubcommentProc')
+            
+            console.log(result);
+            if(result.rowsAffected==1){
+                return res.json({
+                    message: "unliked subcomment"
+                })
+            }else{
+                return res.json({error: "subcomment is not liked"})
             }
 
         }
@@ -493,7 +657,7 @@ const viewSinglePost = async (req, res) => {
 
             const comments = await pool.request()
                 .input('post_id', mssql.VarChar, post_id)
-                .query('SELECT comment_id, user_id, body, datetime FROM Comments WHERE post_id = @post_id');
+                .execute('fetchCommentsForSpecificPostProc');
 
             if (postDetails.recordset) {
                 const commentObjects = [];
@@ -501,13 +665,14 @@ const viewSinglePost = async (req, res) => {
                 for (const comment of comments.recordset) {
                     const subcomments = await pool.request()
                         .input('comment_id', mssql.Int, comment.comment_id)
-                        .query('SELECT subcomment_id, user_id, body, datetime FROM Subcomments WHERE comment_id = @comment_id');
+                        .execute('fetchSubCommentsForSpecificPostProc');
 
                     commentObjects.push({
                         comment_id: comment.comment_id,
                         user_id: comment.user_id,
                         body: comment.body,
                         datetime: comment.datetime,
+                        like_count: comment.like_count,
                         subcomments: subcomments.recordset
                     });
                 }
@@ -533,11 +698,16 @@ module.exports = {
     deletePost,
     likePost,
     unlikePost,
+    likeComment,
+    unlikeComment,
     createComment,
+    likeSubcomment,
+    unlikeSubcomment,
     createSubcomment,
     rankPostEngagement,
     fetchPostsBasedOnPerfomance,
     fetchRecentPosts,
     updateComment,
-    updateSubcomment
+    updateSubcomment,
+    registerUser
 }

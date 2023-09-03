@@ -1,9 +1,9 @@
 CREATE TABLE Posts (
   post_id VARCHAR(255) PRIMARY KEY,
-  user_id VARCHAR(255),
+  user_id VARCHAR(255) NOT NULL,
   image VARCHAR(255),
-  body TEXT,
-  datetime VARCHAR(50),
+  body TEXT NOT NULL,
+  datetime VARCHAR(50) NOT NULL,
   tagged_users VARCHAR(500),
   is_deleted BIT DEFAULT(0),
   trending_score INT DEFAULT(0),
@@ -13,8 +13,17 @@ CREATE TABLE Posts (
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
-DROP Table Posts
+
+-- post id to int
 DROP Table Users
+DROP Table Posts
+DROP Table Comments
+drop table Subcomments
+drop table Likes
+DROP TABLE Followers
+DROP TABLE CommentLikes
+DROP TABLE  SubcommentLikes
+
 
 
 select * from Posts

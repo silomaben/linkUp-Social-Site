@@ -10,3 +10,4 @@ BEGIN
       tagged_users = @tagged
   WHERE post_id = @post_id and user_id = @user_id
 END;
+
