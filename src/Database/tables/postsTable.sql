@@ -14,6 +14,8 @@ CREATE TABLE Posts (
 );
 
 
+-- add feature of enable and disable commenting
+
 -- post id to int
 DROP Table Users
 DROP Table Posts

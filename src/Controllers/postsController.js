@@ -3,6 +3,8 @@ const mssql = require ('mssql');
 const bcrypt = require('bcrypt')
 // const { createProjectsTable } = require('../Database/Tables/createTables');
 const { sqlConfig } = require('../Config/config');
+const Filter = require('bad-words');
+const filter = new Filter();
 
 
 
@@ -55,7 +57,14 @@ const createNewPost = async (req,res)=>{
         const {user_id,image,body,tagged} = req.body
         console.log(timeposted);
 
+        // Check for profanity in the post body
+        if (filter.isProfane(body)) {
+            return res.json({ message: "Posting failed due to profanity" });
+        }
+
         const pool = await mssql.connect(sqlConfig)
+
+
 
         if(pool.connected){
             const result = await pool.request()
