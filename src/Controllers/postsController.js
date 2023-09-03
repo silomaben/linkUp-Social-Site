@@ -6,6 +6,46 @@ const { sqlConfig } = require('../Config/config');
 
 
 
+// upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
+
+
+
+// delete user(a suspended account cannot be deleted)
+
+
+//login a user
+
+
+// verify user
+
+
+// disable user (for user to disable themselves)
+
+
+// suspend user (only for network admin)
+
+
+// keep email private
+
+
+// reset password(send otp and after successful assertion allow to write password and confirm then save.)
+
+
+// suspend post(for admin)
+
+
+// archive post (for user)
+
+
+// delete comment
+
+
+
+
+// delete subcomment
+
+
+
 const createNewPost = async (req,res)=>{
     try {
         const id = v4();
@@ -223,55 +263,7 @@ const updateSubcomment = async (req, res) => {
 
 
 
-// upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
 
-
-
-// delete user(a suspended account cannot be deleted)
-
-
-//login a user
-
-
-// verify user
-
-
-// disable user (for user to disable themselves)
-
-
-// suspend user (only for network admin)
-
-
-// keep email private
-
-
-// reset password(send otp and after successful assertion allow to write password and confirm then save.)
-
-
-// suspend post(for admin)
-
-
-// archive post (for user)
-
-
-// delete comment
-
-
-
-
-// delete subcomment
-
-
-// like comment
-
-
-// like subcomment
-
-
-// unlike comment
-
-
-// unlike subcomment
 
 
 // register a user
@@ -467,6 +459,8 @@ const unlikePost = async (req,res)=>{
     }
 }
 
+// like comment
+
 
 const likeComment= async (req,res)=>{
     try {
@@ -491,6 +485,13 @@ const likeComment= async (req,res)=>{
         return res.json({Error:error.message})
     }
 }
+
+
+
+
+
+
+// unlike comment
 
 const unlikeComment = async (req,res)=>{
     try {
@@ -522,6 +523,7 @@ const unlikeComment = async (req,res)=>{
     }
 }
 
+// like subcomment
 const likeSubcomment= async (req,res)=>{
     try {
         const {user_id,subcomment_id} = req.body
@@ -546,13 +548,15 @@ const likeSubcomment= async (req,res)=>{
     }
 }
 
+
+
+// unlike subcomment
 const unlikeSubcomment = async (req,res)=>{
     try {
         const {user_id,subcomment_id} = req.body
         console.log(user_id,subcomment_id);
 
         const pool = await mssql.connect(sqlConfig)
-
 
         if(pool.connected){
             const result = await pool.request()
