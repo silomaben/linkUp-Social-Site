@@ -1,0 +1,196 @@
+<app-navbar></app-navbar>
+
+<section class="body-container">
+    <div class="profile-header">
+        <div class="dp">
+            <img src="../assets/img/test_profile.jpg" alt="">
+        </div>
+        <div class="profile-details">
+            <div class="top-profile-details">
+                <h2>Silomaben</h2>
+                <button><i class="fa-solid fa-pen-to-square"></i> edit profile</button>
+            </div>
+            <div class="mid-profile-details">
+                <h4>19 posts</h4>
+                <h4>190 followers</h4>
+                <h4>190 following</h4>
+            </div>
+            <h3 id="users-name">Benard Siloma</h3>
+            <p id="user-bio">Django magician 🎩 | Crafting web wonders with code ✨ | 
+                Turning caffeine into code ☕ | Exploring bytes and beyond 🚀
+            </p>
+            <div class="social-links">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                
+                <!-- Gmail -->
+                <a href="mailto:youremail@example.com">
+                    <i class="far fa-envelope"></i>
+                </a>
+
+                <a href="mailto:youremail@example.com">
+                    <i class="far fa-discord"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="content-navigation">
+    <button (click)="setActiveTab('posts')">Posts</button>
+    <button (click)="setActiveTab('following')">Following</button>
+    <button (click)="setActiveTab('followers')">Followers</button>
+</div>
+
+<section class="body-container" *ngIf="navigateTo=='followers'" id="followers">
+    <br>
+    <br>
+    <div class="search-users">
+        <input type="text">
+        <button>search</button>
+    </div>
+    <div class="single-user">
+        <div class="single-user-details">
+            <div>
+                <img src="../assets/img/test_profile.jpg" alt="">
+                <h3>unregister3d_user</h3>
+            </div>
+            <h4>unregistered user</h4>
+        </div>
+        
+        <p>view profile</p>
+    </div>
+</section>
+
+<section class="body-container" *ngIf="navigateTo=='following'" id="following">
+    <br>
+    <br>
+    <div class="search-users">
+        <input type="text">
+        <button>search</button>
+    </div>
+    <div class="single-user">
+        <div class="single-user-details">
+            <div>
+                <img src="../assets/img/test_profile.jpg" alt="">
+                <h3>ignit3graphics</h3>
+            </div>
+            <h4>ignit3 siloma</h4>
+        </div>
+        
+        <p>view profile</p>
+    </div>
+</section>
+
+<section class="body-container" id="posts" *ngIf="navigateTo=='posts'">
+    <br><br>
+    <div class="picture-post">
+        <div class="user-details">
+            <img src="../assets/img/test_profile.jpg" alt="">
+            <div>
+                <h3 class="username">silomaben</h3>
+                <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
+            </div>
+        </div>
+        <div class="post-pic">
+            <img src="../assets/img/bg-blog.jpg" alt="">
+        </div>
+        <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.26961 2.66663C4.87743 2.66663 3.74878 3.69267 3.74878 4.95829C3.74878 7.24996 6.72795 9.33329 8.33211 9.81788C9.93628 9.33329 12.9154 7.24996 12.9154 4.95829C12.9154 3.69267 11.7868 2.66663 10.3946 2.66663C9.54211 2.66663 8.78816 3.05142 8.33211 3.64038C8.09967 3.33938 7.79086 3.09373 7.43184 2.92423C7.07282 2.75473 6.67416 2.66637 6.26961 2.66663Z" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_53_365)">
+                <path d="M5.83203 8.75C6.57371 8.75 7.29873 8.53007 7.91542 8.11801C8.5321 7.70596 9.01275 7.12029 9.29658 6.43506C9.58041 5.74984 9.65467 4.99584 9.50998 4.26841C9.36528 3.54098 9.00813 2.8728 8.48368 2.34835C7.95923 1.8239 7.29105 1.46675 6.56362 1.32206C5.83619 1.17736 5.08219 1.25162 4.39697 1.53545C3.71175 1.81928 3.12608 2.29993 2.71402 2.91661C2.30196 3.5333 2.08203 4.25832 2.08203 5C2.08203 5.62 2.23203 6.20458 2.4987 6.71958L2.08203 8.75L4.11245 8.33333C4.62745 8.6 5.21245 8.75 5.83203 8.75Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_53_365">
+                <rect width="10" height="10" fill="white" transform="translate(0.832031)"/>
+                </clipPath>
+                </defs>
+            </svg>
+                
+                
+        </div>
+        <h4 class="username">silomaben</h4>
+        <p>Exploring hidden gems in the heart of the city 🌆✨ Just stumbled upon this charming café tucked away on a quiet street. The 
+            cozy ambiance and delicious aroma of freshly brewed coffee are giving me all the feels. ☕️❤️ Sometimes, it's the unplanned moments that turn into the best memories. #UrbanAdventures #CaféHunting #CityDiscoveries</p>
+
+        <div class="comment-post">
+            <button>view comments</button>
+            <form method="POST" action="">
+                <div class="comment-section" >
+                    <div>
+                        <input type="text">
+                    </div>
+                    <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
+                </div>
+                
+            </form>
+
+        </div>
+        
+    </div>
+
+    <div class="picture-post">
+        <div class="user-details">
+            <img src="../assets/img/test_profile.jpg" alt="">
+            <div>
+                <h3 class="username">silomaben</h3>
+                <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
+            </div>
+        </div>
+        <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.26961 2.66663C4.87743 2.66663 3.74878 3.69267 3.74878 4.95829C3.74878 7.24996 6.72795 9.33329 8.33211 9.81788C9.93628 9.33329 12.9154 7.24996 12.9154 4.95829C12.9154 3.69267 11.7868 2.66663 10.3946 2.66663C9.54211 2.66663 8.78816 3.05142 8.33211 3.64038C8.09967 3.33938 7.79086 3.09373 7.43184 2.92423C7.07282 2.75473 6.67416 2.66637 6.26961 2.66663Z" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_53_365)">
+                <path d="M5.83203 8.75C6.57371 8.75 7.29873 8.53007 7.91542 8.11801C8.5321 7.70596 9.01275 7.12029 9.29658 6.43506C9.58041 5.74984 9.65467 4.99584 9.50998 4.26841C9.36528 3.54098 9.00813 2.8728 8.48368 2.34835C7.95923 1.8239 7.29105 1.46675 6.56362 1.32206C5.83619 1.17736 5.08219 1.25162 4.39697 1.53545C3.71175 1.81928 3.12608 2.29993 2.71402 2.91661C2.30196 3.5333 2.08203 4.25832 2.08203 5C2.08203 5.62 2.23203 6.20458 2.4987 6.71958L2.08203 8.75L4.11245 8.33333C4.62745 8.6 5.21245 8.75 5.83203 8.75Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_53_365">
+                <rect width="10" height="10" fill="white" transform="translate(0.832031)"/>
+                </clipPath>
+                </defs>
+            </svg>
+                
+                
+        </div>
+        <p>Exploring hidden gems in the heart of the city 🌆✨ Just stumbled upon this charming café tucked away on a quiet street. The 
+            cozy ambiance and delicious aroma of freshly brewed coffee are giving me all the feels. ☕️❤️ Sometimes, it's the unplanned moments that turn into the best memories. #UrbanAdventures #CaféHunting #CityDiscoveries</p>
+
+        <div class="comment-post">
+            <button>view comments</button>
+            <form method="POST" action="">
+                <div class="comment-section" >
+                    <div>
+                        <input type="text">
+                    </div>
+                    <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
+                </div>
+                
+            </form>
+
+        </div>
+        
+    </div>
+
+</section>
+
+<app-footer></app-footer>
