@@ -61,6 +61,38 @@ export class SinglePostComponent {
             like_count: 1
           }
         ]
+      },
+      {
+        comment_id: 2,
+        user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+        body: "Sunday test 2 indeed",
+        datetime: "9/3/2023, 11:58:02 AM",
+        like_count: 1,
+        subcomments: [
+          {
+            subcomment_id: 1,
+            user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+            body: "subcomment sunday init",
+            datetime: "9/3/2023, 12:17:52 PM",
+            like_count: 1
+          }
+        ]
+      },
+      {
+        comment_id: 3,
+        user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+        body: "Sunday test 3 indeed",
+        datetime: "9/3/2023, 11:58:02 AM",
+        like_count: 1,
+        subcomments: [
+          {
+            subcomment_id: 1,
+            user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+            body: "subcomment sunday init",
+            datetime: "9/3/2023, 12:17:52 PM",
+            like_count: 1
+          }
+        ]
       }
     ]
   };

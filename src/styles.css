@@ -437,6 +437,11 @@ textarea {
     margin-top: 15px;
 }
 
+.icons{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
 
 .comments-dp img{
     width: 40px;
@@ -634,7 +639,6 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
     background-color: #6179D4; 
     box-shadow: 10px 2px 6px rgba(100, 95, 136, 0.15);
     background-image: url(assets/img/world_pattern.svg);
@@ -665,7 +669,7 @@ footer a:hover {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 
