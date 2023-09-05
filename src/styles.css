@@ -998,7 +998,7 @@ footer a:hover {
     }
 }
 
-/* login -- register */
+/* login */
 
 .auth-container{
     width: 100%;
@@ -1027,8 +1027,8 @@ footer a:hover {
     width: 50%;
     height: 100%;
     background-color: #6179D4;
-    
 }
+
 
 .left p{
     color: #FFF;
@@ -1038,6 +1038,7 @@ footer a:hover {
     font-weight: 400;
     line-height: normal;
 }
+
 .left h3{
     color: #FFF;
     font-family: Poppins;
@@ -1046,15 +1047,18 @@ footer a:hover {
     font-weight: 400;
     line-height: normal;
 }
+
 .left div{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
 .left img{
     width: 350px;
 }
+
 
 
 .right{
@@ -1068,50 +1072,12 @@ footer a:hover {
 }
 
 
+
+
 .right img{
     width: 100px;
 }
-.reg-form form{
-    display: flex;
-    flex-direction: column;
-}
 
-.reg-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap:10px;
-}
-
-.reg-form h3{
-    color: #2B59CE;
-    font-family: Poppins;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.reg-form input{
-    margin-bottom: 20px;
-    background-color: #d6e4f5;
-    padding: 10px;
-    border: none;
-    outline: none;
-    border-radius: 10px;
-}
-
-.reg-form form > div {
-    display: flex;
-    gap: 20px 10px;
-}
-
-.reg-form button{
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: #6179D4;
-}
 
 
 
@@ -1161,3 +1127,169 @@ footer a:hover {
     align-self: flex-end;
     margin-right: 40px;
 }
+
+
+
+@media (max-width: 720px) {
+    .left img{
+        width: 250px;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .left {
+        display: none;
+    }
+
+    .right{
+        width: 100%;
+    }
+
+}
+
+
+/* registration page */
+
+.left-reg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: #6179D4;
+}
+.left-reg p{
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.left-reg h3{
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.left-reg div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.left-reg img{
+    width: 350px;
+}
+
+.right-reg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    gap: 10px;
+}.right-reg img{
+    width: 100px;
+}
+.reg-form form{
+    display: flex;
+    flex-direction: column;
+}
+
+.reg-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+
+.reg-form h3{
+    color: #2B59CE;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.reg-form input{
+    margin-bottom: 20px;
+    background-color: #d6e4f5;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.reg-form form > div {
+    display: flex;
+    gap: 20px;
+}
+
+.reg-form button{
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #6179D4;
+}
+
+@media (max-width: 405px) {
+    .reg-form > form > div{
+        flex-direction: column;
+    }
+
+    .reg-form form > div {
+        gap: 0px;
+    }
+
+}
+
+@media (max-width: 955px) {
+    .left-reg img{
+        width: 250px;
+    }
+}
+@media (max-width: 790px) {
+    .left-reg{
+        display: none;
+    }
+    .right-reg{
+        width: 100%;
+    }
+}
+
+
+/* Modal container */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  }
+  
+  /* Modal content */
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Close button */
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
