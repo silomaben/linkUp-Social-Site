@@ -12,6 +12,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { RegisterComponent } from './register/register.component';
     FooterComponent,
     ViewProfileComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

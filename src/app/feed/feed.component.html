@@ -1,20 +1,39 @@
 <app-navbar></app-navbar>
 
-<section class="body-container">
+<div class="big-container">
+
+<section class="first-column">
+    <div class="display-card">
+        <div class="profile-display">
+            <img id="header-image" src="../../assets/img/bg-blog.jpg" alt="">
+            <img id="dp-image" src="../../assets/img/test_profile.jpg" alt="">
+        </div>
+        <div  class="profile-display-skills">
+            <p>| Python | Django | MEAN Stack (MSSQL | Angular | Express | Nodejs) | Photoshop | Illustrator | Aftereffects</p>
+        </div>
+        <br>
+        <p class="profile-display-bio">bio</p>
+        <div class="contacts">
+            <p>email</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="body-container-feed">
 
     <!-- make this a modal  -->
     
     <div class="add-post">
-        <form action="">
             <div class="topside">
-                <img src="/img/test_profile.jpg" alt="">
-                <textarea name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                <img src="../../assets/img/test_profile.jpg" alt="">
+                <textarea  (click)="open()"  name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
             </div>
             <div class="bottomside">
                 <button>image</button>
-                <button  id="addPost-btn">submit</button>
+                <button id="addPost-btn">submit</button>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 
     <div class="posts">
@@ -112,5 +131,29 @@
     </div>
 </section>
 
+<section class="third-column">
+    <div class="may-know">
+        <div class="may-know-title">
+            <h6>People you may know</h6>
+        </div>
+        <br>
+        <div class="persons">
+            <div>
+                <img src="../../assets/img/test_profile.jpg" alt="">
+                <p>Benard Siloma</p>
+            </div>
+            <div>
+                <img src="../../assets/img/test_profile.jpg" alt="">
+                <p>Benard Siloma</p>
+            </div>
+            <div>
+                <img src="../../assets/img/test_profile.jpg" alt="">
+                <p>Benard Silomjknkjda</p>
+            </div>
+        </div>
+        <br>
+    </div>
+</section>
 
+</div>
 <app-footer></app-footer>

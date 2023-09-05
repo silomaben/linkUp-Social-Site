@@ -1,0 +1,24 @@
+
+<ng-container *ngIf="display$ | async as display">
+    <section [class.open]="display === 'open'"
+             (click)="close()">
+      <div (click)="$event.stopPropagation()">
+        <button class="close"
+                type="button" 
+                (click)="close()">X</button>
+  
+                <div class="add-post-modal">
+                    <form action="">
+                        <div class="topside-modal">
+                            <img src="../../assets/img/test_profile.jpg" alt="">
+                        </div>
+                        <textarea id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                        <div class="bottomside-modal">
+                            <button>image</button>
+                            <button id="addPost-btn-modal">submit</button>
+                        </div>
+                    </form>
+                </div>
+      </div>
+    </section>
+  </ng-container>

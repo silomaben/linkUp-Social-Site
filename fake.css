@@ -304,7 +304,7 @@ textarea {
 
 .add-post-modal textarea {
     width: 300px;  
-    height: 290px; 
+    height: 255px; 
     padding: 8px;
     border: none;
     border-radius: 30px;
@@ -331,12 +331,6 @@ textarea {
     background-color: #6179D4;
     justify-self: flex-end;
     align-self: flex-end;
-}
-
-@media (max-width: 767px) {
-    .add-post-modal textarea {
-        width: 190px;  
-    }
 }
 
 /********   navbar  ********/
