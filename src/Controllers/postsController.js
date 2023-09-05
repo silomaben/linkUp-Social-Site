@@ -467,6 +467,11 @@ const createComment = async (req,res)=>{
 
         const {post_id,user_id,body} = req.body
 
+        if (filter.isProfane(body)) {
+            return res.json({ message: "Posting failed due to profanity" });
+        }
+
+
         const pool = await mssql.connect(sqlConfig)
 
         if(pool.connected){
@@ -501,6 +506,10 @@ const createSubcomment = async (req, res) => {
         const timeposted = new Date().toLocaleString('en-US', options);
         
         const { comment_id, user_id, body } = req.body;
+
+        if (filter.isProfane(body)) {
+            return res.json({ message: "Posting failed due to profanity" });
+        }
 
         const pool = await mssql.connect(sqlConfig);
 
