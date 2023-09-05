@@ -1,0 +1,7 @@
+npm i @babel/preset-env --save -dev​
+
+create file ".babelrc" and add the following
+
+    {
+        "presets": ["@babel/preset-env"]
+    }

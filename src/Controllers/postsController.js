@@ -1,6 +1,6 @@
 const {v4} = require('uuid');
 const mssql = require ('mssql');
-const bcrypt = require('bcrypt')
+
 // const { createProjectsTable } = require('../Database/Tables/createTables');
 const { sqlConfig } = require('../Config/config');
 const Filter = require('bad-words');
@@ -166,6 +166,7 @@ const deletePost = async(req,res)=>{
 
 
 // view all posts based on perfomance score 
+//solve this using typescript 
 const fetchPostsBasedOnPerfomance = async (req,res)=>{
     try {
         const pool = await mssql.connect(sqlConfig)
@@ -275,138 +276,7 @@ const updateSubcomment = async (req, res) => {
 
 
 
-// register a user
-const registerUser = async (req,res)=>{
-    try {
-        console.log('got data');
-        const user_id = v4();
-        
-        const { first_name, last_name, username, email,  password, profile_pic_url } = req.body;
-        
-
-        const pool = await mssql.connect(sqlConfig);
-
-        if(pool.connected){
-            const confirmEmailExists = await pool
-            .request()
-            .input('email', email)
-            .execute('fetchUserByEmailProc')
-
-            console.log('bellowfetch');
-
-            if(confirmEmailExists.recordset.length > 0){
-                return res.status(409).json({error: 'The email provided is already registered.'})
-            }
-
-            const salt = await bcrypt.genSalt(10)
-            const hashedPwd = await bcrypt.hash(password, salt)
-
-            const result =await pool
-            .request()
-            .input('user_id', user_id)
-            .input('first_name', first_name)
-            .input('last_name', last_name)
-            .input('username', username)
-            .input('email', email)
-            .input('profile_pic_url', profile_pic_url)
-            .input('password', hashedPwd)
-            .execute('registerNewUserProc')
-
-            return res.json({
-                        message: "User registration was successful"
-                    })
-                }
-        // if(result.rowsAffected==1){
-        //     return res.json({
-        //         message: "User registration was successful"
-        //     })
-        // }else{
-        //     return res.json({message: "User registration failed"})
-        // }
-        
-
-    } catch (error) {
-        return res.json({Error:error.message})
-    }
-}
-
             
-
-
-
-
-// cron job
-// rank posts(for admin)=>{query all posts for number of likes and comments and on a give the post with the highest engagement ratio a rank from 1 to 10 }
-const rankPostEngagement= async (req,res)=>{
-    try {
-
-        let postsupdated = []  //track updated posts
-        let posts_details = []
-        
-        // get posts and store in a list
-        const pool = await mssql.connect(sqlConfig);
-
-        if (pool.connected) {
-            posts_details = await pool.request()
-                .execute('fetchPostsPerfomance');
-
-                posts_list = posts_details.recordset;
-
-                console.log(posts_details);
-                
-                //loop through the post engagement list and fetch the perfomance number and use for engament score calculation.
-                // save the posts which post perfomance/engagemrnt have been calculated and saved successfully
-                
-            for (const post of posts_list){
-                const likeWeight = 1;          
-                    const commentWeight = 2;       
-                    const subcommentWeight = 3;    
-                
-                    
-                    const perfomanceScore = (post.like_count * likeWeight) +
-                                            (post.comment_count * commentWeight) +
-                                            (post.subcomment_count * subcommentWeight);
-                    
-                    // save the engagement score to the database it to the database
-                    if(pool.connected){
-                        const result = await pool.request()
-                        .input('post_id',mssql.VarChar, post.post_id)
-                        .input('perfomanceScore',mssql.Int, perfomanceScore)
-                        .query(`UPDATE Posts
-                        SET perfomance_scale = @perfomanceScore
-                        WHERE post_id = @post_id;`)
-
-                        console.log(result);
-                        if(result.rowsAffected[0] === 1){
-                            postsupdated.push(post.id)
-                        }
-
-                    }
-            }
-                
-
-        }
-
-
-        if(postsupdated.length==posts_list.length){
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            // log using winston when all posts engagement has been updated
-            return res.json({message: "all post perfomance score have been updated"})
-        }else{
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            // log using winston when all posts engagement has been updated
-            //  email admin when this happens can be made optional only when its not 100% successfull
-            return res.json({message: `${postsupdated.length} out of ${posts_list.length} posts perfomanceScore updated`})
-
-        }
-
-
-    } catch (error) {
-        return res.json({Error:error.message})
-    }
-}
-
-
 
 
 
@@ -591,8 +461,6 @@ const unlikeSubcomment = async (req,res)=>{
 
 
 
-
-
 const createComment = async (req,res)=>{
     try {
         const timeposted = new Date().toLocaleString('en-US', { timeZone: 'Africa/Nairobi' });
@@ -717,10 +585,8 @@ module.exports = {
     likeSubcomment,
     unlikeSubcomment,
     createSubcomment,
-    rankPostEngagement,
     fetchPostsBasedOnPerfomance,
     fetchRecentPosts,
     updateComment,
     updateSubcomment,
-    registerUser
 }
