@@ -4,6 +4,7 @@ const mssql = require ('mssql');
 // const { createProjectsTable } = require('../Database/Tables/createTables');
 const { sqlConfig } = require('../Config/config');
 const Filter = require('bad-words');
+
 const filter = new Filter();
 
 
@@ -15,13 +16,12 @@ const filter = new Filter();
 // delete user(a suspended account cannot be deleted)
 
 
-//login a user
 
 
 // verify user
 
 
-// disable user (for user to disable themselves)
+
 
 
 // suspend user (only for network admin)

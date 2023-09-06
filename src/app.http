@@ -191,16 +191,52 @@ Content-Type: application/json
 
 ###
 #register a user
-POST http://localhost:4500/posts/registerUser
+POST http://localhost:4500/auth/register
 Content-Type: application/json
 
 {
     "first_name": "Ben",
-    "last_name": "Siloma",
-    "username": "silomaben",
-    "email": "siloma@gmail.com",
+    "last_name": "siloma",
+    "username": "admin",
+    "email": "admin@gmail.com",
     "password": "plokijuhy",
     "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg"
 }
+
+
+### 
+#login a user
+POST http://localhost:4500/auth/login
+Content-Type: application/json
+
+{
+    "credential": "admin@gmail.com", 
+    "passcode": "plokijuhy"
+}
+
+
+###
+#deactivate a user
+POST http://localhost:4500/auth/deactivate
+Content-Type: application/json
+
+{
+    "user_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "password": "plokijuhy"
+}
+
+
+###
+#activate a user
+POST http://localhost:4500/auth/activate
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "plokijuhy"
+}
+
+
+
 
 

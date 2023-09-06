@@ -1,43 +1,57 @@
 const {Router} = require('express');
 const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment } = require('../Controllers/postsController');
-const { registerUser } = require('../Controllers/authControllers');
+const { registerUser, deactivateUserAccount, activateUserAccount, login } = require('../Controllers/authControllers');
 const { rankPostEngagement } = require('../Controllers/jobs');
 
 
-// post router
-linkUpPostsRouter = Router();
+
+const router = Router();
 
 
-linkUpPostsRouter.post('/createpost',createNewPost);
-linkUpPostsRouter.put('/editpost',editPost);
-linkUpPostsRouter.put('/deletepost/:id',deletePost);
-linkUpPostsRouter.post('/likepost',likePost);
-linkUpPostsRouter.post('/unlikepost',unlikePost);
-linkUpPostsRouter.post('/createComment',createComment);
-linkUpPostsRouter.get('/viewSinglePost/:id',viewSinglePost);
-linkUpPostsRouter.post('/createSubComment',createSubcomment);
-linkUpPostsRouter.get('/fetchPostsBasedOnPerfomance',fetchPostsBasedOnPerfomance);
-linkUpPostsRouter.get('/fetchRecentPosts',fetchRecentPosts);
-linkUpPostsRouter.post('/updateComment',updateComment);
-linkUpPostsRouter.post('/updateSubcomment',updateSubcomment);
-linkUpPostsRouter.post('/likeComment',likeComment);
-linkUpPostsRouter.post('/unlikeComment',unlikeComment);
-linkUpPostsRouter.post('/likeSubcomment',likeSubcomment);
-linkUpPostsRouter.post('/unlikeSubcomment',unlikeSubcomment);
+// <!-- schedule posts for later -->
+// also posts visibility
 
+
+// posts routes
+router.post('/createpost',createNewPost);
+router.put('/editpost',editPost);
+router.put('/deletepost/:id',deletePost);
+router.post('/likepost',likePost);
+router.post('/unlikepost',unlikePost);
+router.get('/viewSinglePost/:id',viewSinglePost);
+// create one to view all posts(recent[time most recent], trending[check all for best perfoming in past 8hrs], feed[randoms of most recent and and best perfoming in the last 3 days])    ><><>< load them with scroll length to avoid lagging and create the social media virtual loading look...
+// fetch all posts for a specific user
+router.get('/fetchPostsBasedOnPerfomance',fetchPostsBasedOnPerfomance);
+router.get('/fetchRecentPosts',fetchRecentPosts);
+
+
+// comments routes
+router.post('/createComment',createComment);
+router.post('/updateComment',updateComment);
+router.post('/likeComment',likeComment);
+//delete comment
+router.post('/unlikeComment',unlikeComment);
+
+// subcomments routes
+router.post('/createSubComment',createSubcomment);
+router.post('/updateSubcomment',updateSubcomment);
+router.post('/unlikeSubcomment',unlikeSubcomment);
+//delete subcomment
+router.post('/likeSubcomment',likeSubcomment);
 
 // auth router
-linkUpAuthRouter = Router();
-linkUpAuthRouter.post('/registerUser',registerUser);
+router.post('/auth/register',registerUser);
+router.post('/auth/login',login);
+router.post('/auth/deactivate',deactivateUserAccount);
+router.post('/auth/activate',activateUserAccount);
 
 
 
 //cronjobs router should be deleted in the future
-linkUpCronJobsRouter = Router();
-linkUpCronJobsRouter.get('/rankPostEngagement',rankPostEngagement);
+
+router.get('/rankPostEngagement',rankPostEngagement);
 
 
 module.exports = {
-    linkUpPostsRouter,
-    linkUpAuthRouter
+    router
 }

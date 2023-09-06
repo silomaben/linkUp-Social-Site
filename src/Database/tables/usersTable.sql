@@ -15,16 +15,18 @@ CREATE TABLE Users (
   password_reset_token VARCHAR(255),
   password_reset_expiration VARCHAR(50),
   keep_email_private BIT DEFAULT 0,
-  email_confirmed BIT,
-  is_verified BIT,
-  is_suspended BIT,
-  is_disabled BIT,
-  is_deleted BIT,
-  is_admin BIT,
+  email_confirmed BIT  DEFAULT 0, -- confirm registration
+  is_verified BIT  DEFAULT 0,  -- celeb status
+  is_suspended BIT  DEFAULT 0, --user is suspended for violating terms such as 
+  is_disabled BIT  DEFAULT 0,  --user disables account and cannot be found when searched (deactivate)
+  is_deleted BIT  DEFAULT 0, --user is blocked from using platform by admin {let admin know and authorize account deletion}
+  is_admin BIT  DEFAULT 0, 
 );
 
 drop table users
 delete from Users
+
+select * from Users
 
 UPDATE Users
   SET is_admin = 1
