@@ -17,7 +17,7 @@ module.exports.loginSchema = Joi.object({
                 'string.max': `Username cannot exceed 30 characters`,
             })
     ).required(),
-    password: Joi.string()
+    passcode: Joi.string()
         .min(8)
         .required()
         .messages({

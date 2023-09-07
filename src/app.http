@@ -197,8 +197,8 @@ Content-Type: application/json
 {
     "first_name": "Ben",
     "last_name": "siloma",
-    "username": "admin",
-    "email": "admin@gmail.com",
+    "username": "kben",
+    "email": "kaybernard449@gmail.com",
     "password": "plokijuhy",
     "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg"
 }
@@ -221,7 +221,7 @@ POST http://localhost:4500/auth/deactivate
 Content-Type: application/json
 
 {
-    "user_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144",
     "password": "plokijuhy"
 }
 
@@ -232,8 +232,44 @@ POST http://localhost:4500/auth/activate
 Content-Type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "silomaben@gmail.com",
     "password": "plokijuhy"
+}
+
+
+###
+#barn a user
+POST http://localhost:4500/auth/barn
+Content-Type: application/json
+
+{
+    "admin_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "admin_password": "plokijuhy",
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144"
+
+}
+
+
+###
+#unbarn a user
+POST http://localhost:4500/auth/unbarn
+Content-Type: application/json
+
+{
+    "admin_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "admin_password": "plokijuhy",
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144"
+
+}
+
+
+###
+#forgot password
+POST http://localhost:4500/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "kaybernard449@gmail.com"
 }
 
 

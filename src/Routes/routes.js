@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment } = require('../Controllers/postsController');
-const { registerUser, deactivateUserAccount, activateUserAccount, login } = require('../Controllers/authControllers');
+const { registerUser, deactivateUserAccount, activateUserAccount, login, barnUser, unbarnUser, forgotPassword } = require('../Controllers/authControllers');
 const { rankPostEngagement } = require('../Controllers/jobs');
 
 
@@ -44,6 +44,13 @@ router.post('/auth/register',registerUser);
 router.post('/auth/login',login);
 router.post('/auth/deactivate',deactivateUserAccount);
 router.post('/auth/activate',activateUserAccount);
+router.post('/auth/forgot-password',forgotPassword);
+
+
+//admin maintenance
+router.post('/auth/barn',barnUser);
+router.post('/auth/unbarn',unbarnUser);
+
 
 
 
