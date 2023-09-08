@@ -1,7 +1,8 @@
 const {Router} = require('express');
 const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment } = require('../Controllers/postsController');
-const { registerUser, deactivateUserAccount, activateUserAccount, login, barnUser, unbarnUser, forgotPassword } = require('../Controllers/authControllers');
+const { registerUser, deactivateUserAccount, activateUserAccount, login, barnUser, unbarnUser, forgotPassword, verifyToken, resetPassword } = require('../Controllers/authControllers');
 const { rankPostEngagement } = require('../Controllers/jobs');
+const { followUser, unfollowUser, viewUser } = require('../Controllers/userControllers');
 
 
 
@@ -45,6 +46,8 @@ router.post('/auth/login',login);
 router.post('/auth/deactivate',deactivateUserAccount);
 router.post('/auth/activate',activateUserAccount);
 router.post('/auth/forgot-password',forgotPassword);
+router.post('/auth/verify-token',verifyToken);
+router.post('/auth/reset-password',resetPassword);
 
 
 //admin maintenance
@@ -53,6 +56,9 @@ router.post('/auth/unbarn',unbarnUser);
 
 
 
+router.post('/user/follow',followUser);
+router.post('/user/unfollow',unfollowUser);
+router.post('/user/view-user',viewUser);
 
 //cronjobs router should be deleted in the future
 

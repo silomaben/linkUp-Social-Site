@@ -210,7 +210,7 @@ POST http://localhost:4500/auth/login
 Content-Type: application/json
 
 {
-    "credential": "admin@gmail.com", 
+    "credential": "silomaben", 
     "passcode": "plokijuhy"
 }
 
@@ -273,6 +273,59 @@ Content-Type: application/json
 }
 
 
+###
+#verify token
+POST http://localhost:4500/auth/verify-token
+Content-Type: application/json
+
+{
+    "token": "23732f1e155fe9c15815c7c80dd8c70c4f036bce",
+    "email": "kaybernard449@gmail.com"
+}
+
+
+###
+# reset password
+POST http://localhost:4500/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "kaybernard449@gmail.com",
+    "password": "plokijuhy"
+}
 
 
 
+###
+# follow user
+POST http://localhost:4500/user/follow
+Content-Type: application/json
+
+{
+    "follower_id":  "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "followed_id": "39cd9427-42c8-44e1-b436-20612b21d144"
+}
+
+
+
+###
+# unfollow user
+POST http://localhost:4500/user/unfollow
+Content-Type: application/json
+
+{
+    "unfollower_id": "39cd9427-42c8-44e1-b436-20612b21d144",
+    "unfollowed_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc"
+}
+
+
+
+###
+# view user
+POST http://localhost:4500/user/view-user
+Content-Type: application/json
+
+{
+    "me": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "them": "39cd9427-42c8-44e1-b436-20612b21d144"
+}

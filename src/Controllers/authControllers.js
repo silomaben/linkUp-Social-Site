@@ -7,6 +7,16 @@ const { sqlConfig } = require('../Config/config');
 const { loginSchema } = require('../utils/validators');
 const { sendResetToken } = require('../EmailService/sendResetToken');
 
+
+
+// keep email private
+
+
+// upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
+
+
+
+
 // register a user
 const registerUser = async (req,res)=>{
     try {
@@ -119,10 +129,10 @@ const login = async (req, res)=>{
         const {credential, passcode} = req.body
         
 
-        const { error } = loginSchema.validate({credential, passcode})
-        if(error){
-            return res.status(422).json({error: error.message})
-        }
+        // const { error } = loginSchema.validate({credential, passcode})
+        // if(error){
+        //     return res.status(422).json({error: error.message})
+        // }
 
         console.log(credential,passcode);
 
@@ -287,7 +297,7 @@ const barnUser = async(req, res)=>{
 
 
 
-//unbarn user
+
 
 // unbarn user (for admin)
 const unbarnUser = async(req, res)=>{
@@ -383,10 +393,60 @@ const forgotPassword = async(req, res)=>{
 
 
 // verifytoken
+const verifyToken = async(req, res)=>{
+    try {
+        const {token, email} = req.body
 
+        const pool = await mssql.connect(sqlConfig)
+        const checkEmailQuery = await pool
+        .request()
+        .input('email', email)
+        .execute('fetchUserByEmailProc')
+
+        if(checkEmailQuery.recordset.length <= 0){
+            return res.status(404).json({error: 'Email is not registered'})
+        }
+        
+        if(checkEmailQuery.recordset[0].password_reset_token == token ){
+            return res.status(200).json({message: `Token is Valid`})
+        }
+        return res.status(400).json({error: 'Invalid token or token expired'})
+    } catch (error) {
+        return res.status(500).json({error: `Internal server error: ${error.message}`})
+    }
+}
 
 
 //reset password
+const resetPassword = async(req, res)=>{
+    try {
+        
+        const { password, email } = req.body
+
+        const pool = await mssql.connect(sqlConfig)
+        const checkEmailQuery = await pool
+        .request()
+        .input('email', email)
+        .execute('fetchUserByEmailProc')
+
+        if(checkEmailQuery.recordset.length <= 0){
+            return res.status(404).json({error: 'Email is not registered'})
+        }
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedPwd = await bcrypt.hash(password, salt)
+
+        await pool
+        .request()
+        .input('password', hashedPwd)
+        .input('email', email)
+        .execute('resetPasswordProc')
+
+        return res.status(200).json({message: 'Password reset successful'})
+    } catch (error) {
+        return res.status(500).json({error: `Internal server error: ${error.message}`})
+    }
+}
 
 
 
@@ -402,6 +462,10 @@ module.exports = {
     deactivateUserAccount,
     barnUser,
     unbarnUser,
-    forgotPassword
+    forgotPassword,
+    verifyToken,
+    resetPassword
 }
+
+
 

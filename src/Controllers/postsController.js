@@ -9,30 +9,6 @@ const filter = new Filter();
 
 
 
-// upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
-
-
-
-// delete user(a suspended account cannot be deleted)
-
-
-
-
-// verify user
-
-
-
-
-
-// suspend user (only for network admin)
-
-
-// keep email private
-
-
-// reset password(send otp and after successful assertion allow to write password and confirm then save.)
-
-
 // suspend post(for admin)
 
 
@@ -166,7 +142,13 @@ const deletePost = async(req,res)=>{
 
 
 // view all posts based on perfomance score 
-//solve this using typescript 
+//solve this using typescript at frontend ****ruled out WHY?
+//If posts are millions ill have to call them all 
+// to the frontend to sort them for the best
+// perfoming when i can be qquering only 20 posts 
+// direct from the service when ready sorted for the 
+// best perfoming
+
 const fetchPostsBasedOnPerfomance = async (req,res)=>{
     try {
         const pool = await mssql.connect(sqlConfig)
@@ -223,7 +205,6 @@ const updateComment = async (req,res)=>{
             .input('body', mssql.Text, body)
             .execute('updateCommentProc')
             
-
             if(result.rowsAffected==1){
                 return res.json({
                     message: "comment updated"
@@ -270,17 +251,6 @@ const updateSubcomment = async (req, res) => {
         return res.json({ error });
     }
 }
-
-
-
-
-
-
-            
-
-
-
-
 
 
 
