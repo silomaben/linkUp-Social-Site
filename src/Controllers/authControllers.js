@@ -9,7 +9,7 @@ const { sendResetToken } = require('../EmailService/sendResetToken');
 
 
 
-// keep email private
+
 
 
 // upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)

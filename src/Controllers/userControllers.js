@@ -1,6 +1,12 @@
 const { sqlConfig } = require("../Config/config");
 const mssql = require ('mssql');
 
+
+
+// keep email private
+
+
+
 const followUser = async (req,res)=>{
     try {
         const { follower_id, followed_id } = req.body;
@@ -55,9 +61,9 @@ const unfollowUser = async (req,res)=>{
 
 // view user profile.
 //************************** */
-//     // send the viewed and viewer id to establish follow relationship.
-//     // Frontend logged out users will alway get not followed.
-//     // Have a modal pop up in frontend to request register or login if user tries following when not logged in yet. 
+//  done                // send the viewed and viewer id to establish follow relationship.
+//  frontend not yet    // Frontend logged out users will alway get not followed.
+//  frontend not yet    // Have a modal pop up in frontend to request register or login if user tries following when not logged in yet. 
 
 
   
