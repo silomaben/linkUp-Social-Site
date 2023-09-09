@@ -4,8 +4,9 @@
     </div>
     <div class="navig">
         <p><a routerLink="">Home</a></p>
-        <p><a routerLink="about-us">About</a></p>
-        <p><a routerLink="contact-us">Contact</a></p>
+        <p><a [routerLink]="['/search']">Search</a></p>
+        <p><a routerLink="/about-us">About</a></p>
+        <p><a routerLink="/contact-us">Contact</a></p>
     </div>
     <div class="nav-profile">
         <img src="../assets/img/test_profile.jpg" alt="">
@@ -21,7 +22,7 @@
             <p class="navig-page"><a routerLink="/contact-us">Contact</a></p>
             <p><a routerLink="/edit-profile">edit-profile</a></p>
             <p><a routerLink="/view-profile">View-profile</a></p>
-            <p class="login-btn"><a routerLink="/login">Logout</a></p>
+            <p class="login-btn"><a routerLink="/auth/login">Logout</a></p>
         </div>
 
         

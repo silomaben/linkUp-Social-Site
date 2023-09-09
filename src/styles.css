@@ -163,6 +163,7 @@ body{
     height: 35px;
     width: 300px;
     background-color: #6179D4;
+    color: white;
     border-radius: 10px 10px 0px 0px;
     display: flex;
     justify-content: center;
@@ -184,6 +185,14 @@ body{
     border-radius: 10px;
     padding: 5px;
 }
+
+.persons > div button{
+    border: none;
+    margin-left: 30px;
+    border-radius: 10px;
+    padding: 7px 12px;
+}
+
 .persons img{
     width: 50px;
     border-radius: 50%;
@@ -612,7 +621,21 @@ textarea {
     display: flex;
     flex-direction: column;  
     gap: 5px;
+    
 }
+
+.picture-post .icons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.picture-post .icons p{
+    margin-left: -15px;
+}
+.picture-post .icons button{
+    border: none;
+}
+
 
 .user-details{
     display: flex;
@@ -634,9 +657,13 @@ textarea {
 .picture-post p{
     max-width: 600px;
 }
+.picture-post{
+    width: 600px;
+}
+
 
 .comment-post {
-    width: 200px;
+    /* width: 200px; */
 }
 
 .comment-post > button{
@@ -694,6 +721,9 @@ textarea {
     .post-pic img{
         width: 500px;     
    }
+   .picture-post{
+    width: 500px;
+    }
    .picture-post p{
     max-width: 500px;
 }
@@ -703,6 +733,9 @@ textarea {
     .post-pic img{
         width: 430px;     
    }
+   .picture-post{
+    width: 430px;
+    }
    .picture-post p{
     max-width: 430px;
 }
@@ -711,6 +744,9 @@ textarea {
     .post-pic img{
         width: 380px;     
    }
+   .picture-post{
+    width: 380px;
+    }
    .picture-post p{
     max-width: 380px;
 }
@@ -720,6 +756,9 @@ textarea {
     .post-pic img{
         width: 780px;     
    }
+   .picture-post{
+    width: 780px;
+    }
    .picture-post p{
     max-width: 780px;
 }
@@ -729,6 +768,9 @@ textarea {
     .post-pic img{
         width: 700px;     
    }
+   .picture-post{
+    width: 700px;
+    }
    .picture-post p{
     max-width: 700px;
 }
@@ -739,6 +781,9 @@ textarea {
     .post-pic img{
         width: 700px;
     }
+    .picture-post{
+        width: 700px;
+        }
 
     .picture-post p{
         max-width: 700px;
@@ -749,6 +794,9 @@ textarea {
     .post-pic img{
         width: 500px;
     }
+    .picture-post{
+        width: 500px;
+        }
 
     .picture-post p{
         max-width: 480px;
@@ -760,6 +808,10 @@ textarea {
     .post-pic img{
         width: 290px;
     }
+
+    .picture-post{
+        width: 290px;
+        }
 
     .picture-post p{
         max-width: 270px;

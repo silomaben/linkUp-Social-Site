@@ -13,7 +13,10 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ModalComponent } from './modal/modal.component';
+import { SearchComponent } from './search/search.component';
 
+
+import {HttpClientModule} from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,12 +28,14 @@ import { ModalComponent } from './modal/modal.component';
     ViewProfileComponent,
     LoginComponent,
     RegisterComponent,
-    ModalComponent
+    ModalComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

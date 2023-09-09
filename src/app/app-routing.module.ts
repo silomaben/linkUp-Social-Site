@@ -6,14 +6,16 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {path:"", component: FeedComponent},
+  {path:"search", component: SearchComponent},
   {path:"view-profile", component: ViewProfileComponent},
   {path:"edit-profile", component: EditProfileComponent},
   {path:"view-post", component: SinglePostComponent},
-  {path:"login", component: LoginComponent},
-  {path:"register", component: RegisterComponent},
+  {path:"auth/login", component: LoginComponent},
+  {path:"auth/register", component: RegisterComponent},
 ];
 
 @NgModule({
