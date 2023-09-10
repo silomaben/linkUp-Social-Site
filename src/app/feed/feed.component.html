@@ -53,16 +53,13 @@
                 <img src="{{post['image']}}" alt="">
             </div>
             <div class="icons">
-                <button *ngIf="!post['has_liked']"><i  class="far fa-heart fa-lg"></i></button>
-                <button *ngIf="post['has_liked']"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
+                <button (click)="likePost(post)" *ngIf="!post.has_liked"><i id="like-btn-{{post.post_id}}" class="far fa-heart fa-lg"></i></button>
+                <button (click)="likePost(post)" *ngIf="post.has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
                     <p  *ngIf="post['like_count'] === 1">{{post['like_count']}} like</p>
                         <p *ngIf="post['like_count'] > 1"> {{post['like_count']}} likes</p>
                     
-                
                 <i class="fas fa-comment fa-lg"></i>
 
-                
-                    
                     
             </div>
             <!-- <h4 class="username">{{post['user_name']}}</h4> -->

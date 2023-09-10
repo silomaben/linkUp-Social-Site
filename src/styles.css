@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'ngx-toastr/toastr';
 
 
 *{
@@ -472,6 +473,24 @@ textarea {
 }
 .menu-options p:hover{
     background-color: #738be3;
+}
+
+.is_authenicated{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.nav-login-btn{
+    border: none;
+    padding: 7px 12px;
+    background-color: #6179D4;
+    color: white;
+}
+.nav-register-btn{
+    border: none;
+    padding: 7px 12px;
+    background-color: #e9eeff;
 }
 .navig-page{
     display: none;

@@ -13,9 +13,9 @@
         <p>Connecting dreams</p>
         <div class="login-form">
             <h3>Login</h3>
-            <form action="">
-                <input type="text" placeholder="Username">
-                <input type="text" placeholder="Password">
+            <form action="" [formGroup]="loginForm" (submit)="submitLoginForm()">
+                <input formControlName="credential" type="text" placeholder="Username/email">
+                <input formControlName="passcode" type="password" placeholder="Password">
                 <button>Login</button>
             </form>
             <p>New here? Register with us</p>

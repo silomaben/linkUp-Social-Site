@@ -1,4 +1,5 @@
 import { Component, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,7 +7,7 @@ import { Component, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements AfterViewInit {
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(private renderer: Renderer2, private el: ElementRef,public authenticationService: AuthService) {}
 
   ngAfterViewInit() {
     // Code for toggling the menu
