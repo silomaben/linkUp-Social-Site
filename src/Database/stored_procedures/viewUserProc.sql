@@ -28,7 +28,21 @@ BEGIN
     END
 
     SELECT 
-        U.*, 
+         U.user_id,
+        U.first_name,
+        U.last_name,
+        U.username,
+        U.email,
+        U.profile_pic_url,
+        U.bio,
+        U.linkedin_url,
+        U.facebook_url,
+        U.website_url,
+        U.instagram_url,
+        U.twitter_url,
+        U.keep_email_private,
+        U.email_confirmed,
+        U.is_verified,
         @i_follow_them AS i_follow_them,
         @they_follow_me AS they_follow_me
     FROM Users U

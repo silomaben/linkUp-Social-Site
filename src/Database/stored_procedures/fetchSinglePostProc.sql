@@ -1,13 +1,21 @@
 CREATE OR ALTER PROCEDURE fetchSinglePostProc
-    @post_id VARCHAR(255)
+    @post_id VARCHAR(255),
+    @user_id VARCHAR(255)
 AS
 BEGIN
 
     DECLARE @likesCount INT;
+    DECLARE @hasLiked BIT;
 
     EXEC postLikesCounterProc @post_id, @likesCount OUTPUT;
 
-    SELECT post_id, user_id, image, body, datetime, tagged_users,@likesCount AS likes_count
+     SELECT @hasLiked = CASE WHEN EXISTS (
+        SELECT 1
+        FROM Likes
+        WHERE user_id = @user_id AND post_id = @post_id
+    ) THEN 1 ELSE 0 END;
+
+    SELECT post_id, user_id, image, body, datetime, tagged_users,@likesCount AS likes_count,@hasLiked AS has_liked
     FROM Posts
     WHERE post_id = @post_id;
 END;

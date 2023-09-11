@@ -6,7 +6,8 @@ CREATE OR ALTER PROCEDURE registerNewUserProc(
     @username VARCHAR(255), 
     @email VARCHAR(255),
     @profile_pic_url VARCHAR(255),
-    @password VARCHAR(1000))
+    @password VARCHAR(1000)
+    )
 AS
 BEGIN
 INSERT INTO Users (user_id, first_name, last_name,username, email,profile_pic_url, password)

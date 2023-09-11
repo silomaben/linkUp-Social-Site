@@ -5,3 +5,9 @@ create file ".babelrc" and add the following
     {
         "presets": ["@babel/preset-env"]
     }
+
+
+###
+#rank posts
+GET  http://localhost:4500/posts/rankPostEngagement
+Content-Type: application/json

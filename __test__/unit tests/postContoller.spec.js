@@ -1,5 +1,5 @@
 const mssql = require('mssql')
-const { createNewPost, createComment, createSubcomment } = require('../../src/Controllers/postsController')
+const { createNewPost, createComment, createSubcomment, editPost, deletePost, likeComment, unlikeComment, likeSubcomment, likePost, unlikePost } = require('../../src/Controllers/postsController')
 
 
 const Filter = require('bad-words');
@@ -73,16 +73,65 @@ describe('posts tests',()=>{
     });
 
     it('should edit post and return success message', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                post_id: "5c7f8faa-a07e-44da-9094-ea075a391ac9",
+                body: "no pets but dogs allowed",
+                tagged: ""
+            }
+        }
 
+        const filterMock = jest.spyOn(filter, "isProfane").mockReturnValue(true);
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+
+        await editPost(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Post updated successfully"
+        });
+    
+        filterMock.mockRestore();
+        res.json.mockRestore(); 
     })
 
 
     it('should return error message for editting another persons post', async ()=>{
-
+        
     })
     
     it('should delete post and return success message', async ()=>{
+        const req = {
+            params: { id: "5c7f8faa-a07e-44da-9094-ea075a391ac9" }, 
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await deletePost(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Post deleted successfully"
+        });
+    
+        res.json.mockRestore(); 
     })
 
     it('should return error message for deleting another persons post', async ()=>{
@@ -94,15 +143,65 @@ describe('posts tests',()=>{
     })
 
     it('should fetch and return singlepost with its comments and subcomments', async ()=>{
+        const req = {
+            params: { id: "5c7f8faa-a07e-44da-9094-ea075a391ac9" }, 
+        }
 
+         
     })
 
     it('should like a post successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                comment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await likeComment(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "comment was liked"
+        });
+
+        res.json.mockRestore(); 
     })
 
     it('should unlike a post successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                comment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await unlikePost(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "unliked"
+        });
+
+        res.json.mockRestore();
     })
     
 })
@@ -133,13 +232,12 @@ describe('comments tests',()=>{
 
         await createComment(req,res)
 
-        // expect(res.status).toHaveBeenCalledWith(200)
+        
 
         expect(res.json).toHaveBeenCalledWith({
             message: "comment added"
         })
 
-        //reset mocks
         res.json.mockRestore()
         
 
@@ -161,11 +259,60 @@ describe('comments tests',()=>{
     })
 
     it('should like a comment successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                comment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await likeComment(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "comment was liked"
+        });
+    
+    
+        res.json.mockRestore();
+    
     })
     
     it('should unlike a comment successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                comment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await unlikeComment(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "unliked comment"
+        });
+
+        res.json.mockRestore();
+    
     })
 
 })
@@ -202,7 +349,6 @@ describe('subcomments tests',()=>{
             message: "subcomment added"
         })
 
-        //reset mocks
         res.json.mockRestore()
     })  
 
@@ -224,7 +370,6 @@ describe('subcomments tests',()=>{
             message: "Posting failed due to profanity"
         });
     
-        // Restore the mocks
         filterMock.mockRestore();
         res.json.mockRestore(); 
     });
@@ -246,11 +391,59 @@ describe('subcomments tests',()=>{
     })
 
     it('should like a subcomment successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                subcomment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await likeSubcomment(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "subcomment was liked"
+        });
+    
+        res.json.mockRestore();
+   
     })
     
     it('should unlike a subcomment successfully', async ()=>{
+        const req = {
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+                subcomment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 1
+            })
+        })
+        
+        await likeSubcomment(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "subcomment was liked"
+        });
+    
+        
+        res.json.mockRestore();
     })
    
 })

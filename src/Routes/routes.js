@@ -1,9 +1,9 @@
 const {Router} = require('express');
 const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment } = require('../Controllers/postsController');
-const { registerUser, deactivateUserAccount, activateUserAccount, login, barnUser, unbarnUser, forgotPassword, verifyToken, resetPassword } = require('../Controllers/authControllers');
+const { registerUser, login, forgotPassword, verifyToken, resetPassword } = require('../Controllers/authControllers');
 const { rankPostEngagement } = require('../Controllers/jobs');
-const { followUser, unfollowUser, viewUser } = require('../Controllers/userControllers');
-
+const { followUser, unfollowUser, viewUser, updateUserInformation, deactivateUserAccount, activateUserAccount } = require('../Controllers/userControllers');
+const { barnUser, unbarnUser } =  require('../Controllers/adminControllers');
 
 
 const router = Router();
@@ -12,26 +12,28 @@ const router = Router();
 // <!-- schedule posts for later -->
 // also posts visibility
 
+// ********* to d0 ********************
+// suspend users violate prof whith banned timeout  || temporarily suspended for violating terms and conditions.
 
 // posts routes
-router.post('/createpost',createNewPost);
-router.put('/editpost',editPost);
-router.put('/deletepost/:id',deletePost);
-router.post('/likepost',likePost);
-router.post('/unlikepost',unlikePost);
-router.get('/viewSinglePost/:id',viewSinglePost);
+router.post('/posts/createpost',createNewPost);
+router.put('/posts/editpost',editPost);
+router.put('/posts/deletepost/:id',deletePost);
+router.post('/posts/likepost',likePost);
+router.post('/posts/unlikepost',unlikePost);
+router.post('/posts/viewSinglePost',viewSinglePost);
 // create one to view all posts(recent[time most recent], trending[check all for best perfoming in past 8hrs], feed[randoms of most recent and and best perfoming in the last 3 days])    ><><>< load them with scroll length to avoid lagging and create the social media virtual loading look...
 // fetch all posts for a specific user
-router.get('/fetchPostsBasedOnPerfomance',fetchPostsBasedOnPerfomance);
-router.get('/fetchRecentPosts',fetchRecentPosts);
+router.get('/posts/fetchPostsBasedOnPerfomance/:id',fetchPostsBasedOnPerfomance);
+router.get('/posts/fetchRecentPosts',fetchRecentPosts);
 
 
 // comments routes
-router.post('/createComment',createComment);
+router.post('/posts/createComment',createComment);
 router.post('/updateComment',updateComment);
-router.post('/likeComment',likeComment);
+router.post('/posts/likeComment',likeComment);
 //delete comment
-router.post('/unlikeComment',unlikeComment);
+router.post('/posts/unlikeComment',unlikeComment);
 
 // subcomments routes
 router.post('/createSubComment',createSubcomment);
@@ -59,6 +61,7 @@ router.post('/auth/unbarn',unbarnUser);
 router.post('/user/follow',followUser);
 router.post('/user/unfollow',unfollowUser);
 router.post('/user/view-user',viewUser);
+router.post('/user/edit-profile',updateUserInformation);
 
 //cronjobs router should be deleted in the future
 

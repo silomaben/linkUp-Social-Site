@@ -23,6 +23,9 @@ CREATE TABLE Users (
   is_admin BIT  DEFAULT 0, 
 );
 
+
+-- add created at for user
+
 drop table users
 delete from Users
 

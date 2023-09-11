@@ -78,6 +78,10 @@ const editPost = async (req,res)=>{
 
         const pool = await mssql.connect(sqlConfig)
 
+        if (filter.isProfane(body)) {
+            return res.json({ message: "Updating post failed due to profanity" });
+        }
+
         if(pool.connected){
             const result = await pool.request()
             .input('user_id',mssql.VarChar, user_id)
@@ -85,6 +89,8 @@ const editPost = async (req,res)=>{
             .input('body', mssql.VarChar, body)
             .input('tagged', mssql.VarChar, tagged)
             .execute('editPostProc')
+
+            console.log(result);
             
 
             if(result.rowsAffected==1){
@@ -151,13 +157,18 @@ const deletePost = async(req,res)=>{
 
 const fetchPostsBasedOnPerfomance = async (req,res)=>{
     try {
+
+        const user_id = req.params.id;
+        
         const pool = await mssql.connect(sqlConfig)
 
         if(pool.connected){
             const posts = await pool.request()
+            .input('user_id',mssql.VarChar, user_id)
             .execute('fetchPostsBasedOnPerfomanceProc')
             
 
+        
         return res.json({
             posts: posts.recordset
         })
@@ -507,12 +518,15 @@ const createSubcomment = async (req, res) => {
 
 const viewSinglePost = async (req, res) => {
     try {
-        const post_id = req.params.id;
+        // const post_id = req.params.id;
+
+        const {post_id, user_id} = req.body;
         const pool = await mssql.connect(sqlConfig);
 
         if (pool.connected) {
             const postDetails = await pool.request()
                 .input('post_id', mssql.VarChar, post_id)
+                .input('user_id', mssql.VarChar, user_id)
                 .execute('fetchSinglePostProc');
 
             const comments = await pool.request()

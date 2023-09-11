@@ -1,13 +1,180 @@
+###
+#register a user
+POST http://localhost:4500/auth/register
+Content-Type: application/json
+
+{
+    "first_name": "success",
+    "last_name": "test",
+    "username": "Successfully",
+    "email": "successfully@gmail.com",
+    "password": "plokijuhy",
+    "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg"
+}
+
+
+### 
+#login a user
+POST http://localhost:4500/auth/login
+Content-Type: application/json
+
+{
+    "credential": "successfully@gmail.com", 
+    "passcode": "plokijuhy"
+}
+
+
+
+###
+#update user info
+POST http://localhost:4500/user/edit-profile
+Content-Type: application/json
+
+{
+    "user_id": "234a7d37-d622-47da-b41a-e314cd619b7e",
+    "first_name": "test",
+    "last_name": "failednot",
+    "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg",
+    "bio":"Like batman, I fight bugs in the dark night",
+    "linkedin_url":"",
+    "facebook_url":"",
+    "website_url":"",
+    "instagram_url":"",
+    "twitter_url":""
+}
+
+
+###
+# view user
+POST http://localhost:4500/user/view-user
+Content-Type: application/json
+
+{
+    "me": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "them": "234a7d37-d622-47da-b41a-e314cd619b7e"
+}
+
+
+###
+# follow user
+POST http://localhost:4500/user/follow
+Content-Type: application/json
+
+{
+    "follower_id":  "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "followed_id": "234a7d37-d622-47da-b41a-e314cd619b7e"
+}
+
+
+
+###
+# unfollow user
+POST http://localhost:4500/user/unfollow
+Content-Type: application/json
+
+{
+    "unfollower_id": "39cd9427-42c8-44e1-b436-20612b21d144",
+    "unfollowed_id": "234a7d37-d622-47da-b41a-e314cd619b7e"
+}
+
+
+
+###
+#forgot password
+POST http://localhost:4500/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "kaybernard449@gmail.com"
+}
+
+
+###
+#verify token
+POST http://localhost:4500/auth/verify-token
+Content-Type: application/json
+
+{
+    "token": "e8b46fb03a5e64092f39318c64e95059e09ae253",
+    "email": "kaybernard449@gmail.com"
+}
+
+
+###
+# reset password
+POST http://localhost:4500/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "kaybernard449@gmail.com",
+    "password": "plokijuhy"
+}
+
+
+###
+#deactivate a user
+POST http://localhost:4500/auth/deactivate
+Content-Type: application/json
+
+{
+    "user_id": "e2793b07-bd4d-42c7-ad97-9dfb122f8ff9",
+    "password": "plokijuhy"
+}
+
+
+###
+#activate a user
+POST http://localhost:4500/auth/activate
+Content-Type: application/json
+
+{
+    "email": "kaybernard449@gmail.com",
+    "password": "plokijuhy"
+}
+
+
+
+
+
+
+###
 #create a post
 POST http://localhost:4500/posts/createpost
 Content-Type: application/json
 
 {
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
     "image": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg",
-    "body": "no suck your mother allowed ,only dogs",
+    "body": "success post",
     "tagged": ""
 }
+
+
+###
+#fetch single post
+POST  http://localhost:4500/posts/viewSinglePost
+Content-Type: application/json
+
+{
+    "post_id": "c21376b4-56b9-4df1-9428-17eeaf2ac1b2",
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac"
+}
+
+
+
+###
+#fetch posts based on engagement perfomance
+GET  http://localhost:4500/posts/fetchPostsBasedOnPerfomance/39cd9427-42c8-44e1-b436-20612b21d144
+Content-Type: application/json
+
+
+
+###
+#fetch recent posts
+GET  http://localhost:4500/posts/fetchRecentPosts
+Content-Type: application/json
+
+
 
 
 ###
@@ -16,9 +183,9 @@ PUT http://localhost:4500/posts/editpost
 Content-Type: application/json
 
 {
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "post_id": "5c7f8faa-a07e-44da-9094-ea075a391ac9",
-    "body": "edited",
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144",
+    "post_id": "849aa15d-296f-48d4-af96-86c143058f54",
+    "body": "edit post now works, dont touch it",
     "tagged": ""
 }
 
@@ -39,8 +206,8 @@ POST http://localhost:4500/posts/likepost
 Content-Type: application/json
 
 {
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "post_id": "90af0c8b-7ee7-48a8-a494-927c82598db3"
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "post_id": "c21376b4-56b9-4df1-9428-17eeaf2ac1b2"
 }
 
 
@@ -51,57 +218,11 @@ POST http://localhost:4500/posts/unlikepost
 Content-Type: application/json
 
 {
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "post_id": "90af0c8b-7ee7-48a8-a494-927c82598db3"
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "post_id": "c21376b4-56b9-4df1-9428-17eeaf2ac1b2"
 }
 
 
-
-###
-#like sub comment
-POST http://localhost:4500/posts/likeSubcomment
-Content-Type: application/json
-
-{
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "subcomment_id": "1"
-}
-
-
-
-###
-#unlike sub comment
-POST http://localhost:4500/posts/unlikeSubcomment
-Content-Type: application/json
-
-{
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "subcomment_id": "1"
-}
-
-
-
-###
-#like comment
-POST http://localhost:4500/posts/likeComment
-Content-Type: application/json
-
-{
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "comment_id": "1"
-}
-
-
-
-###
-#unlike comment
-POST http://localhost:4500/posts/unlikeComment
-Content-Type: application/json
-
-{
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "comment_id": "1"
-}
 
 
 
@@ -112,9 +233,9 @@ POST http://localhost:4500/posts/createComment
 Content-Type: application/json
 
 {
-    "post_id": "90af0c8b-7ee7-48a8-a494-927c82598db3",
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "body": "Sunday test 1 indeed"
+    "post_id": "c21376b4-56b9-4df1-9428-17eeaf2ac1b2",
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "body": "Success post updated"
 }
 
 
@@ -132,10 +253,31 @@ Content-Type: application/json
 }
 
 
+
+
+
 ###
-#fetch single post
-GET  http://localhost:4500/posts/viewSinglePost/90af0c8b-7ee7-48a8-a494-927c82598db3
+#like comment
+POST http://localhost:4500/posts/likeComment
 Content-Type: application/json
+
+{
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144",
+    "comment_id": "1"
+}
+
+
+
+###
+#unlike comment
+POST http://localhost:4500/posts/unlikeComment
+Content-Type: application/json
+
+{
+    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144",
+    "comment_id": "1"
+}
+
 
 
 
@@ -166,75 +308,35 @@ Content-Type: application/json
 
 
 
-
 ###
-#rank posts
-GET  http://localhost:4500/posts/rankPostEngagement
-Content-Type: application/json
-
-
-
-###
-#fetch posts based on engagement perfomance
-GET  http://localhost:4500/posts/fetchPostsBasedOnPerfomance
-Content-Type: application/json
-
-
-
-
-###
-#fetch recent posts
-GET  http://localhost:4500/posts/fetchRecentPosts
-Content-Type: application/json
-
-
-
-###
-#register a user
-POST http://localhost:4500/auth/register
+#like sub comment
+POST http://localhost:4500/posts/likeSubcomment
 Content-Type: application/json
 
 {
-    "first_name": "Ben",
-    "last_name": "siloma",
-    "username": "kben",
-    "email": "kaybernard449@gmail.com",
-    "password": "plokijuhy",
-    "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg"
+    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+    "subcomment_id": "1"
 }
 
-
-### 
-#login a user
-POST http://localhost:4500/auth/login
-Content-Type: application/json
-
-{
-    "credential": "silomaben", 
-    "passcode": "plokijuhy"
-}
 
 
 ###
-#deactivate a user
-POST http://localhost:4500/auth/deactivate
+#unlike sub comment
+POST http://localhost:4500/posts/unlikeSubcomment
 Content-Type: application/json
 
 {
-    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144",
-    "password": "plokijuhy"
+    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
+    "subcomment_id": "1"
 }
 
 
-###
-#activate a user
-POST http://localhost:4500/auth/activate
-Content-Type: application/json
 
-{
-    "email": "silomaben@gmail.com",
-    "password": "plokijuhy"
-}
+
+
+
+
+# admin controls
 
 
 ###
@@ -245,7 +347,7 @@ Content-Type: application/json
 {
     "admin_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
     "admin_password": "plokijuhy",
-    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144"
+    "user_id": "e2793b07-bd4d-42c7-ad97-9dfb122f8ff9"
 
 }
 
@@ -258,74 +360,20 @@ Content-Type: application/json
 {
     "admin_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
     "admin_password": "plokijuhy",
-    "user_id": "39cd9427-42c8-44e1-b436-20612b21d144"
+    "user_id": "e2793b07-bd4d-42c7-ad97-9dfb122f8ff9"
 
 }
 
 
-###
-#forgot password
-POST http://localhost:4500/auth/forgot-password
-Content-Type: application/json
-
-{
-    "email": "kaybernard449@gmail.com"
-}
 
 
-###
-#verify token
-POST http://localhost:4500/auth/verify-token
-Content-Type: application/json
-
-{
-    "token": "23732f1e155fe9c15815c7c80dd8c70c4f036bce",
-    "email": "kaybernard449@gmail.com"
-}
-
-
-###
-# reset password
-POST http://localhost:4500/auth/reset-password
-Content-Type: application/json
-
-{
-    "email": "kaybernard449@gmail.com",
-    "password": "plokijuhy"
-}
+// keep email private
 
 
 
-###
-# follow user
-POST http://localhost:4500/user/follow
-Content-Type: application/json
-
-{
-    "follower_id":  "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
-    "followed_id": "39cd9427-42c8-44e1-b436-20612b21d144"
-}
 
 
 
-###
-# unfollow user
-POST http://localhost:4500/user/unfollow
-Content-Type: application/json
-
-{
-    "unfollower_id": "39cd9427-42c8-44e1-b436-20612b21d144",
-    "unfollowed_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc"
-}
 
 
 
-###
-# view user
-POST http://localhost:4500/user/view-user
-Content-Type: application/json
-
-{
-    "me": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
-    "them": "39cd9427-42c8-44e1-b436-20612b21d144"
-}
