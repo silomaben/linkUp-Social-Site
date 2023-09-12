@@ -18,7 +18,7 @@ const routes: Routes = [
   {path:"search", component: SearchComponent},
   {path:"view-profile", component: ViewProfileComponent},
   {path:"edit-profile", component: EditProfileComponent},
-  {path:"view-post", component: SinglePostComponent},
+  {path:'view-post/:post_id', component: SinglePostComponent},
   {path:"auth/login", component: LoginComponent},
   {path:"auth/register", component: RegisterComponent},
 ];

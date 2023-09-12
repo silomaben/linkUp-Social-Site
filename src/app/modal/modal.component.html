@@ -8,14 +8,15 @@
                 (click)="close()">X</button>
   
                 <div class="add-post-modal">
-                    <form action="">
+                    <form action="" [formGroup]="createPostForm">
                         <div class="topside-modal">
                             <img src="../../assets/img/test_profile.jpg" alt="">
                         </div>
-                        <textarea id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                        <textarea formControlName="body" id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                        <input type="file"  (change)="onChange($event)">
                         <div class="bottomside-modal">
                             <button>image</button>
-                            <button id="addPost-btn-modal">submit</button>
+                            <button (click)="sendPost()" id="addPost-btn-modal">submit</button>
                         </div>
                     </form>
                 </div>

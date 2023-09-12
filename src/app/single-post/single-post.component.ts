@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
-
+import { PostsService } from '../services/posts.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -8,7 +8,53 @@ import { Component } from '@angular/core';
   templateUrl: './single-post.component.html',
   styleUrls: ['./single-post.component.css']
 })
+
 export class SinglePostComponent {
+
+  singlePost: any = {};
+  showCommentForm: boolean = false;
+
+  constructor(private posts:PostsService,private route: ActivatedRoute){
+    
+  }
+
+  ngOnInit(){
+    this.route.params.subscribe((params) => {
+      const post_id = params['post_id'];
+  
+     
+      this.fetchSinglePost(post_id);
+    })
+  }
+
+  // onCommentFormBlur() {
+  //   setTimeout(() => {
+  //     const commentInputValue = (document.querySelector('#commentInput') as HTMLInputElement)?.value;
+  //     if (!commentInputValue) {
+  //       this.showCommentForm = false;
+  //     }
+  //   }, 0);
+  // }
+  
+
+  fetchSinglePost(post_id:string){
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+
+      this.posts.getSinglePost(post_id,user_id).subscribe((response) => {
+        console.log(response)
+        this.singlePost = response
+
+        console.log(this.singlePost.post[0].post_id)
+
+      })
+    }
+  }
+
+
   post: {
     post: {
       post_id: string;
@@ -96,5 +142,6 @@ export class SinglePostComponent {
       }
     ]
   };
+
 }
 

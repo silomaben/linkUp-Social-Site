@@ -6,6 +6,9 @@ import { PostResponse, loginResponse } from '../interfaces';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
+
+import { Store } from '@ngrx/store';
+import { login, logout } from '../user/store/actions'// Import your actions
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +20,7 @@ export class LoginComponent {
     passcode: new FormControl('',Validators.required)
   })
 
-  constructor(private toastr: ToastrService,private login:AuthService,private route:Router,private is_authenticated:AuthService ) {}
+  constructor(private toastr: ToastrService,private login:AuthService,private route:Router,private is_authenticated:AuthService, private store: Store) {}
   
   submitLoginForm(){
     const credential = this.loginForm.value.credential ?? '';
@@ -31,8 +34,7 @@ export class LoginComponent {
         this.is_authenticated.signIn()
         this.toastr.success('Login successful!', 'Success');
         console.log(`success`)
-
-
+        this.store.dispatch(login({ userDetails: res.user }));
       });
 
       

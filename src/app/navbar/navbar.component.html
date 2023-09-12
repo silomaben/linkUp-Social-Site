@@ -5,7 +5,7 @@
     <div class="navig">
         <p><a routerLink="">Home</a></p>
         <p><a [routerLink]="['/search']">Search</a></p>
-        <p><a routerLink="/about-us">About</a></p>
+        <!-- <p><a routerLink="/about-us">About</a></p> -->
         <p><a routerLink="/contact-us">Contact</a></p>
     </div>
     <div *ngIf="authenticationService.isAuthenticatedUser()"  class="nav-profile">
@@ -18,7 +18,7 @@
         </div>
         <div  class="menu-options">
             <p class="navig-page"><a routerLink="">Home</a></p>
-            <p class="navig-page"><a routerLink="/about-us">About</a></p>
+            <!-- <p class="navig-page"><a routerLink="/about-us">About</a></p> -->
             <p class="navig-page"><a routerLink="/contact-us">Contact</a></p>
             <p><a routerLink="/edit-profile">edit-profile</a></p>
             <p><a routerLink="/view-profile">View-profile</a></p>

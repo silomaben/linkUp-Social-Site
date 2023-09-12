@@ -30,6 +30,16 @@ export class PostsService {
       return this.http.get<PostResponse>(url); 
     }
 
+    getSinglePost(post_id:string,user_id:string){
+      const url = `http://localhost:4500/posts/viewSinglePost/${post_id}`
+
+      const requestBody = {
+        user_id: user_id
+      }
+
+      return this.http.post<any>(url,requestBody)
+    }
+
     likePost(user_id:string,post_id:string): Observable<likePostResponse> {
       const url = 'http://localhost:4500/posts/likepost';
 
@@ -40,6 +50,8 @@ export class PostsService {
 
       return this.http.post<likePostResponse>(url,requestBody)
     }
+
+
     unlikePost(user_id:string,post_id:string): Observable<likePostResponse> {
       const url = 'http://localhost:4500/posts/unlikepost';
 
@@ -50,6 +62,8 @@ export class PostsService {
 
       return this.http.post<likePostResponse>(url,requestBody)
     };
+
+
 
     createPost(user_id:string, image:string,body:string,tagged:string):Observable<any>{
       const url = 'http://localhost:4500/posts/createpost';
@@ -63,6 +77,45 @@ export class PostsService {
 
       return this.http.post<any>(url,requestBody)
     }
+
+
+    deletePost(post_id:string, user_id:string){
+      const url = `http://localhost:4500/posts/deletepost/${post_id}`
+
+      const requestBody = {
+        user_id: user_id
+      }
+
+      return this.http.put<any>(url,requestBody)
+    }
+
+    editPost(user_id: string,post_id: string){
+      const url = 'http://localhost:4500/posts/editpost';
+
+      const requestBody = {
+        user_id: user_id,
+        post_id: post_id
+      }
+
+      return this.http.put<any>(url,requestBody)
+    }
+
+
+    commentPost(post_id:string, user_id:String,body:string ){
+      const url = ' http://localhost:4500/posts/createComment';
+
+      const requestBody = {
+        user_id: user_id,
+        post_id: post_id,
+        body:body,
+      }
+
+      return this.http.post<any>(url,requestBody)
+    }
+
+
+
+    
 
     
     

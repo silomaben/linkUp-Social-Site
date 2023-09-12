@@ -7,7 +7,7 @@ export interface post{
     datetime: Date,
     tagged_users: string,
     has_liked: boolean,
-    like_count: number
+    like_count: number,
   }
 
 export interface PostResponse {
@@ -55,3 +55,7 @@ export interface loginResponse
   }
 }
 
+
+export interface postOptions {
+  showOptions: boolean;
+}

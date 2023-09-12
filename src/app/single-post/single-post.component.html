@@ -11,7 +11,7 @@
             <div class="user-details">
                 <img src="../../assets/img/test_profile.jpg" alt="">
                 <div>
-                    <h3 class="username">unregister3d_us3r</h3>
+                    <h3 class="username">{{this.singlePost.post[0].user_name}}</h3>
                     <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <i class="fas fa-comment"></i>                    
             </div>
             <h4 class="username">unregister3d_us3r</h4>
-            <p>{{ post.post[0].body }}</p>
+            <p>{{this.singlePost.post[0].body}}</p>
 
             <div class="comment-post">
                 <form method="POST" action="">
@@ -40,9 +40,9 @@
 
 
             
-            <div *ngFor="let comment of post.comments" class="level-1-comment">
+            <div *ngFor="let comment of this.singlePost.comments" class="level-1-comment">
                 <div class="comments-dp">
-                    <img src="../../assets/img/test_profile.jpg" alt="">
+                    <img src="{{comment.user_dp}}" alt="">
                 </div>
                 <div>
                     <h4 class="username">{{ comment.user_id }}</h4>
@@ -51,27 +51,39 @@
                         <div><button><i class="fas fa-heart"></i></button><span> {{ comment.like_count }} likes</span></div>
                         <div><button><i class="fas fa-reply"></i></button><span> reply</span></div>
                     </div>
+                    <div class="comment-post">
+                <form method="POST" action="">
+                    <div class="comment-section" >
+                        <div>
+                            <input type="text">
+                        </div>
+                        <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
+                    </div>
+                    
+                </form>
+
+            </div>
                     <div *ngIf="comment.subcomments.length > 0" class="level-2-comments">
                         <div *ngFor="let subcomment of comment.subcomments" class="level-2-comment">
                         
-                        <div class="level-2-comment">
-                            <div class="comments-dp">
-                                <img src="../../assets/img/test_profile.jpg" alt="">
-                            </div>
-                            <div>
-                                <h4 class="username">{{ subcomment.user_id }}</h4>
-                                <p>{{ subcomment.body }}</p>
-                                <div class="comment-icons">
-                                    <div><button><i class="fas fa-heart"></i></button><span> {{ subcomment.like_count }} likes</span></div>
-                                    <!-- <div><button><i class="fas fa-reply"></i></button><span> reply</span></div> -->
+                            <div class="level-2-comment">
+                                <div class="comments-dp">
+                                    <img src="{{ subcomment.user_dp }}" alt="">
+                                </div>
+                                <div>
+                                    <h4 class="username">{{ subcomment.username }}</h4>
+                                    <p>{{ subcomment.body }}</p>
+                                    <div class="comment-icons">
+                                        <div><button><i class="fas fa-heart"></i></button><span> {{ subcomment.like_count }} likes</span></div>
+                                        <!-- <div><button><i class="fas fa-reply"></i></button><span> reply</span></div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
+            </div>
 
         
     </div>

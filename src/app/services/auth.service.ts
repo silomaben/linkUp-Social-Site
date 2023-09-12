@@ -4,12 +4,15 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { Store } from '@ngrx/store';
+import { login, logout } from '../user/store/actions'// Import your actions
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  constructor( private http:HttpClient,private route:Router) { }
+  constructor( private http:HttpClient,private route:Router,private store:Store) { }
 
   
   private isAuthenticated = !!localStorage.getItem('token') && !!localStorage.getItem('user');
@@ -38,6 +41,7 @@ export class AuthService {
     this.route.navigateByUrl("/auth/login")
     console.log('logged out');
     this.isAuthenticated = false;
+    this.store.dispatch(logout());
     
 
   }
