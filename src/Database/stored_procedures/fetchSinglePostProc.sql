@@ -3,44 +3,35 @@ CREATE OR ALTER PROCEDURE fetchSinglePostProc
     @user_id VARCHAR(255)
 AS
 BEGIN
-
     DECLARE @likesCount INT;
     DECLARE @hasLiked BIT;
+    DECLARE @username VARCHAR(255); 
 
+    
     EXEC postLikesCounterProc @post_id, @likesCount OUTPUT;
 
-     SELECT @hasLiked = CASE WHEN EXISTS (
+    
+    SELECT @hasLiked = CASE WHEN EXISTS (
         SELECT 1
         FROM Likes
         WHERE user_id = @user_id AND post_id = @post_id
     ) THEN 1 ELSE 0 END;
 
-    SELECT post_id, user_id, image, body, datetime, tagged_users,@likesCount AS likes_count,@hasLiked AS has_liked
-    FROM Posts
-    WHERE post_id = @post_id;
+    SELECT
+        P.post_id,
+        P.user_id,
+        U.username AS user_name, 
+        P.image,
+        P.body,
+        P.datetime,
+        P.tagged_users,
+        @likesCount AS likes_count,
+        @hasLiked AS has_liked
+    FROM Posts P
+    JOIN Users U ON P.user_id = U.user_id
+    WHERE P.post_id = @post_id;
 END;
 
-
-
--- CREATE OR ALTER PROCEDURE fetchSinglePostProc
---     @post_id VARCHAR(255)
--- AS
--- BEGIN
---     DECLARE @likesCount INT;
-
---     -- Execute a stored procedure to count likes (assuming you have one)
---     EXEC postLikesCounterProc @post_id, @likesCount OUTPUT;
-
---     -- Select the post details and the like count
---     SELECT post_id, user_id, image, body, datetime, tagged_users, @likesCount AS likes_count
---     FROM Posts
---     WHERE post_id = @post_id;
-
---     -- Select comments for the specified post
---     SELECT comment_id, user_id, body, datetime
---     FROM Comments
---     WHERE post_id = @post_id;
--- END;
 
 
 -- view tagged users using a modal after a 3 button to prompt users for options

@@ -4,14 +4,14 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 
-const verifyToken = async (req, res, next)=>{
+const verifyLoginToken = async (req, res, next)=>{
     try {
         const token = req.headers['token']
         if(!token){
             return res.status(403).json({message: "Restricted access, please provide a token"})
         }
 
-        const decodedData = jwt.verify(token, process.env.SECRET)
+        const decodedData = jwt.verify(token, process.env.SECRET_KEY)
         req.info = decodedData
         
     } catch (error) {
@@ -21,6 +21,7 @@ const verifyToken = async (req, res, next)=>{
     next()
 }
 
-module.exports ={
-    verifyToken
+
+module.exports = {
+    verifyLoginToken
 }

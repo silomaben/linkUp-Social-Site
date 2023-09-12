@@ -132,7 +132,7 @@ const deletePost = async(req,res)=>{
                 })
             }else{
                 res.json({
-                    message: 'Post not found'
+                    message: 'run into an error'
             })
             }
         }
@@ -518,9 +518,9 @@ const createSubcomment = async (req, res) => {
 
 const viewSinglePost = async (req, res) => {
     try {
-        // const post_id = req.params.id;
+        const post_id = req.params.id;
 
-        const {post_id, user_id} = req.body;
+        const { user_id} = req.body;
         const pool = await mssql.connect(sqlConfig);
 
         if (pool.connected) {
@@ -540,10 +540,13 @@ const viewSinglePost = async (req, res) => {
                     const subcomments = await pool.request()
                         .input('comment_id', mssql.Int, comment.comment_id)
                         .execute('fetchSubCommentsForSpecificPostProc');
+                        console.log(subcomments.recordset);
 
                     commentObjects.push({
                         comment_id: comment.comment_id,
                         user_id: comment.user_id,
+                        username: comment.username,
+                        user_dp: comment.profile_pic_url,
                         body: comment.body,
                         datetime: comment.datetime,
                         like_count: comment.like_count,

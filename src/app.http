@@ -141,6 +141,7 @@ Content-Type: application/json
 #create a post
 POST http://localhost:4500/posts/createpost
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1Y2Nlc3NmdWxseUBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY5NDQzNzcxNiwiZXhwIjoxNjk0NTI0MTE2fQ.IR1XhPam_67lWOmrOFFJhezSa_Y-QchWPEzlOkRdyo0
 
 {
     "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
@@ -152,11 +153,10 @@ Content-Type: application/json
 
 ###
 #fetch single post
-POST  http://localhost:4500/posts/viewSinglePost
+POST  http://localhost:4500/posts/viewSinglePost/c21376b4-56b9-4df1-9428-17eeaf2ac1b2
 Content-Type: application/json
 
 {
-    "post_id": "c21376b4-56b9-4df1-9428-17eeaf2ac1b2",
     "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac"
 }
 
@@ -287,9 +287,9 @@ POST  http://localhost:4500/posts/createSubComment
 Content-Type: application/json
 
 {
-    "comment_id": "1",
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "body": "subcoment sunday init"
+    "comment_id": "2",
+    "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "body": "subcomment is under construction"
 }
 
 

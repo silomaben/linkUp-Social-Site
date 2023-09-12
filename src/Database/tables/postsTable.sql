@@ -15,6 +15,7 @@ CREATE TABLE Posts (
 
 
 -- add feature of enable and disable commenting
+-- add feature to archive post
 
 -- post id to int
 DROP Table Users

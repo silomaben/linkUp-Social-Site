@@ -104,7 +104,34 @@ describe('posts tests',()=>{
 
 
     it('should return error message for editting another persons post', async ()=>{
-        
+        const req = {
+            body: {
+                user_id: "39cd9427-42c8-44e1-b436-20612b21d144",
+                post_id: "5c7f8faa-a07e-44da-9094-ea075a391ac9",
+                body: "no pets but dogs allowed",
+                tagged: ""
+            }
+        }
+
+        const filterMock = jest.spyOn(filter, "isProfane").mockReturnValue(true);
+
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 0
+            })
+        })
+
+        await editPost(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Post updating failed"
+        });
+    
+        filterMock.mockRestore();
+        res.json.mockRestore(); 
     })
     
     it('should delete post and return success message', async ()=>{
@@ -135,11 +162,34 @@ describe('posts tests',()=>{
     })
 
     it('should return error message for deleting another persons post', async ()=>{
+        const req = {
+            params: { id: "237e7cb2-2bc1-438b-8fff-510bd4787dad" }, 
+            body: {
+                user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
+            }
+        }
 
+        
+        const pool = jest.spyOn(mssql, "connect").mockResolvedValueOnce({
+            connected: true,
+            request: jest.fn().mockReturnThis(),
+            input: jest.fn().mockReturnThis(),
+            execute: jest.fn().mockResolvedValueOnce({
+                rowsAffected: 0
+            })
+        })
+        
+        await deletePost(req, res);
+    
+        expect(res.json).toHaveBeenCalledWith({
+            message: "run into an error"
+        });
+    
+        res.json.mockRestore(); 
     })
 
     it('should fetch and return posts', async ()=>{
-
+        
     })
 
     it('should fetch and return singlepost with its comments and subcomments', async ()=>{
@@ -260,7 +310,7 @@ describe('comments tests',()=>{
 
     it('should like a comment successfully', async ()=>{
         const req = {
-            body: {
+            body: { 
                 user_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4",
                 comment_id: "be6feb2f-4195-40b3-8d65-39403d5f37e4"
             }

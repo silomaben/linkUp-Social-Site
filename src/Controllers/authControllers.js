@@ -132,7 +132,7 @@ const login = async (req, res)=>{
         }
     
         const token = jwt.sign({ email: checkEmailQuery.recordset[0].email, is_admin: checkEmailQuery.recordset[0].is_admin }, process.env.SECRET_KEY, {
-            expiresIn: 24 * 60 * 60
+            expiresIn: 60 * 60
         })
 
         
