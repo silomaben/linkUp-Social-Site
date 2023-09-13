@@ -27,7 +27,7 @@
     <div class="add-post">
             <div class="topside">
                 <img src="../../assets/img/test_profile.jpg" alt="">
-                <textarea  (click)="open()"  name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                <textarea  (click)="openCreatePostModal()"  name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
             </div>
             <div class="bottomside">
                 <button>image</button>
@@ -57,12 +57,12 @@
                         <p  *ngIf="isMyPost(post.user_id)" >archive</p>
                         <p  *ngIf="isAdmin()" >suspend</p>
 
-                        <p  *ngIf="isMyPost(post.user_id)" (click)="editCurrentPost(post.post_id)" >edit</p>
+                        <p  *ngIf="isMyPost(post.user_id)" (click)="openEditPostModal(i,post.post_id)">edit</p>
                         <p *ngIf="isMyPost(post.user_id)" (click)="deleteCurrentPost(post.post_id)" class="login-btn">delete</p>
                     </div>
                 </div>
             </div>
-            <p>{{post['body']}}</p>
+            <p id="post-body-{{post.post_id}}">{{post['body']}}</p>
             <div class="post-pic">
                 <img src="{{post['image']}}" alt="">
             </div>

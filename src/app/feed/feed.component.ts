@@ -39,17 +39,12 @@ export class FeedComponent {
 
     postOptionsVisibility: boolean[] = [];
 
-
-    editPostForm = this.formBuilder.group({
-      body: new FormControl('',[Validators.required]),
-      image: new FormControl(''),
-      tagged: new FormControl(''),
-    })
+    // my forms
     commentPostForm = this.formBuilder.group({
       body: new FormControl('',[Validators.required])
     })
 
-      
+    // my functions
     ngOnInit(): void {
       this.posts.getPosts().subscribe((data: PostResponse) => {
         this.postOptionsVisibility = new Array(this.allpost.length).fill(false);
@@ -60,22 +55,33 @@ export class FeedComponent {
       });
     }
 
+    postComment(post_id:string){
+      const storedUser = localStorage.getItem('user');
+        
+        if(storedUser){
+          const user = JSON.parse(storedUser);
+          const user_id = user.user_id;
+  
+          const body = this.commentPostForm.value.body ?? '';
+  
+          this.posts.commentPost(post_id,user_id,body).subscribe((response)=>{
+            console.log('res',response)
+            this.toastr.success('Comment added');
+          })
+        }
+    }
+  
+
     
   
    
   likePost(post:post) {
-    // To retrieve the user object ...is there a safer way rather than localstorage?
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
     const storedUser = localStorage.getItem('user');
     
     if (storedUser) {
       const user = JSON.parse(storedUser);
       const user_id = user.user_id;
 
-    // console.log(user_id);
-    
     if(!post.has_liked){
       // like post
       this.posts.likePost(user_id, post.post_id).subscribe((response) => {
@@ -100,7 +106,7 @@ export class FeedComponent {
         }
       });
     
- }
+    }
       
     } else {
       console.log('please login to like');
@@ -111,9 +117,7 @@ export class FeedComponent {
     
   }
 
-  togglePostOptions(index: number) {
-    this.postOptionsVisibility[index] = !this.postOptionsVisibility[index];
-  }
+ 
  
   
   @HostListener('document:click', ['$event'])
@@ -165,26 +169,7 @@ viewComments(post_id: string) {
 }
 
 
-// *******************************     used ngrx     ********************************************
-  editCurrentPost(post_id:string){
-    this.store.pipe(select(selectUserDetails)).subscribe((selectUserDetails) => {
-      console.log(selectUserDetails);
-      
-      if(selectUserDetails){
-        const user_id = selectUserDetails.user_id;
 
-        const body = this.editPostForm.value.body ?? '';
-        const tagged = this.editPostForm.value.tagged ?? '';
-
-        this.posts.editPost(user_id,post_id).subscribe((response)=>{
-          console.log('res',response)
-          this.toastr.success('Post updated successfully!', 'Success');
-        })
-
-      }
-      
-    });
-  }
 
   isMyPost(postUserId: string): boolean {
     const storedUser = localStorage.getItem('user');
@@ -206,36 +191,37 @@ viewComments(post_id: string) {
     }
   }
 
-  postComment(post_id:string){
-    const storedUser = localStorage.getItem('user');
-      
-      if(storedUser){
-        const user = JSON.parse(storedUser);
-        const user_id = user.user_id;
-
-        const body = this.commentPostForm.value.body ?? '';
-
-        this.posts.commentPost(post_id,user_id,body).subscribe((response)=>{
-          console.log('res',response)
-          this.toastr.success('Comment added');
-        })
-      }
+  
+// view post options function{toggle open and close}
+  togglePostOptions(index: number) {
+    this.postOptionsVisibility[index] = !this.postOptionsVisibility[index];
   }
-
-
-
   closePostOptions(index: number): void {
     this.postOptionsVisibility[index] = false;
   }
   
   
-
-open() {
-  this.modalService.open();
-}
-close() {
-  this.modalService.close();
-}
+  // open and close create post modal
+  openCreatePostModal() {
+    this.modalService.openCreatePostModal();
+  }
+  closeCreatePostModal() {
+    this.modalService.closeCreatePostModal();
+  }
+  // open and close edit post modal
+  openEditPostModal(index: number,post_id:string) {
+    this.modalService.openEditPostModal();
+    this.postOptionsVisibility[index] = false;
+    const postToEdit = document.querySelector(`#post-body-${post_id}`) as HTMLParagraphElement
+    const editPostTextbox = document.querySelector('.editPostBody') as HTMLTextAreaElement
+    editPostTextbox.value = postToEdit.textContent as string;
+    editPostTextbox.id = post_id
+    // console.log('post data ' + postToEdit.textContent)
+    // console.log(editPostTextbox.textContent)
+  }
+  closeEditPostModal() {
+    this.modalService.closeEditPostModal();
+  }
 
 
 }

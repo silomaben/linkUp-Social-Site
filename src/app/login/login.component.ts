@@ -30,11 +30,14 @@ export class LoginComponent {
         console.log('res',res)
         localStorage.setItem('token',res.token)
         localStorage.setItem('user', JSON.stringify(res.user));
-        this.route.navigateByUrl("/")
         this.is_authenticated.signIn()
-        this.toastr.success('Login successful!', 'Success');
-        console.log(`success`)
         this.store.dispatch(login({ userDetails: res.user }));
+        this.toastr.success('Login successful!', 'Success', {
+          timeOut: 1000, 
+        });
+        setTimeout(() => {
+            this.route.navigateByUrl("/");
+        }, 1500);
       });
 
       

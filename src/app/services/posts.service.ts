@@ -12,21 +12,20 @@ export class PostsService {
  
     getPosts(): Observable<PostResponse> {
 
-      const storedUser = localStorage.getItem('user');
-      let user_id = null
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      user_id = user.user_id;
-    }
+        const storedUser = localStorage.getItem('user');
+        let user_id = null
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        user_id = user.user_id;
+      }
 
-    let url = null
-    if(user_id){
-      url = `http://localhost:4500/posts/fetchPostsBasedOnPerfomance/${user_id}`;
-    } else {
-      url = `http://localhost:4500/posts/fetchPostsBasedOnPerfomance/234a7d37-d622-47da-b41a-e314cd619b7e`
-    }
+      let url = null
+      if(user_id){
+        url = `http://localhost:4500/posts/fetchPostsBasedOnPerfomance/${user_id}`;
+      } else {
+        url = `http://localhost:4500/posts/fetchPostsBasedOnPerfomance/234a7d37-d622-47da-b41a-e314cd619b7e`
+      }
     
-      
       return this.http.get<PostResponse>(url); 
     }
 
@@ -89,12 +88,14 @@ export class PostsService {
       return this.http.put<any>(url,requestBody)
     }
 
-    editPost(user_id: string,post_id: string){
+    editPost(user_id: string,post_id: string,body:string,tagged:string){
       const url = 'http://localhost:4500/posts/editpost';
 
       const requestBody = {
         user_id: user_id,
-        post_id: post_id
+        post_id: post_id,
+        body: body,
+        tagged: tagged
       }
 
       return this.http.put<any>(url,requestBody)

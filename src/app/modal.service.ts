@@ -5,20 +5,40 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ModalService {
-  private display: BehaviorSubject<'open' | 'close'> = 
+  // create post modal
+  private displayCreatePostModal: BehaviorSubject<'open' | 'close'> = 
                    new BehaviorSubject<'open' | 'close'>('close');
 
 
-  watch(): Observable<'open' | 'close'> {
-    return this.display.asObservable();
+  watchCreatePostModal(): Observable<'open' | 'close'> {
+    return this.displayCreatePostModal.asObservable();
   }
 
-  open() {
-    this.display.next('open');
+  openCreatePostModal() {
+    this.displayCreatePostModal.next('open');
   }
 
-  close() {
-    this.display.next('close');
+  closeCreatePostModal() {
+    this.displayCreatePostModal.next('close');
+  }
+
+  // edit post modal
+  private displayEditPostModal: BehaviorSubject<'open' | 'close'> = 
+                   new BehaviorSubject<'open' | 'close'>('close');
+
+
+  watchEditPostModal(): Observable<'open' | 'close'> {
+    return this.displayEditPostModal.asObservable();
+  }
+
+  openEditPostModal() {
+    this.displayEditPostModal.next('open');
+    
+  }
+
+  closeEditPostModal() {
+    this.displayEditPostModal.next('close');
   }
 }
