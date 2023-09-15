@@ -3,6 +3,7 @@ import { PostsService } from '../services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../services/modal.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,18 +18,26 @@ export class SinglePostComponent {
   showCommentForm: boolean = false;
   postOptionsVisibility: boolean[] = [];
 
+   // my forms
+   commentPostForm = this.formBuilder.group({
+    body: new FormControl('',[Validators.required])
+  })
+   subCommentForm = this.formBuilder.group({
+    body: new FormControl('',[Validators.required])
+  })
+
   constructor(
     private posts:PostsService,
     private route: ActivatedRoute,
      private router:Router,
      private toastr: ToastrService,
-     private modalService : ModalService
+     private modalService : ModalService,
+     private formBuilder : FormBuilder
      ){ }
 
   ngOnInit(){
     this.route.params.subscribe((params) => {
       const post_id = params['post_id'];
-  
       this.fetchSinglePost(post_id);
     })
   }
@@ -53,10 +62,138 @@ export class SinglePostComponent {
       this.posts.getSinglePost(post_id,user_id).subscribe((response) => {
         console.log(response)
         this.singlePost = response
-
-        console.log(this.singlePost.post[0].has_liked)
-
       })
+    }
+  }
+
+  likePost(post:any) {
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+
+    if(!post.has_liked){
+      // like post
+      this.posts.likePost(user_id, post.post_id).subscribe((response) => {
+      
+        if (response.message=="liked") {
+          post.likes_count += 1;
+          // console.log(this.singlePost);
+          
+          post.has_liked = true
+        } else {
+          console.log(response.message)
+        }
+      });
+    }else{
+      // unlike post
+      this.posts.unlikePost(user_id, post.post_id).subscribe((response) => {
+        
+        if (response.message=="unliked") {
+          // console.log(this.singlePost);
+
+          post.likes_count -= 1;
+          post.has_liked = false
+        } else {
+          console.log(response.message)
+        }
+      });
+    
+    }
+      
+    } else {
+      console.log('please login to like');
+      
+    }
+  }
+
+  likeComment(comment:any) {
+    // console.log('comment'+ typeof(comment.comment_id.toString()));
+
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+
+    if(!comment.has_liked){
+      
+      // like post
+      this.posts.likeComment(user_id, comment.comment_id.toString()).subscribe((response) => {
+      
+        if (response.message=="comment was liked") {
+          comment.like_count += 1;
+          // console.log(this.singlePost);
+          
+          comment.has_liked = true
+        } else {
+          console.log(response.message)
+        }
+      });
+    }else{
+      // unlike post
+      this.posts.unlikeComment(user_id, comment.comment_id.toString()).subscribe((response) => {
+        
+        if (response.message=="unliked comment") {
+          // console.log(this.singlePost);
+
+          comment.like_count -= 1;
+          comment.has_liked = false
+        } else {
+          console.log(response.message)
+        }
+      });
+    
+    }
+      
+    } else {
+      console.log('please login to like');
+      
+    }
+  }
+  likeSubcomment(subcomment:any) {
+    console.log('subcomment'+ subcomment.subcomment_id);
+
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+
+    if(!subcomment.has_liked){
+      
+      // like post
+      this.posts.likeComment(user_id, subcomment.subcomment_id.toString()).subscribe((response) => {
+      
+        if (response.message=="comment was liked") {
+          subcomment.like_count += 1;
+          // console.log(this.singlePost);
+          
+          subcomment.has_liked = true
+        } else {
+          console.log(response.message)
+        }
+      });
+    }else{
+      // unlike post
+      this.posts.unlikeComment(user_id, subcomment.subcomment_id.toString()).subscribe((response) => {
+        
+        if (response.message=="unliked comment") {
+          // console.log(this.singlePost);
+
+          subcomment.like_count -= 1;
+          subcomment.has_liked = false
+        } else {
+          console.log(response.message)
+        }
+      });
+    
+    }
+      
+    } else {
+      console.log('please login to like');
+      
     }
   }
 
@@ -85,6 +222,41 @@ export class SinglePostComponent {
     }
   }
 
+  postComment(post_id:string){
+    const storedUser = localStorage.getItem('user');
+      
+      if(storedUser){
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
+
+        const body = this.commentPostForm.value.body ?? '';
+
+        this.posts.commentPost(post_id,user_id,body).subscribe((response)=>{
+          console.log('res',response)
+          this.toastr.success('Comment added');
+        })
+      }
+  }
+  addSubComment(post_id:string){
+    const storedUser = localStorage.getItem('user');
+      
+      if(storedUser){
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
+
+        const body = this.subCommentForm.value.body ?? '';
+
+        if(body.length<1){
+          this.toastr.show('make button inactive');
+          return
+        }
+
+        this.posts.subCommentPost(post_id,user_id,body).subscribe((response)=>{
+          console.log('res',response)
+          this.toastr.success('subComment added');
+        })
+      }
+  }
 
   deleteCurrentPost(post_id:string){
     const storedUser = localStorage.getItem('user');

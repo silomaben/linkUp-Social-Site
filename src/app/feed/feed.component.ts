@@ -45,7 +45,6 @@ export class FeedComponent {
     // my functions
     ngOnInit(): void {
       this.getPosts()
-
     }
 
     getPosts(){

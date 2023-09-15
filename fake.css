@@ -642,6 +642,7 @@ textarea {
     cursor: pointer;
 }
 .comment-section{
+    width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 7px;

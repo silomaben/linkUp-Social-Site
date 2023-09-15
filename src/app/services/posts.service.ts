@@ -114,6 +114,66 @@ export class PostsService {
       return this.http.post<any>(url,requestBody)
     }
 
+    subCommentPost(comment_id:string, user_id:String,body:string ){
+      const url = 'http://localhost:4500/posts/createSubComment';
+
+      const requestBody = {
+        user_id: user_id,
+        comment_id: comment_id,
+        body:body,
+      }
+
+      return this.http.post<any>(url,requestBody)
+    }
+
+
+    likeComment(user_id:string,comment_id:string): Observable<likePostResponse> {
+      const url = 'http://localhost:4500/posts/likeComment';
+
+      const requestBody = {
+        user_id: user_id,
+        comment_id: comment_id
+      };
+
+      return this.http.post<any>(url,requestBody)
+    }
+
+
+    unlikeComment(user_id:string,comment_id:string): Observable<likePostResponse> {
+      const url = 'http://localhost:4500/posts/unlikeComment';
+
+      const requestBody = {
+        user_id: user_id,
+        comment_id: comment_id
+      };
+
+      return this.http.post<any>(url,requestBody)
+    };
+
+    likeSubcomment(user_id:string,subcomment_id:string): Observable<likePostResponse> {
+      const url = 'http://localhost:4500/posts/likeSubcomment';
+
+      const requestBody = {
+        user_id: user_id,
+        subcomment_id: subcomment_id
+      };
+
+      return this.http.post<any>(url,requestBody)
+    }
+
+
+    unlikeSubcomment(user_id:string,subcomment_id:string): Observable<likePostResponse> {
+      const url = 'http://localhost:4500/posts/unlikeSubcomment';
+
+      const requestBody = {
+        user_id: user_id,
+        subcomment_id: subcomment_id
+      };
+
+      return this.http.post<any>(url,requestBody)
+    };
+
+
 
 
     

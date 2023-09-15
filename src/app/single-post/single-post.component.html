@@ -33,19 +33,19 @@
                 <img src="{{singlePost.post[0].image}}" alt="">
             </div>
             <div class="icons">
-                <button *ngIf="!singlePost.post[0].has_liked"><i id="like-btn-" class="far fa-heart fa-lg"></i></button>
-                <button  *ngIf="singlePost.post[0].has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
+                <button (click)="likePost(singlePost.post[0])" *ngIf="!singlePost.post[0].has_liked"><i id="like-btn-{{singlePost.post[0].post_id}}" class="far fa-heart fa-lg"></i></button>
+                <button (click)="likePost(singlePost.post[0])" *ngIf="singlePost.post[0].has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
                     <p *ngIf="singlePost.post[0].likes_count === 1">{{singlePost.post[0].likes_count}} like</p>
-                        <p  *ngIf="singlePost.post[0].has_liked > 1">{{singlePost.post[0].likes_count}}  likes</p>
+                        <p  *ngIf="singlePost.post[0].likes_count > 1">{{singlePost.post[0].likes_count}}  likes</p>
                     
                 <i class="fas fa-comment fa-lg"></i>                   
             </div>
 
             <div class="comment-post">
-                <form method="POST" action="">
+                <form [formGroup]="commentPostForm" (submit)="postComment(singlePost.post[0].post_id)">
                     <div class="comment-section" >
                         <div>
-                            <input type="text">
+                            <input formControlName="body" type="text">
                         </div>
                         <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
                     </div>
@@ -61,17 +61,18 @@
                     <img src="{{comment.user_dp}}" alt="">
                 </div>
                 <div>
-                    <h4 class="username">{{ comment.user_id }}</h4>
+                    <h4 class="username">{{ comment.username }}</h4>
                     <p>{{ comment.body }}</p>
                     <div class="comment-icons">
-                        <div><button><i class="fas fa-heart"></i></button><span> {{ comment.like_count }} likes</span></div>
+                        <div *ngIf="!comment.has_liked"><button (click)="likeComment(comment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
+                        <div *ngIf="comment.has_liked"><button (click)="likeComment(comment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
                         <div><button><i class="fas fa-reply"></i></button><span> reply</span></div>
                     </div>
-                    <div class="comment-post">
-                <form method="POST" action="">
+                    <div class="comment-comment">
+                <form method="POST" [formGroup]="subCommentForm" (click)="addSubComment(comment.comment_id)">
                     <div class="comment-section" >
                         <div>
-                            <input type="text">
+                            <input formControlName="body" type="text">
                         </div>
                         <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
                     </div>
@@ -90,7 +91,8 @@
                                     <h4 class="username">{{ subcomment.username }}</h4>
                                     <p>{{ subcomment.body }}</p>
                                     <div class="comment-icons">
-                                        <div><button><i class="fas fa-heart"></i></button><span> {{ subcomment.like_count }} likes</span></div>
+                                        <div *ngIf="!subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} like</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
+                                        <div *ngIf="subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} likes</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
                                         <!-- <div><button><i class="fas fa-reply"></i></button><span> reply</span></div> -->
                                     </div>
                                 </div>

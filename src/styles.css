@@ -631,10 +631,6 @@ textarea {
 }
 
 
-.comment-post {
-    /* width: 200px; */
-}
-
 .comment-post > button{
     background-color: transparent;
     color: #77A7D8;
@@ -679,7 +675,9 @@ textarea {
     line-height: normal;
 }
 
-
+.comment-comment {
+    width: 530px;
+}
 
 .comment-section button{
     background-color: #6F8CF1;
@@ -848,6 +846,7 @@ textarea {
 }
 .level-2-comment p{
     max-width: 635px;
+    width: 100%;
 }
 
 @media (max-width: 850px) {
