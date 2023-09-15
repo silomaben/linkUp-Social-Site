@@ -1,7 +1,6 @@
 const {Router} = require('express');
-const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment } = require('../Controllers/postsController');
+const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment, fetchSingleUserPosts } = require('../Controllers/postsController');
 const { registerUser, login, forgotPassword, verifyToken, resetPassword } = require('../Controllers/authControllers');
-const { rankPostEngagement } = require('../Controllers/jobs');
 const { followUser, unfollowUser, viewUser, updateUserInformation, deactivateUserAccount, activateUserAccount } = require('../Controllers/userControllers');
 const { barnUser, unbarnUser } =  require('../Controllers/adminControllers');
 const { verifyLoginToken } = require('../Middleware/verifyLoginToken');
@@ -18,35 +17,36 @@ const router = Router();
 
 // posts routes
 router.post('/posts/createpost', verifyLoginToken,createNewPost);
-router.put('/posts/editpost',editPost);
-router.put('/posts/deletepost/:id',deletePost);
-router.post('/posts/likepost',likePost);
-router.post('/posts/unlikepost',unlikePost);
-router.post('/posts/viewSinglePost/:id',viewSinglePost);
+router.put('/posts/editpost',verifyLoginToken,editPost);
+router.put('/posts/deletepost/:id',verifyLoginToken,deletePost);
+router.post('/posts/likepost',verifyLoginToken,likePost);
+router.post('/posts/unlikepost',verifyLoginToken,unlikePost);
+router.post('/posts/viewSinglePost/:id',verifyLoginToken,viewSinglePost);
 // create one to view all posts(recent[time most recent], trending[check all for best perfoming in past 8hrs], feed[randoms of most recent and and best perfoming in the last 3 days])    ><><>< load them with scroll length to avoid lagging and create the social media virtual loading look...
 // fetch all posts for a specific user
 router.get('/posts/fetchPostsBasedOnPerfomance/:id',fetchPostsBasedOnPerfomance);
 router.get('/posts/fetchRecentPosts',fetchRecentPosts);
+router.post('/posts/fetchSingleUserPosts/:username',fetchSingleUserPosts);
 
 
 // comments routes
 router.post('/posts/createComment',verifyLoginToken,createComment);
-router.post('/posts/updateComment',updateComment);
-router.post('/posts/likeComment',likeComment);
+router.post('/posts/updateComment',verifyLoginToken,updateComment);
+router.post('/posts/likeComment',verifyLoginToken,likeComment);
 //delete comment
-router.post('/posts/unlikeComment',unlikeComment);
+router.post('/posts/unlikeComment',verifyLoginToken,unlikeComment);
 
 // subcomments routes
-router.post('/posts/createSubComment',createSubcomment);
-router.post('/posts/updateSubcomment',updateSubcomment);
-router.post('/posts/unlikeSubcomment',unlikeSubcomment);
+router.post('/posts/createSubComment',verifyLoginToken,createSubcomment);
+router.post('/posts/updateSubcomment',verifyLoginToken,updateSubcomment);
+router.post('/posts/unlikeSubcomment',verifyLoginToken,unlikeSubcomment);
 //delete subcomment
-router.post('/posts/likeSubcomment',likeSubcomment);
+router.post('/posts/likeSubcomment',verifyLoginToken,likeSubcomment);
 
 // auth router
 router.post('/auth/register',registerUser);
 router.post('/auth/login',login);
-router.post('/auth/deactivate',deactivateUserAccount);
+router.post('/auth/deactivate',verifyLoginToken,deactivateUserAccount);
 router.post('/auth/activate',activateUserAccount);
 router.post('/auth/forgot-password',forgotPassword);
 router.post('/auth/verify-token',verifyToken);
@@ -54,19 +54,17 @@ router.post('/auth/reset-password',resetPassword);
 
 
 //admin maintenance
-router.post('/auth/barn',barnUser);
-router.post('/auth/unbarn',unbarnUser);
+router.post('/auth/barn',verifyLoginToken,barnUser);
+router.post('/auth/unbarn',verifyLoginToken,unbarnUser);
 
 
 
-router.post('/user/follow',followUser);
-router.post('/user/unfollow',unfollowUser);
-router.post('/user/view-user',viewUser);
-router.post('/user/edit-profile',updateUserInformation);
+router.post('/user/follow',verifyLoginToken,followUser);
+router.post('/user/unfollow',verifyLoginToken,unfollowUser);
+router.post('/user/view-user',verifyLoginToken,viewUser);
+router.post('/user/edit-profile',verifyLoginToken,updateUserInformation);
 
-//cronjobs router should be deleted in the future
 
-router.get('/rankPostEngagement',rankPostEngagement);
 
 
 module.exports = {

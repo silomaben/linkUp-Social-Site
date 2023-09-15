@@ -113,10 +113,6 @@ const login = async (req, res)=>{
             
         }
 
-        
-       
-        
-        
     
         if(checkEmailQuery.recordset.length <= 0){
             return res.status(404).json({error: 'Email is not registered'})

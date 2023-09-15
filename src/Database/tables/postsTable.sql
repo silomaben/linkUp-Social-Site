@@ -8,7 +8,7 @@ CREATE TABLE Posts (
   is_deleted BIT DEFAULT(0),
   trending_score INT DEFAULT(0),
   perfomance_scale INT DEFAULT(0),
-  reported BIT DEFAULT(0),
+  reported BIT DEFAULT(0), --turn this to number to count number of reports
   suspended BIT DEFAULT(0),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
@@ -16,6 +16,7 @@ CREATE TABLE Posts (
 
 -- add feature of enable and disable commenting
 -- add feature to archive post
+--have a controller that if reports exceed 15 the post is suspended
 
 -- post id to int
 DROP Table Users

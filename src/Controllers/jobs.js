@@ -18,7 +18,7 @@ const rankPostEngagement= async (req,res)=>{
 
                 posts_list = posts_details.recordset;
 
-                console.log(posts_details);
+                // console.log(posts_details);
                 
                 //loop through the post engagement list and fetch the perfomance number and use for engament score calculation.
                 // save the posts which post perfomance/engagemrnt have been calculated and saved successfully
@@ -33,7 +33,7 @@ const rankPostEngagement= async (req,res)=>{
                                             (post.comment_count * commentWeight) +
                                             (post.subcomment_count * subcommentWeight);
                     
-                    // save the engagement score to the database it to the database
+                    // save the engagement score to db
                     if(pool.connected){
                         const result = await pool.request()
                         .input('post_id',mssql.VarChar, post.post_id)
@@ -42,7 +42,7 @@ const rankPostEngagement= async (req,res)=>{
                         SET perfomance_scale = @perfomanceScore
                         WHERE post_id = @post_id;`)
 
-                        console.log(result);
+                        // console.log(result);
                         if(result.rowsAffected[0] === 1){
                             postsupdated.push(post.id)
                         }
@@ -54,21 +54,23 @@ const rankPostEngagement= async (req,res)=>{
         }
 
 
-        if(postsupdated.length==posts_list.length){
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            // log using winston when all posts engagement has been updated
-            return res.json({message: "all post perfomance score have been updated"})
-        }else{
-            //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            // log using winston when all posts engagement has been updated
-            //  email admin when this happens can be made optional only when its not 100% successfull
-            return res.json({message: `${postsupdated.length} out of ${posts_list.length} posts perfomanceScore updated`})
+        // if(postsupdated.length==posts_list.length){
+        //     //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //     // log using winston when all posts engagement has been updated
+        //     return res.json({message: "all post perfomance score have been updated"})
+        // }else{
+        //     //>>>>>>>>>>>>>>>>>>>>>>>>>to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //     // log using winston when all posts engagement has been updated
+        //     //  email admin when this happens can be made optional only when its not 100% successfull
+        //     return res.json({message: `${postsupdated.length} out of ${posts_list.length} posts perfomanceScore updated`})
 
-        }
+        // }
 
 
     } catch (error) {
-        return res.json({Error:error.message})
+        // <<<<<<<<<<<<<<>>>>>>>>>>>>>>>  log errors   <<<<<<<<<<<<<<<<<<<<<<<<<<<>?????</>
+        // return res.json({Error:error.message})
+        console.log({Error:error.message});
     }
 }
 

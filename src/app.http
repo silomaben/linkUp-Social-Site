@@ -34,6 +34,7 @@ Content-Type: application/json
     "user_id": "234a7d37-d622-47da-b41a-e314cd619b7e",
     "first_name": "test",
     "last_name": "failednot",
+    "username": "failtest",
     "profile_pic_url": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg",
     "bio":"Like batman, I fight bugs in the dark night",
     "linkedin_url":"",
@@ -50,8 +51,8 @@ POST http://localhost:4500/user/view-user
 Content-Type: application/json
 
 {
-    "me": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
-    "them": "234a7d37-d622-47da-b41a-e314cd619b7e"
+    "me_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
+    "them_username": "admin"
 }
 
 
@@ -141,12 +142,12 @@ Content-Type: application/json
 #create a post
 POST http://localhost:4500/posts/createpost
 Content-Type: application/json
-token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1Y2Nlc3NmdWxseUBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTY5NDQzNzcxNiwiZXhwIjoxNjk0NTI0MTE2fQ.IR1XhPam_67lWOmrOFFJhezSa_Y-QchWPEzlOkRdyo0
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE2OTQ2MjA1MjIsImV4cCI6MTY5NDYyNDEyMn0.vNlRP5t9FHwjlr8AMJ63u-JiAYz1lPe04lNXTxrKnxM
 
 {
     "user_id": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac",
     "image": "https://cdn.pixabay.com/photo/2023/08/20/20/03/planes-8203121_1280.jpg",
-    "body": "success post",
+    "body": "is jwt expired",
     "tagged": ""
 }
 
@@ -173,6 +174,18 @@ Content-Type: application/json
 #fetch recent posts
 GET  http://localhost:4500/posts/fetchRecentPosts
 Content-Type: application/json
+
+
+
+
+###
+#fetch single user post
+POST  http://localhost:4500/posts/fetchSingleUserPosts/admin
+Content-Type: application/json
+
+{
+     "viewer_userId": "0edd9c13-d738-42f1-a267-0fedd9a9a8ac"
+}
 
 
 
@@ -368,6 +381,11 @@ Content-Type: application/json
 
 
 // keep email private
+
+
+
+
+
 
 
 

@@ -1,12 +1,5 @@
--- CREATE OR ALTER PROCEDURE fetchPostsBasedOnPerfomanceProc
--- AS
--- BEGIN
---  SELECT  post_id, user_id, image, body, datetime, tagged_users
---       FROM Posts
---       ORDER BY perfomance_scale DESC;
--- END;
 CREATE OR ALTER PROCEDURE fetchPostsBasedOnPerfomanceProc
-@user_id VARCHAR(255) -- Declare the @user_id variable
+@user_id VARCHAR(255) 
 AS
 BEGIN
   SELECT 
@@ -34,4 +27,4 @@ END;
 
 exec fetchPostsBasedOnPerfomanceProc '39cd9427-42c8-44e1-b436-20612b21d144'
 
-drop procedure fetchPostsBasedOnPerfomance 
+-- drop procedure fetchPostsBasedOnPerfomance 

@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 // upload/edit user info(including user name....handle errors well to know if usernames have been taken or not)
 const updateUserInformation = async (req,res)=>{
     try {
-        const { user_id ,first_name, last_name,  profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url} = req.body;
+        const { user_id ,first_name, last_name,username, profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url} = req.body;
         
         const pool = await mssql.connect(sqlConfig)
 
@@ -14,6 +14,7 @@ const updateUserInformation = async (req,res)=>{
             .input('user_id',mssql.VarChar, user_id)
             .input('first_name',mssql.VarChar, first_name)
             .input('last_name',mssql.VarChar, last_name)
+            .input('username',mssql.VarChar, username)
             .input('profile_pic_url',mssql.VarChar, profile_pic_url)
             .input('bio',mssql.VarChar, bio)
             .input('linkedin_url',mssql.VarChar, linkedin_url)
@@ -206,14 +207,14 @@ const unfollowUser = async (req,res)=>{
   
 const viewUser = async (req,res)=>{
     try {
-        const { me, them } = req.body;
+        const { me_id, them_username } = req.body;
         
         const pool = await mssql.connect(sqlConfig)
 
         if(pool.connected){
             const result = await pool.request()
-            .input('me',mssql.VarChar, me)
-            .input('them', mssql.VarChar,them)
+            .input('me',mssql.VarChar, me_id)
+            .input('them', mssql.VarChar,them_username)
             .execute('viewUserProc')
 
         console.log(result);

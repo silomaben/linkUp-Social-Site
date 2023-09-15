@@ -148,13 +148,6 @@ const deletePost = async(req,res)=>{
 
 
 // view all posts based on perfomance score 
-//solve this using typescript at frontend ****ruled out WHY?
-//If posts are millions ill have to call them all 
-// to the frontend to sort them for the best
-// perfoming when i can be qquering only 20 posts 
-// direct from the service when ready sorted for the 
-// best perfoming
-
 const fetchPostsBasedOnPerfomance = async (req,res)=>{
     try {
 
@@ -177,6 +170,34 @@ const fetchPostsBasedOnPerfomance = async (req,res)=>{
         
     } catch (error) {
         return res.json({error})
+    }
+}
+
+// fetch single user post
+const fetchSingleUserPosts = async (req,res)=>{
+    try {
+
+        const viewed_username = req.params.username;
+        const {viewer_userId} = req.body
+
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const posts = await pool.request()
+            .input('viewed_username',mssql.VarChar, viewed_username)
+            .input('viewer_userId',mssql.VarChar, viewer_userId)
+            .execute('fetchPostsForSingleUserProc')
+            
+
+        
+        return res.json({
+            posts: posts.recordset
+        })
+
+        }
+        
+    } catch (error) {
+        return res.json({Error:error.message})
     }
 }
 
@@ -585,4 +606,5 @@ module.exports = {
     fetchRecentPosts,
     updateComment,
     updateSubcomment,
+    fetchSingleUserPosts
 }
