@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,7 +12,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent {
-  constructor(private User:UserService,private formBuilder: FormBuilder,private toastr: ToastrService,private http: HttpClient){}
+  constructor(private User:UserService,
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private http: HttpClient,
+    private router: Router
+    ){}
 
   editUserForm!:FormGroup
   
@@ -70,6 +76,7 @@ export class EditProfileComponent {
           this.editUserForm.get('first_name')?.setValue(this.userProfileData.first_name),
           this.editUserForm.get('last_name')?.setValue(this.userProfileData.last_name),
           this.editUserForm.get('username')?.setValue(this.userProfileData.username),
+          this.editUserForm.get('profile_pic_url')?.setValue(this.userProfileData.profile_pic_url),
           this.editUserForm.get('bio')?.setValue(this.userProfileData.bio),
           this.editUserForm.get('linkedin_url')?.setValue(this.userProfileData.linkedin_url),
           this.editUserForm.get('facebook_url')?.setValue(this.userProfileData.facebook_url),
@@ -130,11 +137,14 @@ export class EditProfileComponent {
     const twitter_url = this.editUserForm.value.twitter_url ?? '';
 
     // console.log(first_name,last_name,username,profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url)
-// console.log("this"+ this.editUserForm.value);
+    // console.log("this"+ this.editUserForm.value);
 
     if(first_name.length<1 ,last_name.length<1 ,username.length<1){return}
+    
     this.User.updateUserInfo(this.userProfileData.user_id,first_name,last_name,username,profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url).subscribe((response) =>{
       console.log(response.message)
+      this.toastr.success('Profile updated successfully')
+      this.router.navigate(['/profile', username]);
     })    
   }
 

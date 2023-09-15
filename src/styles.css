@@ -581,6 +581,7 @@ textarea {
 
 .user-details img{
     width: 50px;
+    height: 50px;
     border-radius: 50px;
 }
 
@@ -823,6 +824,7 @@ textarea {
 
 .comments-dp img{
     width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 20px;
 }
@@ -1150,6 +1152,7 @@ footer a:hover {
 
 .top-edit-profile img{
     width: 160px;
+    height: 160px;
     border-radius: 50%;
     margin: 20px;
     box-shadow: 0 8px 9px rgba(100, 95, 136, 0.85);

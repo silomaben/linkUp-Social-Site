@@ -101,6 +101,7 @@ export class ModalComponent implements OnInit {
       this.posts.editPost(user_id,post_id,body,tagged).subscribe((response)=>{
         console.log('res',response)
         this.toastr.success('Post updated successfully!', 'Success');
+        this.closeEditPostModal()
       })
 
       

@@ -8,20 +8,37 @@
         <br>
 
         <div class="picture-post">
-            <div class="user-details">
-                <img src="../../assets/img/test_profile.jpg" alt="">
-                <div>
-                    <h3 class="username">{{this.singlePost.post[0].user_name}}</h3>
-                    <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
+            <div class="user-post-container" >
+                <div class="user-details">
+                    <img (click)="viewUserProfile(singlePost.post[0].user_name)" src="{{singlePost.post[0].user_dp}}" alt="">
+                    <div>
+                        <h3 class="username" (click)="viewUserProfile(singlePost.post[0].user_name)">{{singlePost.post[0].user_name}}</h3>
+                        <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
+                    </div>
+                </div>
+                <div class="view-post-option-div"  #mainContainer (click)="handleContainerClick($event)">
+                    <button class="view-post-options"(click)="togglePostOptions(0)">[ooo]</button>
+                    <div  class="post-options" *ngIf="postOptionsVisibility[0]">
+                        <p>report</p>
+                        <p  *ngIf="isMyPost(singlePost.post[0].user_id)" >archive</p>
+                        <p  *ngIf="isAdmin()" >suspend</p>
+
+                        <p  *ngIf="isMyPost(singlePost.post[0].user_id)" (click)="openEditPostModal(0,singlePost.post[0].post_id)">edit</p>
+                        <p *ngIf="isMyPost(singlePost.post[0].user_id)" (click)="deleteCurrentPost(singlePost.post[0].post_id)" class="login-btn">delete</p>
+                    </div>
                 </div>
             </div>
-            <p>{{this.singlePost.post[0].body}}</p>
+            <p  id="post-body-{{singlePost.post[0].post_id}}">{{singlePost.post[0].body}}</p>
             <div class="post-pic">
-                <img src="../../assets/img/bg-blog.jpg" alt="">
+                <img src="{{singlePost.post[0].image}}" alt="">
             </div>
             <div class="icons">
-                <i class="fas fa-heart"></i> 
-                <i class="fas fa-comment"></i>                    
+                <button *ngIf="!singlePost.post[0].has_liked"><i id="like-btn-" class="far fa-heart fa-lg"></i></button>
+                <button  *ngIf="singlePost.post[0].has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
+                    <p *ngIf="singlePost.post[0].likes_count === 1">{{singlePost.post[0].likes_count}} like</p>
+                        <p  *ngIf="singlePost.post[0].has_liked > 1">{{singlePost.post[0].likes_count}}  likes</p>
+                    
+                <i class="fas fa-comment fa-lg"></i>                   
             </div>
 
             <div class="comment-post">

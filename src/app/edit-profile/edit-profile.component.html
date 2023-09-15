@@ -4,7 +4,7 @@
     <div class="edit-profile">
         <div class="top-edit-profile">
             <h3>Edit Profile</h3>
-            <img src="../../assets/img/test_profile.jpg" alt="">
+            <img src="{{userProfileData.profile_pic_url}}" alt="">
         </div>
         
         <form  [formGroup]="editUserForm" (ngSubmit)="updateUserDetails()">
@@ -28,10 +28,9 @@
                     </div>
 
                     <textarea formControlName="bio" name="" id="bio" cols="30" rows="10" placeholder="User bio"></textarea>
-                    
 
-                    <!-- <button type="submit">save changes</button> -->
-                    <input type="submit" value="submit"/>
+                    <button [disabled]="disableSubmitButton" type="submit">save changes</button>
+                    <!-- <input *ngIf="disableSubmitButton" type="submit" value="submit"/> -->
                 
             </div>
         </form>

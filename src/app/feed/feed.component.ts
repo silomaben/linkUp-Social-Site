@@ -32,9 +32,7 @@ export class FeedComponent {
     private formBuilder: FormBuilder,
     private router: Router
     // private likingPost:PostsService,
-    ) {
-      
-    }
+    ) { }
     allpost: post[] = [];
 
     postOptionsVisibility: boolean[] = [];

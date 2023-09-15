@@ -5,10 +5,11 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from './services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private route:Router, private toastr:ToastrService) {}
+  constructor(private route:Router, private toastr:ToastrService, private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const exemptedRoutes = [
@@ -41,10 +42,9 @@ export class AuthInterceptor implements HttpInterceptor {
             localStorage.clear();
             let modal = document.querySelector('.open') as HTMLDivElement
             modal.className='close'
-            this.route.navigateByUrl("/auth/login")
-          }, 1500);
-          
-          
+            this.authService.signOut()
+            // console.log('You are being redirected to login page');
+          }, 1500);      
         }
 
         return throwError(error);
@@ -52,3 +52,22 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 }
+
+
+
+// forget password
+// verify token
+//reset password
+// deactivate user
+// activate user
+// fetch recent posts
+// update comment
+// like comment
+// unlike comment
+// create subcomment
+// update subcomment
+// like subcomment
+// unlike subcomment
+// barn
+// unbarn
+// keep email private--- take this into update user
