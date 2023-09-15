@@ -2,12 +2,14 @@ import {Component, OnInit} from '@angular/core';
 
 import {Observable} from 'rxjs';
 
-import {ModalService} from '../modal.service';
+import {ModalService} from '../services/modal.service';
 import { PostsService } from '../services/posts.service';
 import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { ToastrService } from 'ngx-toastr';
+import { FeedComponent } from '../feed/feed.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -15,7 +17,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
-
   // my forms
   createPostForm = this.formBuilder.group({
     body: new FormControl('',[Validators.required]),
@@ -41,7 +42,9 @@ export class ModalComponent implements OnInit {
       private posts:PostsService,
       private http: HttpClient,
       private toastr: ToastrService,
-      private formBuilder: FormBuilder
+      private formBuilder: FormBuilder,
+      private router: Router
+      // private feed: FeedComponent
   ) {}
 
 
@@ -67,6 +70,9 @@ export class ModalComponent implements OnInit {
           if(response.message=="Posted successfully"){
             this.closeCreatePostModal()
             this.toastr.success('Post uploaded successfully!', 'Success');
+            this.router.navigateByUrl("/login");
+            // this.feed.getPosts()
+            localStorage.setItem('modal_status', 'true')
           }else if(response.message=="Posting failed due to profanity"){
             this.toastr.error('Post rejected. Please avoid profanity in your post', );
           }

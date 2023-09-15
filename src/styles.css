@@ -906,6 +906,7 @@ textarea {
 
 .dp img{
     width: 200px;
+    height: 200px;
     border-radius: 50%;
     border: solid #0c1844 3px;
 }
@@ -914,7 +915,7 @@ textarea {
     font-family: Poppins;
     display: flex;
     flex-direction: row;
-    gap: 300px;
+    gap: 230px;
     color: #0c1844;
 }
 
@@ -971,7 +972,7 @@ textarea {
     }
 
     .top-profile-details{
-        gap: 200px;
+        gap: 130px;
     }
 }
 
@@ -982,7 +983,7 @@ textarea {
     }
 
     .top-profile-details{
-        gap: 120px;
+        gap: 40px;
     }
 }
 
@@ -1667,4 +1668,19 @@ footer a:hover {
     padding: 10px;
     cursor: pointer;
   }
+  .child {
+    flex: 1; /* Equivalent to flex-grow: 1, flex-shrink: 1, flex-basis: 0% */
+  }
+
+  .child {
+    order: 2; /* This item will appear after items with lower order values */
+  }
+
+  .child {
+    flex-basis: 50%; /* Initial size is 50% of the container's size */
+  }
+  
+  
+  
+  
   

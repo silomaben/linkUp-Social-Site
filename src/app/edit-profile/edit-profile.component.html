@@ -6,30 +6,35 @@
             <h3>Edit Profile</h3>
             <img src="../../assets/img/test_profile.jpg" alt="">
         </div>
+        
+        <form  [formGroup]="editUserForm" (ngSubmit)="updateUserDetails()">
+            <div class="edit-form">
+                    <input type="file" style="width: 200px;" (change)="onChange($event)">
+                    <div>
+                        <input formControlName="first_name" type="text" id="first_name" name="first_name" placeholder="first_name">
+                        <input formControlName="last_name" type="text" id="last_name" name="last_name" placeholder="last_name">
+                    </div>
+                    <div>
+                        <input formControlName="username" type="text" id="username" name="username" placeholder="username">
+                        <input formControlName="website_url" type="text" id="website_url" name="website" placeholder="website">
+                    </div>
+                    <div>
+                        <input formControlName="linkedin_url" type="text" id="linkedin_url" name="linkedin" placeholder="linkedin">
+                        <input formControlName="facebook_url" type="text" id="facebook_url" name="facebook" placeholder="facebook">
+                    </div>
+                    <div>
+                        <input formControlName="instagram_url" type="text" id="instagram_url" name="instagram" placeholder="instagram">
+                        <input formControlName="twitter_url" type="text" id="twitter_url" name="twitter" placeholder="twitter">
+                    </div>
 
-        <div class="edit-form">
-            <div>
-                <input type="text" name="first_name" placeholder="first_name">
-                <input type="text" name="last_name" placeholder="last_name">
-            </div>
-            <div>
-                <input type="text" name="username" placeholder="username">
-                <input type="text" name="email" placeholder="email">
-            </div>
-            <div>
-                <input type="text" name="linkedin" placeholder="linkedin">
-                <input type="text" name="facebook" placeholder="facebook">
-            </div>
-            <div>
-                <input type="text" name="instagram" placeholder="instagram">
-                <input type="text" name="discord" placeholder="discord">
-            </div>
+                    <textarea formControlName="bio" name="" id="bio" cols="30" rows="10" placeholder="User bio"></textarea>
+                    
 
-            <textarea name="" id="" cols="30" rows="10" placeholder="User bio"></textarea>
-
-            <button>save changes</button>
-        </div>
-
+                    <!-- <button type="submit">save changes</button> -->
+                    <input type="submit" value="submit"/>
+                
+            </div>
+        </form>
     </div>
 
 </section>

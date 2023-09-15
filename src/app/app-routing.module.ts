@@ -12,13 +12,11 @@ import { AuthenticationGuard } from './auth.guard';
 import { CustomRouteReuseStrategy } from './custom-route-reuse.strategy';
 
 const routes: Routes = [
-  {path:"", component: FeedComponent,
-  canActivate: [AuthenticationGuard],
-  resolve: { isAuthenticated: AuthStatusResolver },},
-  {path:"search", component: SearchComponent},
-  {path:"view-profile", component: ViewProfileComponent},
-  {path:"edit-profile", component: EditProfileComponent},
-  {path:'view-post/:post_id', component: SinglePostComponent},
+  {path:"", component: FeedComponent},
+  {path:"search", component: SearchComponent,canActivate: [AuthenticationGuard],resolve: { isAuthenticated: AuthStatusResolver },},
+  {path:"profile/:username", component: ViewProfileComponent,canActivate: [AuthenticationGuard],resolve: { isAuthenticated: AuthStatusResolver },},
+  {path:"edit-profile", component: EditProfileComponent,canActivate: [AuthenticationGuard],resolve: { isAuthenticated: AuthStatusResolver },},
+  {path:'view-post/:post_id', component: SinglePostComponent,canActivate: [AuthenticationGuard],resolve: { isAuthenticated: AuthStatusResolver },},
   {path:"auth/login", component: LoginComponent},
   {path:"auth/register", component: RegisterComponent},
 ];

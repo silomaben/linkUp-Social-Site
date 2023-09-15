@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2,AfterViewInit, HostListener  } from '@angular/core';
 
-import {ModalService} from '../modal.service';
+import {ModalService} from '../services/modal.service';
 import { PostsService } from '../services/posts.service';
 import { PostResponse, post } from '../interfaces';
 import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
@@ -46,11 +46,17 @@ export class FeedComponent {
 
     // my functions
     ngOnInit(): void {
+      this.getPosts()
+
+    }
+
+    getPosts(){
+      
       this.posts.getPosts().subscribe((data: PostResponse) => {
         this.postOptionsVisibility = new Array(this.allpost.length).fill(false);
         if (data && data.posts) {
           this.allpost = data.posts;
-          console.log(this.allpost);
+          // console.log(this.allpost);
         }
       });
     }
@@ -75,49 +81,47 @@ export class FeedComponent {
     
   
    
-  likePost(post:post) {
-    const storedUser = localStorage.getItem('user');
-    
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      const user_id = user.user_id;
-
-    if(!post.has_liked){
-      // like post
-      this.posts.likePost(user_id, post.post_id).subscribe((response) => {
+    likePost(post:post) {
+      const storedUser = localStorage.getItem('user');
       
-        if (response.message=="liked") {
-          post.like_count += 1;
-          post.has_liked = true
-        } else {
-          console.log(response.message)
-        }
-      });
-    }else{
-      // unlike post
-      this.posts.unlikePost(user_id, post.post_id).subscribe((response) => {
-      
-        if (response.message=="unliked") {
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
 
-          post.like_count -= 1;
-          post.has_liked = false
-        } else {
-          console.log(response.message)
-        }
-      });
-    
+      if(!post.has_liked){
+        // like post
+        this.posts.likePost(user_id, post.post_id).subscribe((response) => {
+        
+          if (response.message=="liked") {
+            post.like_count += 1;
+            post.has_liked = true
+          } else {
+            console.log(response.message)
+          }
+        });
+      }else{
+        // unlike post
+        this.posts.unlikePost(user_id, post.post_id).subscribe((response) => {
+        
+          if (response.message=="unliked") {
+
+            post.like_count -= 1;
+            post.has_liked = false
+          } else {
+            console.log(response.message)
+          }
+        });
+      
+      }
+        
+      } else {
+        console.log('please login to like');
+        
+      }
+      
+      
+      
     }
-      
-    } else {
-      console.log('please login to like');
-      
-    }
-    
-    
-    
-  }
-
- 
  
   
   @HostListener('document:click', ['$event'])
@@ -166,6 +170,10 @@ export class FeedComponent {
   
 viewComments(post_id: string) {
   this.router.navigate(['/view-post', post_id]);
+}
+
+viewUserProfile(username:string){
+  this.router.navigate(['/profile', username]);
 }
 
 

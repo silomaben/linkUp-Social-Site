@@ -4,6 +4,7 @@ export interface post{
     user_name: string,
     image:string,
     body: string,
+    user_dp: string,
     datetime: Date,
     tagged_users: string,
     has_liked: boolean,
