@@ -32,9 +32,9 @@ router.post('/posts/fetchSingleUserPosts/:username',fetchSingleUserPosts);
 // comments routes
 router.post('/posts/createComment',verifyLoginToken,createComment);
 router.post('/posts/updateComment',verifyLoginToken,updateComment);
-router.post('/posts/likeComment',verifyLoginToken,likeComment);
+router.post('/posts/likeComment',likeComment);
 //delete comment
-router.post('/posts/unlikeComment',verifyLoginToken,unlikeComment);
+router.post('/posts/unlikeComment',unlikeComment);
 
 // subcomments routes
 router.post('/posts/createSubComment',verifyLoginToken,createSubcomment);

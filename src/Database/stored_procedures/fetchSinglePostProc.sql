@@ -20,7 +20,8 @@ BEGIN
     SELECT
         P.post_id,
         P.user_id,
-        U.username AS user_name, 
+        U.username AS user_name,
+        U.profile_pic_url AS user_dp,
         P.image,
         P.body,
         P.datetime,

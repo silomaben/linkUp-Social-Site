@@ -552,6 +552,7 @@ const viewSinglePost = async (req, res) => {
 
             const comments = await pool.request()
                 .input('post_id', mssql.VarChar, post_id)
+                .input('user_id', mssql.VarChar, user_id)
                 .execute('fetchCommentsForSpecificPostProc');
 
             if (postDetails.recordset) {
@@ -560,6 +561,7 @@ const viewSinglePost = async (req, res) => {
                 for (const comment of comments.recordset) {
                     const subcomments = await pool.request()
                         .input('comment_id', mssql.Int, comment.comment_id)
+                        .input('user_id', mssql.VarChar, user_id)
                         .execute('fetchSubCommentsForSpecificPostProc');
                         console.log(subcomments.recordset);
 
@@ -568,6 +570,7 @@ const viewSinglePost = async (req, res) => {
                         user_id: comment.user_id,
                         username: comment.username,
                         user_dp: comment.profile_pic_url,
+                        has_liked: comment.has_liked,
                         body: comment.body,
                         datetime: comment.datetime,
                         like_count: comment.like_count,
