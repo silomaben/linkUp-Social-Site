@@ -16,7 +16,7 @@
             <form action="" [formGroup]="loginForm" (submit)="submitLoginForm()">
                 <input formControlName="credential" type="text" placeholder="Username/email">
                 <input formControlName="passcode" type="password" placeholder="Password">
-                <button>Login</button>
+                <button style="color: white;">Login</button>
             </form>
             <p>New here? Register with us</p>
             <a [routerLink]="['/auth/register']">Register</a>

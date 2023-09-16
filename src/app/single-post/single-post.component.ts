@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NgConfirmService } from 'ng-confirm-box';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class SinglePostComponent {
      private router:Router,
      private toastr: ToastrService,
      private modalService : ModalService,
-     private formBuilder : FormBuilder
+     private formBuilder : FormBuilder,
+     private confirmService: NgConfirmService
      ){ }
 
   ngOnInit(){
@@ -259,23 +261,37 @@ export class SinglePostComponent {
   }
 
   deleteCurrentPost(post_id:string){
-    const storedUser = localStorage.getItem('user');
-    
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      const user_id = user.user_id;
-      
-      this.posts.deletePost(post_id, user_id).subscribe((response) => {
-        console.log(response);
         
-        if(response.message = "Post deleted successfully"){
-          this.toastr.success('Post Deleted successfully!');
-          this.router.navigate(['']);
-        }
+    this.confirmService.showConfirm("Are you sure want to delete this post?",
+     () => {
+      const storedUser = localStorage.getItem('user');
+    
+      if (storedUser) {
+        console.log('delete no clicked');
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
+        
+        this.posts.deletePost(post_id, user_id).subscribe((response) => {
+          console.log(response);
+          
+          if(response.message = "Post deleted successfully"){
+            this.toastr.success('Post Deleted successfully!');
+            this.router.navigate(['']);
+          }
 
-      })
+        })
 
-    }
+      }
+    },
+    () => {
+      console.log('no ');
+      console.log('delete no clicked');
+      
+    })
+
+    
+    
+    
   }
 
 

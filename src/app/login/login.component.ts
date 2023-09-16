@@ -20,17 +20,17 @@ export class LoginComponent {
     passcode: new FormControl('',Validators.required)
   })
 
-  constructor(private toastr: ToastrService,private login:AuthService,private route:Router,private is_authenticated:AuthService, private store: Store) {}
+  constructor(private toastr: ToastrService,private auth:AuthService,private route:Router, private store: Store) {}
   
   submitLoginForm(){
     const credential = this.loginForm.value.credential ?? '';
     const passcode = this.loginForm.value.passcode ?? '';
     if( this.loginForm.valid){
-      this.login.login(credential,passcode).subscribe((res: loginResponse) => {
+      this.auth.login(credential,passcode).subscribe((res: loginResponse) => {
         console.log('res',res)
         localStorage.setItem('token',res.token)
         localStorage.setItem('user', JSON.stringify(res.user));
-        this.is_authenticated.signIn()
+        this.auth.signIn()
         this.store.dispatch(login({ userDetails: res.user }));
         this.toastr.success('Login successful!', 'Success', {
           timeOut: 1000, 

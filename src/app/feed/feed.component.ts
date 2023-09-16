@@ -5,6 +5,7 @@ import { PostsService } from '../services/posts.service';
 import { PostResponse, post } from '../interfaces';
 import { FormControl, FormGroup,FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgConfirmService } from 'ng-confirm-box';
 
 import { selectUserDetails } from '../user/store/reducers';
 import { select } from '@ngrx/store';
@@ -30,7 +31,8 @@ export class FeedComponent {
     private toastr: ToastrService,
     private store: Store,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private confirmService: NgConfirmService 
     // private likingPost:PostsService,
     ) { }
     allpost: post[] = [];
@@ -134,7 +136,10 @@ export class FeedComponent {
   }
 
   deleteCurrentPost(post_id:string){
-    const storedUser = localStorage.getItem('user');
+
+    this.confirmService.showConfirm('Are you sure want to delete this post??',
+    ()=>{
+      const storedUser = localStorage.getItem('user');
     
     if (storedUser) {
       const user = JSON.parse(storedUser);
@@ -162,6 +167,11 @@ export class FeedComponent {
       })
 
     }
+    },
+    ()=>{
+
+    })
+    
   }
 
   

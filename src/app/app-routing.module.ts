@@ -10,6 +10,8 @@ import { SearchComponent } from './search/search.component';
 import { AuthStatusResolver } from './auth.resolver';
 import { AuthenticationGuard } from './auth.guard';
 import { CustomRouteReuseStrategy } from './custom-route-reuse.strategy';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {path:"", component: FeedComponent},
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path:'view-post/:post_id', component: SinglePostComponent,canActivate: [AuthenticationGuard],resolve: { isAuthenticated: AuthStatusResolver },},
   {path:"auth/login", component: LoginComponent},
   {path:"auth/register", component: RegisterComponent},
+  {path:"auth/forgot-password", component: ForgotPasswordComponent},
+  {path:"auth/reset-password", component: ResetPasswordComponent},
 ];
 
 @NgModule({

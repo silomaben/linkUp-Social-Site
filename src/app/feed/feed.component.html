@@ -43,7 +43,7 @@
         <div class="picture-post" *ngFor="let post of allpost;  let i = index">
             <div class="user-post-container" >
                 <div class="user-details">
-                    <img (click)="viewUserProfile(post.user_name)" src="../../assets/img/test_profile.jpg" alt="">
+                    <img (click)="viewUserProfile(post.user_name)" src="{{post.user_dp}}" alt="">
                     <div>
                         <h3 class="username" (click)="viewUserProfile(post.user_name)">{{post['user_name']}}</h3>
                         <h5 class="post-mood">feeling sijui aje with 17 others</h5>

@@ -1,4 +1,26 @@
 <div class="auth-container">
+    <div class="right-reg">
+        <img src="../../assets/img/logo.png" alt="">
+        <p>Connecting dreams</p>
+        <div class="reg-form">
+            <h3>Register</h3>
+            <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
+                <div>
+                    <input formControlName="first_name" type="text" placeholder="First Name">
+                    <input formControlName="last_name" type="text" placeholder="Last Name">
+                </div>
+                <input formControlName="username" type="text" placeholder="Username">
+                <input formControlName="email" type="text" placeholder="Email">
+                <input formControlName="password" type="text" placeholder="Password">
+                <input formControlName="confirmPassword" type="text" placeholder="Confirm password">
+                <button style="color: white;"  type="submit">Register</button>
+            </form>
+            <p>Already Have an Account?</p>
+            <a [routerLink]="['/auth/login']">Login</a>
+        </div>
+        <p class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
+
+    </div>
     <div class="left-reg">
         <div>
             <h3>Link Up</h3>
@@ -7,27 +29,5 @@
             <br>
         </div>
         <img src="../../assets/img/linkUp_girls.png" alt="">
-    </div>
-    <div class="right-reg">
-        <img src="../../assets/img/logo.png" alt="">
-        <p>Connecting dreams</p>
-        <div class="reg-form">
-            <h3>Register</h3>
-            <form action="">
-                <div>
-                    <input type="text" placeholder="First Name">
-                    <input type="text" placeholder="Last Name">
-                </div>
-                <input type="text" placeholder="Username">
-                <input type="text" placeholder="Email">
-                <input type="text" placeholder="Password">
-                <input type="text" placeholder="Confirm password">
-                <button>Register</button>
-            </form>
-            <p>Already Have an Account?</p>
-            <a [routerLink]="['/auth/login']">Login</a>
-        </div>
-        <p class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
-
     </div>
 </div>

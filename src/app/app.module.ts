@@ -18,12 +18,14 @@ import { SearchComponent } from './search/search.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import {CloudinaryModule} from '@cloudinary/ng';
+import {NgConfirmModule} from 'ng-confirm-box';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { AuthInterceptor } from './auth.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { userReducer } from './user/store/reducers';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +38,8 @@ import { userReducer } from './user/store/reducers';
     LoginComponent,
     RegisterComponent,
     ModalComponent,
-    SearchComponent
+    SearchComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { userReducer } from './user/store/reducers';
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
     CloudinaryModule,
+    NgConfirmModule,
     StoreModule.forRoot({
       user:userReducer,
     }),

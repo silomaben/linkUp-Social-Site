@@ -17,6 +17,44 @@ export class AuthService {
   
   private isAuthenticated = !!localStorage.getItem('token') && !!localStorage.getItem('user');
 
+  register(first_name: string,last_name:string,username:string,email:string,password:string): Observable<any>{
+
+    const url = `http://localhost:4500/auth/register`
+
+    const requestBody = {
+      first_name: first_name,
+      last_name: last_name,
+      username: username,
+      email: email,
+      password: password,
+      profile_pic_url: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"
+    }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
+  forgotPassword(email:string): Observable<any>{
+
+    const url = `http://localhost:4500/auth/forgot-password`
+
+    const requestBody = {
+      email: email
+    }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
+  resetPassword(email:string,password:string){
+    const url = 'http://localhost:4500/auth/forgot-password'
+
+    const requestBody = {
+      email: email,
+      password:password
+    }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
   
 
   login(credential:string,passcode:string): Observable<loginResponse>{

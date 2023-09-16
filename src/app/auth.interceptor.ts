@@ -55,19 +55,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
 
+// like comment //
+// unlike comment //
+// create subcomment //
+// like subcomment //
+// unlike subcomment //
+// verify token //
+// register 
+// reset password
 // forget password
-// verify token
-//reset password
+// update comment
+// update subcomment
 // deactivate user
 // activate user
 // fetch recent posts
-// update comment
-// like comment
-// unlike comment
-// create subcomment //
-// update subcomment
-// like subcomment
-// unlike subcomment
 // barn
 // unbarn
 // keep email private--- take this into update user
