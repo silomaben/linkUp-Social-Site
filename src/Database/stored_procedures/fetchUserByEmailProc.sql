@@ -3,5 +3,10 @@ CREATE OR ALTER PROCEDURE fetchUserByEmailProc(
 )
 AS
 BEGIN
+
+    UPDATE Users
+     SET is_disabled = 0
+     WHERE email = @email;
+     
      SELECT * FROM Users WHERE email = @email
 END

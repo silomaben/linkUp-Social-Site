@@ -4,6 +4,7 @@ const mssql = require ('mssql');
 // const { createProjectsTable } = require('../Database/Tables/createTables');
 const { sqlConfig } = require('../Config/config');
 const Filter = require('bad-words');
+const { notify, fetchEmailsForTaggedUsers } = require('./jobs');
 
 const filter = new Filter();
 
@@ -21,6 +22,7 @@ const filter = new Filter();
 
 
 // delete subcomment
+
 
 
 
@@ -48,12 +50,14 @@ const createNewPost = async (req,res)=>{
             .input('post_id',mssql.VarChar, id)
             .input('image', mssql.VarChar,image)
             .input('body', mssql.VarChar, body)
-            .input('tagged', mssql.VarChar, tagged)
+            .input('tagged', mssql.VarChar, tagged.toString())
             .input('timeposted',mssql.VarChar, timeposted)
             .execute('createPostProc')
             
 
             if(result.rowsAffected==1){
+                const emails = await fetchEmailsForTaggedUsers(tagged, user_id);
+                notify(emails,id);
                 return res.json({
                     message: "Posted successfully"
                 })
@@ -64,9 +68,10 @@ const createNewPost = async (req,res)=>{
         }
         
     } catch (error) {
-        return res.json({error})
+        return res.json({error:error.message})
     }
 }
+
 
 
 

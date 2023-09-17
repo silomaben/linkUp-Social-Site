@@ -20,6 +20,26 @@ module.exports.sendResetToken= async (email,token) => {
             } catch (error) {
               console.log(error);
             }
+
+
+            const sent = youWereTagged(email,token)
+  };
+
+module.exports.youWereTagged= async (email,post_id,tagged_by) => {
+            const message = {
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: `You were tagged in a post by ${tagged_by}.(Link Up)`, 
+              text: `Click on this link to view the post you were tagged in http://localhost:4200/view-post/${post_id}`
+            };
+            try {
+              
+              await sendMail(message);
+              console.log('sent email to user');
+              
+            } catch (error) {
+              console.log(error);
+            }
   };
 
 

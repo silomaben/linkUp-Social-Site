@@ -3,5 +3,10 @@ CREATE OR ALTER PROCEDURE fetchUserByUsernameProc(
 )
 AS
 BEGIN
+
+    UPDATE Users
+     SET is_disabled = 0
+     WHERE username = @username;
+
      SELECT * FROM Users WHERE username = @username
 END
