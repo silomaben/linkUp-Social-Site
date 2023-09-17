@@ -9,7 +9,7 @@
         <div class="profile-details">
             <div class="top-profile-details">
                 <div>
-                    <h2>{{userProfileData?.first_name}} {{userProfileData?.last_name}}</h2>
+                    <h2 id="users-fullname">{{userProfileData?.first_name}} {{userProfileData?.last_name}}</h2>
                     <h3 id="users-name">@{{userProfileData?.username}}</h3>
                 </div>
                 <!-- <p *ngIf="userProfileData?.they_follow_me">Follows You</p>
@@ -18,45 +18,48 @@
                 <button *ngIf="!userProfileData?.they_follow_me && !isMyProfile(userProfileData?.user_id)">Not Follows You</button>
                 <button *ngIf="isMyProfile(userProfileData?.user_id)"> <a routerLink="/edit-profile" style="color: black;"><i class="fa-solid fa-pen-to-square"></i> edit profile</a></button>
             </div>
-            <button (click)="follow(userProfileData?.user_id)" *ngIf="!userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">Follow</button>
-            <button (click)="unfollow(userProfileData?.user_id)" *ngIf="userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">UnFollow</button>
-            <button (click)="openBarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && !userProfileData?.is_deleted">Suspend</button>
-            <button (click)="openUnbarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && userProfileData?.is_deleted">Unsuspend</button>
+            <button class="user-profile-btns" (click)="follow(userProfileData?.user_id)" *ngIf="!userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">Follow</button>
+            <button class="user-profile-btns" (click)="unfollow(userProfileData?.user_id)" *ngIf="userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">UnFollow</button>
+            <button class="user-profile-btns" (click)="openBarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && !userProfileData?.is_deleted">Suspend</button>
+            <button class="user-profile-btns" (click)="openUnbarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && userProfileData?.is_deleted">Unsuspend</button>
             <div class="mid-profile-details">
-                <h4>19 posts</h4>
-                <h4>190 followers</h4>
-                <h4>190 following</h4>
+                <h4 (click)="setActiveTab('posts')">{{singleUserPosts.length}} posts</h4>
+                <h4 (click)="setActiveTab('followers')">{{followersNfollowing[1].length}} following</h4>
+                <h4 (click)="setActiveTab('following')">{{followersNfollowing[0].length}} followers</h4>
             </div>
             <br>
             
             <p id="user-bio">{{userProfileData?.bio}}</p>
             <div class="social-links">
-                <!-- Facebook -->
+                <a  *ngIf="userProfileData?.website_url !== null && userProfileData?.website_url !== undefined && userProfileData?.website_url !== ''" href="{{userProfileData?.website_url}}" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-globe"></i>
+                </a>
+
                 <a *ngIf="userProfileData?.facebook_url !== null && userProfileData?.facebook_url !== undefined && userProfileData?.facebook_url !== ''" href="{{userProfileData?.facebook_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook"></i>
                 </a>
 
-                
-                <!-- Instagram -->
                 <a   *ngIf="userProfileData?.instagram_url !== null && userProfileData?.instagram_url !== undefined && userProfileData?.instagram_url !== ''" href="{{userProfileData?.instagram_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
                 
-                <!-- LinkedIn -->
+                <a   *ngIf="userProfileData?.twitter_url !== null && userProfileData?.twitter_url !== undefined && userProfileData?.twitter_url !== ''" href="{{userProfileData?.twitter_url}}" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+                        <g fill="#071b64" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M11,4c-3.866,0 -7,3.134 -7,7v28c0,3.866 3.134,7 7,7h28c3.866,0 7,-3.134 7,-7v-28c0,-3.866 -3.134,-7 -7,-7zM13.08594,13h7.9375l5.63672,8.00977l6.83984,-8.00977h2.5l-8.21094,9.61328l10.125,14.38672h-7.93555l-6.54102,-9.29297l-7.9375,9.29297h-2.5l9.30859,-10.89648zM16.91406,15l14.10742,20h3.06445l-14.10742,-20z"></path></g></g>
+                        </svg>
+                </a>
+
                 <a   *ngIf="userProfileData?.linkedin_url !== null && userProfileData?.linkedin_url !== undefined && userProfileData?.linkedin_url !== ''" href="{{userProfileData?.linkedin_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
                 </a>
                 
-                <!-- Gmail -->
                 <div>
-                    <a  *ngIf="!userProfileData?.keep_email_private"  href="mailto:{{userProfileData?.email}}" target="_blank" rel="noopener noreferrer" >
-                        <i class="far fa-envelope"></i>
+                    <a   *ngIf="!userProfileData?.keep_email_private"  href="mailto:{{userProfileData?.email}}" target="_blank" rel="noopener noreferrer" >
+                       {{userProfileData?.email}}
                     </a>
                 </div>
 
-                <a  *ngIf="userProfileData?.website_url !== null && userProfileData?.website_url !== undefined && userProfileData?.website_url !== ''" href="{{userProfileData?.website_url}}" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-globe"></i>
-                </a>
+                
             </div>
 
         </div>
@@ -78,19 +81,21 @@
         <input type="text">
         <button>search</button>
     </div>
+
+    <h3 style="margin-top: 20px;"  *ngIf="followersNfollowing[0].length === 0">No followers</h3>
     <div class="single-user" *ngFor="let user of followersNfollowing[0];">
         <div class="single-user-details">
-            <div>
+            <div  class="search-display-pic">
                 <img src="../assets/img/test_profile.jpg" alt="">
-                <div>
-                    <h3 (click)="viewUserProfile(user.follower_username)">{{user.name}}</h3>
-                    <h4 (click)="viewUserProfile(user.follower_username)">@{{user.follower_username}}</h4>
-                </div>
             </div>
-
-            <button *ngIf="!user.is_following && !isUsernameMine(user.follower_username)">follow</button>
-            <button *ngIf="user.is_following && !isUsernameMine(user.follower_username)">unfollow</button>
-            
+            <div class="search-display-names">
+                <h3 (click)="viewUserProfile(user.follower_username)">{{user.name}}</h3>
+                <h4 (click)="viewUserProfile(user.follower_username)">@{{user.follower_username}}</h4>
+            </div>
+            <div class="follow-buttons-search">
+                <button *ngIf="!user.is_following && !isUsernameMine(user.follower_username)">follow</button>
+                <button *ngIf="user.is_following && !isUsernameMine(user.follower_username)">unfollow</button>
+            </div>
         </div>
     </div>
 </section>
@@ -102,18 +107,21 @@
         <input type="text">
         <button>search</button>
     </div>
+    <h3 style="margin-top: 20px;" *ngIf="followersNfollowing[1].length === 0">No followers</h3>
     <div class="single-user" *ngFor="let user of followersNfollowing[1];">
         <div class="single-user-details">
-            <div>
+            <br>
+            <div class="search-display-pic">
                 <img src="../assets/img/test_profile.jpg" alt="">
-                <div>
-                    <h3 (click)="viewUserProfile(user?.following_username)">{{user.name}}</h3>
-                    <h4 (click)="viewUserProfile(user?.following_username)">@{{user.following_username}}</h4>
-                </div>
             </div>
-            <button *ngIf="!user.is_following && !isUsernameMine(user.following_username)">follow</button>
-            <button *ngIf="user.is_following && !isUsernameMine(user.following_username)">unfollow</button>
-            
+            <div class="search-display-names">
+                <h3 (click)="viewUserProfile(user?.following_username)">{{user.name}}</h3>
+                <h4 (click)="viewUserProfile(user?.following_username)">@{{user.following_username}}</h4>
+            </div>
+            <div>
+                <button *ngIf="!user.is_following && !isUsernameMine(user.following_username)">follow</button>
+                <button *ngIf="user.is_following && !isUsernameMine(user.following_username)">unfollow</button>
+            </div>
         </div>
         
         
@@ -123,7 +131,8 @@
 
 <section class="body-container" id="posts" *ngIf="navigateTo=='posts'">
     <br><br>
-    <div class="picture-post" *ngFor="let post of singleUserPosts;  let i = index">
+    <h3  *ngIf="singleUserPosts.length === 0">No posts</h3>
+    <div class="picture-post" *ngFor="let post of singleUserPosts;  let i = index" style="margin-bottom: 30px;">
         <div class="user-post-container" >
             <div class="user-details">
                 <img  src="{{post.user_dp}}" alt="">
@@ -176,7 +185,9 @@
 
         </div>
         
+        
     </div>
+    
 
 </section>
 

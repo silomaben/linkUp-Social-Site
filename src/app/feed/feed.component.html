@@ -45,8 +45,9 @@
                 <div class="user-details">
                     <img (click)="viewUserProfile(post.user_name)" src="{{post.user_dp}}" alt="">
                     <div>
-                        <h3 class="username" (click)="viewUserProfile(post.user_name)">{{post['user_name']}}</h3>
-                        <h5 class="post-mood">feeling sijui aje with 17 others</h5>
+                        <h3 class="fullname" (click)="viewUserProfile(post.user_name)">{{post.full_name}}</h3>
+                        <h5 class="username" (click)="viewUserProfile(post.user_name)">@{{post['user_name']}}</h5>
+                        <h6 *ngIf="post.tagged_users.length > 0" class="post-mood">{{ post.tagged_users.split(',')[0] }} and {{ post.tagged_users.split(',').length}} other have been tagged</h6>
                     </div>
                     
                 </div>
@@ -84,7 +85,7 @@
                 <form action="" [formGroup]="commentPostForm" (submit)="postComment(post.post_id)">
                     <div class="comment-section" >
                         <div>
-                            <input formControlName="body" type="text">
+                            <input formControlName="body" id="comment-input-feed" type="text">
                         </div>
                         <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
                     </div>

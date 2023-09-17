@@ -113,6 +113,17 @@ export class AuthService {
     return this.http.post<any>(url,requestBody)
   }
 
+  deactivateAccount(user_id:string,password:string){
+    const url = 'http://localhost:4500/auth/deactivate'
+
+    const requestBody = {
+      user_id: user_id,
+      password: password
+  }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
   signIn() {
     this.isAuthenticated = true;
   }

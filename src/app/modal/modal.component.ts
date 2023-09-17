@@ -20,14 +20,16 @@ import { UserService } from '../services/user.service';
 })
 export class ModalComponent implements OnInit {
 
-  // @Output() userBanned = new EventEmitter<void>();
-
+  fetchedUsers: any = [];
+  filteredSearch: any = [];
+  searchedUsers: string = ''; 
   
   // my forms
   createPostForm = this.formBuilder.group({
     body: new FormControl('',[Validators.required]),
+    searchedUsers: new FormControl(''),
     image: new FormControl(''),
-    tagged: new FormControl(''),
+    tagged: new FormControl<string[]>([]),
   })
 
   editPostForm = this.formBuilder.group({
@@ -36,6 +38,9 @@ export class ModalComponent implements OnInit {
   })
 
   barnUserPassword = this.formBuilder.group({
+    password: new FormControl('',[Validators.required]),
+  })
+  deactivateAccount = this.formBuilder.group({
     password: new FormControl('',[Validators.required]),
   })
 
@@ -64,6 +69,13 @@ export class ModalComponent implements OnInit {
 
 
   // my functions
+
+  // ******************* not finished ******************************
+  updateSettings(){
+//  for making email private
+  }
+
+
   sendPost(){
     if(this.createPostForm.valid){
       const storedUser = localStorage.getItem('user');
@@ -74,7 +86,7 @@ export class ModalComponent implements OnInit {
 
         const body = this.createPostForm.value.body ?? '';
         const image = this.createPostForm.value.image ?? '';
-        const tagged = this.createPostForm.value.tagged ?? '';
+        const tagged = this.createPostForm.value.tagged as string[];
 
         if (body.length <=0){
           return
@@ -82,10 +94,12 @@ export class ModalComponent implements OnInit {
         
         this.posts.createPost(user_id,image,body,tagged).subscribe((response)=>{
           console.log('res',response)
+          console.log('tagged '+tagged);
+          
           if(response.message=="Posted successfully"){
             this.closeCreatePostModal()
             this.toastr.success('Post uploaded successfully!', 'Success');
-            this.router.navigateByUrl("/login");
+            this.router.navigateByUrl("");
             this.User.triggerRefresh()
             // this.router.navigateByUrl("/login");
             // this.feed.getPosts()
@@ -93,14 +107,16 @@ export class ModalComponent implements OnInit {
           }else if(response.message=="Posting failed due to profanity"){
             this.toastr.error('Post rejected. Please avoid profanity in your post', );
           }
+
+          this.createPostForm.get('body')?.setValue('');
+          this.createPostForm.get('image')?.setValue('');
+          this.createPostForm.get('tagged')?.setValue(null);
           
         })
       }
     }
   }
 
-
-  // *******************************     used ngrx     ********************************************
   editCurrentPost(){
     const storedUser = localStorage.getItem('user');
       
@@ -119,6 +135,9 @@ export class ModalComponent implements OnInit {
         console.log('res',response)
         this.toastr.success('Post updated successfully!', 'Success');
         this.closeEditPostModal()
+        this.editPostForm.get('tagged')?.setValue('');
+        this.editPostForm.get('body')?.setValue('');
+        this.User.triggerRefresh()
       })
 
       
@@ -126,8 +145,89 @@ export class ModalComponent implements OnInit {
     };
   }
 
-  updateSettings(){
 
+
+  deactivate(){
+    const storedUser = localStorage.getItem('user');
+      
+    if(storedUser){
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+      const tagged = this.deactivateAccount.value.password ?? '';   
+
+      this.auth.deactivateAccount(user_id,tagged).subscribe((response)=>{
+        console.log(response);
+        if ('' == ''){
+          this.toastr.info('Account deactivated successfully,Loging you out', 'Goodbye', {
+            timeOut: 1000, 
+          });
+          setTimeout(() => {
+            localStorage.clear();
+            let modal = document.querySelector('.open') as HTMLDivElement
+            modal.className='close'
+            this.auth.signOut()
+          }, 1500); 
+          this.deactivateAccount.get('password')?.setValue('');
+
+        }
+        
+      })
+    }
+  }
+
+  // tagUser(id:string){
+  //   this.createPostForm.value.tagged = this.createPostForm.value.tagged + `${id}`
+  //   console.log(this.createPostForm.value.tagged );
+    
+  // }
+
+  tagUser(id: string) {
+    const taggedUsers = this.createPostForm.value.tagged ?? '';
+    const currentTaggedUsers = taggedUsers as string[];
+  
+    if (currentTaggedUsers.length < 5) {
+      currentTaggedUsers.push(id);
+    } else {
+      currentTaggedUsers.shift(); 
+      currentTaggedUsers.push(id);
+    }
+  
+    this.createPostForm.get('tagged')?.setValue(currentTaggedUsers);
+    console.log(this.createPostForm.value.tagged );
+  }
+  
+
+  
+  filterResults() {
+    const text = this.createPostForm.value.searchedUsers ?? '';
+
+    // console.log(text);
+    
+
+    if (!text) {
+      this.filteredSearch = this.fetchedUsers;
+    } else {
+      this.filteredSearch = this.fetchedUsers.filter((user: any) =>
+          user?.username.toLowerCase().includes(text)
+          
+          
+      );
+      // console.log(this.filteredSearch);
+    }
+  }
+
+
+  getUsers() {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_id = user.user_id;
+      this.User.getAllUsers(user_id).subscribe((response) => {
+        this.fetchedUsers = response.users;
+        this.filteredSearch = this.fetchedUsers; 
+      });
+    }
   }
 
 
@@ -175,6 +275,10 @@ export class ModalComponent implements OnInit {
 
       const password = this.barnUserPassword.value.password ?? '';
 
+      if(password.length <= 0){
+        return 
+      }
+
       this.auth.barnUser(user_id,password,barn_who).subscribe((response)=>{
         console.log(response);
         if(response.message == 'User banned successfully'){
@@ -185,6 +289,7 @@ export class ModalComponent implements OnInit {
           this.closeBarnUserModal()
           // this.userBanned.emit();
           this.User.triggerRefresh()
+          this.barnUserPassword.get('password')?.setValue('');
         }
         
         
@@ -202,6 +307,10 @@ export class ModalComponent implements OnInit {
 
       const password = this.barnUserPassword.value.password ?? '';
 
+      if(password.length <= 0){
+        return 
+      }
+
       this.auth.unbarnUser(user_id,password,unbarn_who).subscribe((response)=>{
         console.log(response);
         if(response.message == 'User unbanned successfully'){
@@ -209,8 +318,8 @@ export class ModalComponent implements OnInit {
             timeOut: 2000, 
           });
           this.closeUnbarnUserModal()
-          // this.userBanned.emit();
           this.User.triggerRefresh()
+          this.barnUserPassword.get('password')?.setValue('');
 
           
         }
@@ -220,15 +329,13 @@ export class ModalComponent implements OnInit {
   }
   }
 
-
-
-
   ngOnInit() {
     this.displayCreatePostModal$ = this.modalService.watchCreatePostModal();
     this.displayEditPostModal$ = this.modalService.watchEditPostModal();
     this.displaySettingsModal$ = this.modalService.watchSettingsModal();
     this.displayBarnUserModal$ = this.modalService.watchBarnUserModal();
     this.displayUnbarnUserModal$ = this.modalService.watchUnbarnUserModal();
+    this.getUsers()
   }
 
   closeCreatePostModal() {

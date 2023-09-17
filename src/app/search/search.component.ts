@@ -12,7 +12,7 @@ export class SearchComponent {
 
   fetchedUsers: any = [];
   filteredSearch: any = [];
-  searchText: string = ''; // Added searchText variable
+  searchText: string = ''; 
 
   ngOnInit() {
     this.getUsers();
@@ -44,7 +44,7 @@ export class SearchComponent {
       const user_id = user.user_id;
       this.userService.getAllUsers(user_id).subscribe((response) => {
         this.fetchedUsers = response.users;
-        this.filteredSearch = this.fetchedUsers; // Initialize filtered list
+        this.filteredSearch = this.fetchedUsers;
       });
     }
   }

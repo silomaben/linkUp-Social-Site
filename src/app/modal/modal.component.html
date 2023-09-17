@@ -10,7 +10,19 @@
                             <img src="../../assets/img/test_profile.jpg" alt="">
                         </div>
                         <textarea formControlName="body" id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
-                        <input type="file"  (change)="onChange($event)">
+                        
+                       
+                        <div class="tagged-users">
+                          <input type="text"  formControlName="searchedUsers" (input)="filterResults()"  id="select-users-to-tag" placeholder="Search and tag user..."/>
+                          <div class="tag-list"  *ngFor="let user of filteredSearch">
+                            <div (click)="tagUser(user.username)" class="tagged-user">{{user.username}} <span class="remove-tag"><i class="fa fa-times"></i></span> </div>
+                          </div>
+                        </div>
+
+                        <input id="select-image_input" type="file"  (change)="onChange($event)">
+
+                        
+                        
                         <div class="bottomside-modal">
                             <button>image</button>
                             <button (click)="sendPost()" id="addPost-btn-modal" [disabled]="disableSubmitButton">submit</button>
@@ -50,13 +62,13 @@
                 <div class="settings-modal">
                     <br>
                     <br><br>
-                    <form >
+                    <form [formGroup]="deactivateAccount" (ngSubmit)="deactivate()">
                       <h3>Settings</h3>
                       <br>
                       <p>To deactivate account, enter your password to confirm the deactivation.</p>
                       <br>
                       <label for="confirmPassword"></label>
-                      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                      <input formControlName="password" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
                       <br>
                       
                       <button  class="deactivate-settings-btn">Deactivate Account</button>

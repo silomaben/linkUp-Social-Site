@@ -1,6 +1,7 @@
 export interface post{
     post_id: string,
     user_id: string,
+    full_name: string,
     user_name: string,
     image:string,
     body: string,

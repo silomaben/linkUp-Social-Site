@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements AfterViewInit {
-  constructor(private renderer: Renderer2, private el: ElementRef,public authenticationService: AuthService) {}
+  constructor(private renderer: Renderer2, private el: ElementRef,public authenticationService: AuthService, private router:Router) {}
 
   ngAfterViewInit() {
     // Code for toggling the menu
@@ -34,4 +35,24 @@ export class NavbarComponent implements AfterViewInit {
       }
     });
   }
+
+  getUsername(){
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const username = user.username;
+      return username
+    }
+  }
+
+  viewUserProfile(){
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const username = user.username;
+      this.router.navigate(['/profile', username]);
+    }
+  }
+  
 }

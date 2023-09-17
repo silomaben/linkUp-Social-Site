@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../services/modal.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgConfirmService } from 'ng-confirm-box';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -59,25 +60,30 @@ export class SinglePostComponent {
      private toastr: ToastrService,
      private modalService : ModalService,
      private formBuilder : FormBuilder,
-     private confirmService: NgConfirmService
+     private confirmService: NgConfirmService,
+     private User: UserService
      ){ }
 
   ngOnInit(){
+    this.loadSinglePost()
+    this.User.refreshEvent.subscribe(() => {
+      this.refresh();
+    });
+  }
+
+  loadSinglePost(){
     this.route.params.subscribe((params) => {
       const post_id = params['post_id'];
       this.fetchSinglePost(post_id);
+      
     })
   }
 
-  // onCommentFormBlur() {
-  //   setTimeout(() => {
-  //     const commentInputValue = (document.querySelector('#commentInput') as HTMLInputElement)?.value;
-  //     if (!commentInputValue) {
-  //       this.showCommentForm = false;
-  //     }
-  //   }, 0);
-  // }
-  
+  refresh(){
+    this.loadSinglePost()
+  }
+
+ 
 
   fetchSinglePost(post_id:string){
     const storedUser = localStorage.getItem('user');
@@ -251,7 +257,7 @@ export class SinglePostComponent {
 
   postComment(post_id:string){
     const storedUser = localStorage.getItem('user');
-      
+
       if(storedUser){
         const user = JSON.parse(storedUser);
         const user_id = user.user_id;
@@ -261,6 +267,8 @@ export class SinglePostComponent {
         this.posts.commentPost(post_id,user_id,body).subscribe((response)=>{
           console.log('res',response)
           this.toastr.success('Comment added');
+          this.User.triggerRefresh()
+          this.commentPostForm.get('body')?.setValue('');
         })
       }
   }
@@ -281,6 +289,9 @@ export class SinglePostComponent {
         this.posts.subCommentPost(post_id,user_id,body).subscribe((response)=>{
           console.log('res',response)
           this.toastr.success('subComment added');
+          this.User.triggerRefresh()
+          this.subCommentForm.get('body')?.setValue('');
+          
         })
       }
   }
@@ -292,7 +303,6 @@ export class SinglePostComponent {
       const storedUser = localStorage.getItem('user');
     
       if (storedUser) {
-        // console.log('delete no clicked');
         const user = JSON.parse(storedUser);
         const user_id = user.user_id;
         
@@ -302,6 +312,7 @@ export class SinglePostComponent {
           if(response.message = "Post deleted successfully"){
             this.toastr.success('Post Deleted successfully!');
             this.router.navigate(['']);
+            this.User.triggerRefresh()
           }
 
         })
@@ -336,6 +347,7 @@ export class SinglePostComponent {
         
         this.posts.editComment(comment_id,post_id,user_id,body).subscribe((response)=>{
           console.log(response);
+          this.User.triggerRefresh()
           
 
         })
@@ -362,8 +374,7 @@ export class SinglePostComponent {
         
         this.posts.editSubcomment(subcomment_id,comment_id,user_id,body).subscribe((response)=>{
           console.log(response);
-          
-
+          this.User.triggerRefresh()
         })
       }
   }

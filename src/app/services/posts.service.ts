@@ -66,7 +66,7 @@ export class PostsService {
 
 
 
-    createPost(user_id:string, image:string,body:string,tagged:string):Observable<any>{
+    createPost(user_id:string, image:string,body:string,tagged:string[]):Observable<any>{
       const url = 'http://localhost:4500/posts/createpost';
 
       const requestBody = {

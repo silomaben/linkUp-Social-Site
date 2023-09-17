@@ -64,7 +64,7 @@ export class FeedComponent {
         this.postOptionsVisibility = new Array(this.allpost.length).fill(false);
         if (data && data.posts) {
           this.allpost = data.posts;
-          // console.log(this.allpost);
+          console.log(this.allpost);
         }
       });
     }
@@ -81,6 +81,7 @@ export class FeedComponent {
           this.posts.commentPost(post_id,user_id,body).subscribe((response)=>{
             console.log('res',response)
             this.toastr.success('Comment added');
+            this.commentPostForm.get('body')?.setValue('');
           })
         }
     }
@@ -191,8 +192,6 @@ viewComments(post_id: string) {
 viewUserProfile(username:string){
   this.router.navigate(['/profile', username]);
 }
-
-
 
 
   isMyPost(postUserId: string): boolean {

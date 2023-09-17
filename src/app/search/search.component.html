@@ -11,15 +11,17 @@
 
     </div>
     <div class="single-user" *ngFor="let user of filteredSearch">
-        <div class="single-user-details" (click)="viewUserProfile(user.username)">
-            <div>
+        <div class="single-user-detail" (click)="viewUserProfile(user.username)">
+            <div class="search-display-pic">
                 <img src="../assets/img/test_profile.jpg" alt="">
-                <h3>{{user.username}}</h3>
             </div>
-            <h4>{{user.first_name}} {{user.last_name}}</h4>
+            <div class="search-display-names">
+                <h3>{{user.first_name}} {{user.last_name}}</h3>
+                <h4>@{{user.username}}</h4>
+            </div>
         </div>
         
-        <p>view profile</p>
+        <p (click)="viewUserProfile(user.username)">view profile</p>
     </div>
     
 </section>

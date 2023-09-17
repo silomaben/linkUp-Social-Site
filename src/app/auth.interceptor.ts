@@ -66,10 +66,18 @@ export class AuthInterceptor implements HttpInterceptor {
 // forget password //
 // update comment //
 // update subcomment //
-// deactivate user
-// activate user
+// search users //
+// barn //
+// unbarn //
+// deactivate user //
+// delete comment
+// delete subcomment
+// create send us a message page
+// send email on registration
+// send email on barn
+// send email on unbarn
+// create nice logo 
+// create favicon
 // fetch recent posts
-// search users
-// barn
-// unbarn
+// activate user 
 // keep email private--- take this into update user
