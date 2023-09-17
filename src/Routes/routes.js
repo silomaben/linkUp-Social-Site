@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const { createNewPost, likePost, unlikePost, viewSinglePost, createSubcomment, createComment, editPost, deletePost, fetchPostsBasedOnPerfomance, fetchRecentPosts, updateComment, updateSubcomment, likeComment, unlikeComment, likeSubcomment, unlikeSubcomment, fetchSingleUserPosts } = require('../Controllers/postsController');
 const { registerUser, login, forgotPassword, verifyToken, resetPassword } = require('../Controllers/authControllers');
-const { followUser, unfollowUser, viewUser, updateUserInformation, deactivateUserAccount, activateUserAccount } = require('../Controllers/userControllers');
+const { followUser, unfollowUser, viewUser, updateUserInformation, deactivateUserAccount, activateUserAccount, viewAllUsers } = require('../Controllers/userControllers');
 const { barnUser, unbarnUser } =  require('../Controllers/adminControllers');
 const { verifyLoginToken } = require('../Middleware/verifyLoginToken');
 
@@ -63,6 +63,7 @@ router.post('/user/follow',verifyLoginToken,followUser);
 router.post('/user/unfollow',verifyLoginToken,unfollowUser);
 router.post('/user/view-user',verifyLoginToken,viewUser);
 router.post('/user/edit-profile',verifyLoginToken,updateUserInformation);
+router.post('/user/view-users/:id',viewAllUsers);
 
 
 

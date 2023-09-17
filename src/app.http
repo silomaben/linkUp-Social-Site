@@ -57,6 +57,13 @@ Content-Type: application/json
 
 
 ###
+# view all user
+POST http://localhost:4500/user/view-users/b991bde8-ec68-4259-9b4e-f9d76a132ebc
+Content-Type: application/json
+
+
+
+###
 # follow user
 POST http://localhost:4500/user/follow
 Content-Type: application/json

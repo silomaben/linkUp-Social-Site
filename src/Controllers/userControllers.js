@@ -122,32 +122,32 @@ const activateUserAccount = async(req, res)=>{
 
 }
 
-// view users followers and following
-const fetchUsers = async (req,res)=>{
-    try {
+// // view users followers and following
+// const fetchUsers = async (req,res)=>{
+//     try {
 
-        const viewed_username = req.params.username;
+//         const viewed_username = req.params.username;
         
 
-        const pool = await mssql.connect(sqlConfig)
+//         const pool = await mssql.connect(sqlConfig)
 
-        if(pool.connected){
-            const posts = await pool.request()
-            .input('viewed_username',mssql.VarChar, viewed_username)
-            .execute('fetchPostsForSingleUserProc')
+//         if(pool.connected){
+//             const posts = await pool.request()
+//             .input('viewed_username',mssql.VarChar, viewed_username)
+//             .execute('fetchPostsForSingleUserProc')
             
 
         
-        return res.json({
-            posts: posts.recordset
-        })
+//         return res.json({
+//             posts: posts.recordset
+//         })
 
-        }
+//         }
         
-    } catch (error) {
-        return res.json({Error:error.message})
-    }
-}
+//     } catch (error) {
+//         return res.json({Error:error.message})
+//     }
+// }
 
 
 
@@ -258,6 +258,25 @@ const viewUser = async (req,res)=>{
         return res.json({Error:error.message})
     }
 }
+const viewAllUsers = async (req,res)=>{
+    try {
+        const { me_id } = req.params.id
+        
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const result = await pool.request()
+            .input('me',mssql.VarChar, me_id)
+            .execute('viewAllUsersProc')
+            
+        return res.json({users: result.recordset })
+         
+        }
+        
+    } catch ( error ) {
+        return res.json({Error:error.message})
+    }
+}
 
 
 
@@ -272,5 +291,6 @@ module.exports = {
     hideEmail,
     updateUserInformation,
     deactivateUserAccount,
-    activateUserAccount
+    activateUserAccount,
+    viewAllUsers
 }

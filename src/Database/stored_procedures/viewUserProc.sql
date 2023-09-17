@@ -52,6 +52,7 @@ BEGIN
         U.keep_email_private,
         U.email_confirmed,
         U.is_verified,
+        U.is_deleted,
         @i_follow_them AS i_follow_them,
         @they_follow_me AS they_follow_me
     FROM Users U
