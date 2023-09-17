@@ -16,30 +16,34 @@
                 <p *ngIf="!userProfileData?.they_follow_me">Not Follows You</p> -->
                 <button *ngIf="userProfileData?.they_follow_me && !isMyProfile(userProfileData?.user_id)">Follows You</button>
                 <button *ngIf="!userProfileData?.they_follow_me && !isMyProfile(userProfileData?.user_id)">Not Follows You</button>
-                <button *ngIf="isMyProfile(userProfileData?.user_id)"><i class="fa-solid fa-pen-to-square"></i> edit profile</button>
+                <button *ngIf="isMyProfile(userProfileData?.user_id)"> <a routerLink="/edit-profile" style="color: black;"><i class="fa-solid fa-pen-to-square"></i> edit profile</a></button>
             </div>
             <button (click)="follow(userProfileData?.user_id)" *ngIf="!userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">Follow</button>
             <button (click)="unfollow(userProfileData?.user_id)" *ngIf="userProfileData?.i_follow_them && !isMyProfile(userProfileData?.user_id)">UnFollow</button>
+            <button (click)="openBarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && !userProfileData?.is_deleted">Suspend</button>
+            <button (click)="openUnbarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && userProfileData?.is_deleted">Unsuspend</button>
             <div class="mid-profile-details">
                 <h4>19 posts</h4>
                 <h4>190 followers</h4>
                 <h4>190 following</h4>
             </div>
+            <br>
             
             <p id="user-bio">{{userProfileData?.bio}}</p>
             <div class="social-links">
                 <!-- Facebook -->
-                <a  *ngIf="userProfileData?.facebook_url" href="{{userProfileData?.facebook_url}}" target="_blank" rel="noopener noreferrer">
+                <a *ngIf="userProfileData?.facebook_url !== null && userProfileData?.facebook_url !== undefined && userProfileData?.facebook_url !== ''" href="{{userProfileData?.facebook_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook"></i>
                 </a>
+
                 
                 <!-- Instagram -->
-                <a  *ngIf="userProfileData?.instagram_url" href="{{userProfileData?.instagram_url}}" target="_blank" rel="noopener noreferrer">
+                <a   *ngIf="userProfileData?.instagram_url !== null && userProfileData?.instagram_url !== undefined && userProfileData?.instagram_url !== ''" href="{{userProfileData?.instagram_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
                 
                 <!-- LinkedIn -->
-                <a  *ngIf="userProfileData?.linkedin_url" href="{{userProfileData?.linkedin_url}}" target="_blank" rel="noopener noreferrer">
+                <a   *ngIf="userProfileData?.linkedin_url !== null && userProfileData?.linkedin_url !== undefined && userProfileData?.linkedin_url !== ''" href="{{userProfileData?.linkedin_url}}" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
                 </a>
                 
@@ -50,8 +54,8 @@
                     </a>
                 </div>
 
-                <a *ngIf="userProfileData?.website_url" href="{{userProfileData?.website_url}}" target="_blank" rel="noopener noreferrer">
-                    <i class="far fa-website"></i>
+                <a  *ngIf="userProfileData?.website_url !== null && userProfileData?.website_url !== undefined && userProfileData?.website_url !== ''" href="{{userProfileData?.website_url}}" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-globe"></i>
                 </a>
             </div>
 

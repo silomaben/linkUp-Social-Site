@@ -48,7 +48,6 @@
       <div (click)="$event.stopPropagation()" >
         <button class="close" type="button" (click)="closeSettingsModal()">X</button>
                 <div class="settings-modal">
-                  <!-- <div class="settings-modal"> -->
                     <br>
                     <br><br>
                     <form >
@@ -60,7 +59,57 @@
                       <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
                       <br>
                       
-                      <button  class="save-settings-btn">Deactivate Account</button>
+                      <button  class="deactivate-settings-btn">Deactivate Account</button>
+                    
+                  </form>
+                </div>
+      </div>
+    </section>
+  </ng-container>
+
+
+<ng-container *ngIf="displayBarnUserModal$ | async as display" class="barnUserModal">
+    <section [class.open]="display === 'open'" (click)="closeBarnUserModal()">
+      <div (click)="$event.stopPropagation()" >
+        <button class="close" type="button" (click)="closeBarnUserModal()">X</button>
+                <div class="barnUser-Modal">
+                    <br>
+                    <br><br>
+                    <form [formGroup]="barnUserPassword" (ngSubmit)="suspendUser()">
+                      <h3>Barn User</h3>
+                      <br>
+                      <p>To deactivate account, enter your password to confirm the deactivation.</p>
+                      <br>
+                      <label for="confirmPassword"></label>
+                      <input formControlName="password" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                      <br>
+                      
+                      <button  class="deactivate-settings-btn">Deactivate Account</button>
+                    
+                  </form>
+                </div>
+      </div>
+    </section>
+  </ng-container>
+
+
+<ng-container *ngIf="displayUnbarnUserModal$ | async as display" class="barnUserModal">
+    <section [class.open]="display === 'open'" (click)="closeUnbarnUserModal()">
+      <div (click)="$event.stopPropagation()" >
+        <button class="close" type="button" (click)="closeUnbarnUserModal()">X</button>
+                <div class="barnUser-Modal">
+                    <br>
+                    <br><br>
+                    <form [formGroup]="barnUserPassword" (ngSubmit)="unSuspendUser()">
+                      <h3>Unbarn User</h3>
+                      <br>
+                      <p>To deactivate account, enter your password to confirm the deactivation.</p>
+                      <br>
+                      <label for="confirmPassword"></label>
+                      <input formControlName="password" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                      <br>
+                      
+                      <button  class="deactivate-settings-btn">Deactivate Account</button>
                     
                   </form>
                 </div>

@@ -10,6 +10,7 @@ export class ModalService {
   // create post modal
   private displayCreatePostModal: BehaviorSubject<'open' | 'close'> = new BehaviorSubject<'open' | 'close'>('close');
 
+barnedUserId:string = ''
 
   watchCreatePostModal(): Observable<'open' | 'close'> {
     return this.displayCreatePostModal.asObservable();
@@ -22,6 +23,37 @@ export class ModalService {
   closeCreatePostModal() {
     this.displayCreatePostModal.next('close');
   }
+
+  // barn user modal
+  private displayBarnUserModal: BehaviorSubject<'open' | 'close'> = new BehaviorSubject<'open' | 'close'>('close');
+
+  watchBarnUserModal(): Observable<'open' | 'close'> {
+    return this.displayBarnUserModal.asObservable();
+  }
+
+  openBarnUserModal() {
+    this.displayBarnUserModal.next('open');
+  }
+
+  closeBarnUserModal() {
+    this.displayBarnUserModal.next('close');
+  }
+
+  // unbarn user modal
+  private displayUnbarnUserModal: BehaviorSubject<'open' | 'close'> = new BehaviorSubject<'open' | 'close'>('close');
+
+  watchUnbarnUserModal(): Observable<'open' | 'close'> {
+    return this.displayUnbarnUserModal.asObservable();
+  }
+
+  openUnbarnUserModal() {
+    this.displayUnbarnUserModal.next('open');
+  }
+
+  closeUnbarnUserModal() {
+    this.displayUnbarnUserModal.next('close');
+  }
+
   // settings modal
   private displaySettingsModal: BehaviorSubject<'open' | 'close'> = 
                    new BehaviorSubject<'open' | 'close'>('close');

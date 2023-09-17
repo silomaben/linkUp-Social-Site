@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,11 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
+  refreshEvent: EventEmitter<void> = new EventEmitter<void>();
+
+  triggerRefresh() {
+    this.refreshEvent.emit();
+  }
 
   
   viewUser(me_id:string, them_username:string){
@@ -83,6 +88,12 @@ export class UserService {
   
 
     return this.http.post<any>(url,requestBody)
+  }
+
+  getAllUsers(my_id:string){
+    const url = `http://localhost:4500/user/view-users/${my_id}`
+
+    return this.http.post<any>(url,{})
   }
 
 }

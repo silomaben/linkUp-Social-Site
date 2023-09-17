@@ -8,7 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SinglePostComponent } from './single-post/single-post.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { FeedComponent } from './feed/feed.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { LoginComponent } from './login/login.component';
@@ -52,6 +52,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ToastrModule.forRoot(),
     CloudinaryModule,
     NgConfirmModule,
+    FormsModule,
     StoreModule.forRoot({
       user:userReducer,
     }),

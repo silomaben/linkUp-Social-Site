@@ -14,6 +14,8 @@ import { ModalService } from '../services/modal.service';
 })
 export class ViewProfileComponent implements OnInit {
 
+ 
+
   constructor(
     private router:Router,
     private User:UserService,
@@ -48,6 +50,19 @@ export class ViewProfileComponent implements OnInit {
   ngOnInit() {
     this.fetchUserProfile()
     this.fetchUserPosts()
+    this.User.refreshEvent.subscribe(() => {
+      this.refresh();
+    });
+    
+  }
+
+  refresh(){
+    this.fetchUserProfile()
+    this.fetchUserPosts()
+  }
+
+  onUserBanned() {
+    this.fetchUserProfile();
   }
 
 
@@ -68,7 +83,7 @@ export class ViewProfileComponent implements OnInit {
         this.userProfileData = response.message[0];
         this.followersNfollowing = response.friends
         
-        console.log(this.followersNfollowing)
+        console.log(response)
       })
     }
   }
@@ -127,8 +142,7 @@ export class ViewProfileComponent implements OnInit {
     this.fetchUserProfile()
     this.fetchUserPosts()
     this.router.navigate(['/profile', username]);
-    
-
+ 
   }
 
   isMyProfile(profile_id:string){
@@ -307,14 +321,14 @@ export class ViewProfileComponent implements OnInit {
     }
   }
 
-  // open and close create post modal
+  // create post modal
   openCreatePostModal() {
     this.modalService.openCreatePostModal();
   }
   closeCreatePostModal() {
     this.modalService.closeCreatePostModal();
   }
-  // open and close edit post modal
+  // edit post modal
   openEditPostModal(index: number,post_id:string) {
     this.modalService.openEditPostModal();
     this.postOptionsVisibility[index] = false;
@@ -327,6 +341,23 @@ export class ViewProfileComponent implements OnInit {
   }
   closeEditPostModal() {
     this.modalService.closeEditPostModal();
+  }
+
+   // barn user
+   openBarnUserModal(user_id:string) {
+    localStorage.setItem('barnWho',user_id)
+    this.modalService.openBarnUserModal();
+  }
+  closeBarnUserModal() {
+    this.modalService.closeBarnUserModal();
+  }
+   // unbarn user
+   openUnbarnUserModal(user_id:string) {
+    localStorage.setItem('unbarnWho',user_id)
+    this.modalService.openUnbarnUserModal();
+  }
+  closeUnbarnUserModal() {
+    this.modalService.closeBarnUserModal();
   }
   
   

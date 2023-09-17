@@ -73,15 +73,44 @@ export class AuthService {
       catchError((error) => {
         if (error.error.error === 'Email is not registered') {
           this.toastr.error('Email is not registered!', 'Error', {
-            timeOut: 1000, 
+            timeOut: 1000,
+          });
+        } else if (error.error.error === 'Account is deactivated') {
+          this.toastr.error('Account is deactivated! You will be notified once you are reactivated via email', 'Error', {
+            timeOut: 3000,
           });
         } else {
           console.error('Unexpected error:', error);
         }
-        
+  
         return throwError(error);
       })
     );
+  }
+
+
+  barnUser(my_id:string, password:string,user_id:string){
+    const url = 'http://localhost:4500/auth/barn'
+
+    const requestBody = {
+      admin_id: my_id,
+      admin_password: password,
+      user_id: user_id
+  }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
+  unbarnUser(my_id:string, password:string,user_id:string){
+    const url = 'http://localhost:4500/auth/unbarn'
+
+    const requestBody = {
+      admin_id: my_id,
+      admin_password: password,
+      user_id: user_id
+  }
+
+    return this.http.post<any>(url,requestBody)
   }
 
   signIn() {

@@ -66,16 +66,6 @@ export class EditProfileComponent {
         console.log(response.message[0])
         this.userProfileData = response.message[0];
 
-        // let last_name = document.querySelector('#last_name') as HTMLInputElement
-        // let username = document.querySelector('#username') as HTMLInputElement
-        // let website_url = document.querySelector('#website_url') as HTMLInputElement
-        // let linkedin_url = document.querySelector('#linkedin_url') as HTMLInputElement
-        // let facebook_url = document.querySelector('#facebook_url') as HTMLInputElement
-        // let instagram_url = document.querySelector('#instagram_url') as HTMLInputElement
-        // let twitter_url = document.querySelector('#twitter_url') as HTMLInputElement
-        // let bio = document.querySelector('#bio') as HTMLTextAreaElement
-        
-
           this.editUserForm.get('first_name')?.setValue(this.userProfileData.first_name),
           this.editUserForm.get('last_name')?.setValue(this.userProfileData.last_name),
           this.editUserForm.get('username')?.setValue(this.userProfileData.username),
@@ -126,7 +116,6 @@ export class EditProfileComponent {
    // open and close create post modal
    openSettingsModal() {
     this.modalService.openSettingsModal();
-    console.log('open settings');
   }
   closeSettingsModal() {
     

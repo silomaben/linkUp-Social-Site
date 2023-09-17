@@ -11,6 +11,7 @@ import { selectUserDetails } from '../user/store/reducers';
 import { select } from '@ngrx/store';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 
 
@@ -32,7 +33,8 @@ export class FeedComponent {
     private store: Store,
     private formBuilder: FormBuilder,
     private router: Router,
-    private confirmService: NgConfirmService 
+    private confirmService: NgConfirmService,
+    private User: UserService
     // private likingPost:PostsService,
     ) { }
     allpost: post[] = [];
@@ -46,6 +48,13 @@ export class FeedComponent {
 
     // my functions
     ngOnInit(): void {
+      this.getPosts()
+      this.User.refreshEvent.subscribe(() => {
+        this.refresh();
+      });
+    }
+
+    refresh(){
       this.getPosts()
     }
 

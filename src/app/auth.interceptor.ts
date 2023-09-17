@@ -69,6 +69,7 @@ export class AuthInterceptor implements HttpInterceptor {
 // deactivate user
 // activate user
 // fetch recent posts
+// search users
 // barn
 // unbarn
 // keep email private--- take this into update user
