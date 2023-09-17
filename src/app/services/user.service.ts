@@ -53,6 +53,17 @@ export class UserService {
     return this.http.post<any>(url,requestBody)
   }
 
+  deactivateAccount(user_id: string,password:string){
+    const url = `http://localhost:4500/auth/deactivate`
+
+    const requestBody = {
+      user_id: user_id,
+      password: password
+  }
+
+    return this.http.post<any>(url,requestBody)
+  }
+
   updateUserInfo(user_id:string,first_name:string,last_name:string,username:string,profile_pic_url:string,bio:string,linkedin_url:string,facebook_url:string,website_url:string,instagram_url:string,twitter_url:string){
     const url = `http://localhost:4500/user/edit-profile`
 

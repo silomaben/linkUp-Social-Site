@@ -33,6 +33,7 @@ export class ModalComponent implements OnInit {
   // my observables  
   displayCreatePostModal$!: Observable<'open' | 'close'>;
   displayEditPostModal$!: Observable<'open' | 'close'>;
+  displaySettingsModal$!: Observable<'open' | 'close'>;
 
   // state variable
   disableSubmitButton:boolean = false;
@@ -109,6 +110,10 @@ export class ModalComponent implements OnInit {
     };
   }
 
+  updateSettings(){
+
+  }
+
 
 
 
@@ -147,7 +152,7 @@ onChange(event: Event) {
   ngOnInit() {
     this.displayCreatePostModal$ = this.modalService.watchCreatePostModal();
     this.displayEditPostModal$ = this.modalService.watchEditPostModal();
-
+    this.displaySettingsModal$ = this.modalService.watchSettingsModal();
   }
 
   closeCreatePostModal() {
@@ -155,5 +160,9 @@ onChange(event: Event) {
   }
   closeEditPostModal() {
     this.modalService.closeEditPostModal();
+  }
+
+  closeSettingsModal() {
+    this.modalService.closeSettingsModal();
   }
 }

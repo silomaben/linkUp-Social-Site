@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { post } from '../interfaces';
@@ -12,7 +12,7 @@ import { ModalService } from '../services/modal.service';
   templateUrl: './view-profile.component.html',
   styleUrls: ['./view-profile.component.css']
 })
-export class ViewProfileComponent {
+export class ViewProfileComponent implements OnInit {
 
   constructor(
     private router:Router,
@@ -22,6 +22,7 @@ export class ViewProfileComponent {
     private toastr: ToastrService,
     private modalService: ModalService,
     ){}
+    
 
   // my forms
   commentPostForm = this.formBuilder.group({
@@ -39,6 +40,7 @@ export class ViewProfileComponent {
   // the rest :)
 
   userProfileData: any;
+  followersNfollowing: any;
   singleUserPosts: post[] = [];
   postOptionsVisibility: boolean[] = [];
 
@@ -59,12 +61,14 @@ export class ViewProfileComponent {
   
     if (storedUser) {
       const user = JSON.parse(storedUser);
+      // console.log(urlUsername);
+      
       const user_id = user.user_id;
       this.User.viewUser(user_id,urlUsername).subscribe((response) =>{
-        console.log(response.message[0])
         this.userProfileData = response.message[0];
+        this.followersNfollowing = response.friends
         
-
+        console.log(this.followersNfollowing)
       })
     }
   }
@@ -85,7 +89,7 @@ export class ViewProfileComponent {
       this.User.getPostsForUser(urlUsername,user_id).subscribe((data)=>{
         if (data && data.posts) {
           this.singleUserPosts = data.posts;
-          // console.log(this.singleUserPosts[0].user_dp);
+
         }
 
       })
@@ -119,13 +123,41 @@ export class ViewProfileComponent {
     this.postOptionsVisibility[index] = false;
   }
 
+  viewUserProfile(username:string){
+    this.fetchUserProfile()
+    this.fetchUserPosts()
+    this.router.navigate(['/profile', username]);
+    
+
+  }
+
   isMyProfile(profile_id:string){
     const storedUser = localStorage.getItem('user');
     
     if (storedUser) {
       const user = JSON.parse(storedUser);
       const user_id = user.user_id;
+      const user_name = user.user_name
       if(user_id==profile_id){
+        return true
+      } else if(user_name==profile_id){
+        return true
+      }
+    }
+    
+    return false
+
+  }
+
+  isUsernameMine(username:string){
+    const storedUser = localStorage.getItem('user');
+    
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_name = user.username
+      console.log(user_name,username);
+      
+      if(user_name==username){
         return true
       }
     }

@@ -51,9 +51,9 @@ export class RegisterComponent {
         this.toastr.success('You account has been created successfully!', 'Success', {
           timeOut: 1000, 
         });
-        // setTimeout(() => {
-        //     this.router.navigateByUrl("/auth/login");
-        // }, 1500);
+        setTimeout(() => {
+            this.router.navigateByUrl("/auth/login");
+        }, 1500);
       });
 
       

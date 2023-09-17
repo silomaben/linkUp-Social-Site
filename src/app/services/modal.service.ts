@@ -8,8 +8,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 export class ModalService {
   // create post modal
-  private displayCreatePostModal: BehaviorSubject<'open' | 'close'> = 
-                   new BehaviorSubject<'open' | 'close'>('close');
+  private displayCreatePostModal: BehaviorSubject<'open' | 'close'> = new BehaviorSubject<'open' | 'close'>('close');
 
 
   watchCreatePostModal(): Observable<'open' | 'close'> {
@@ -23,10 +22,25 @@ export class ModalService {
   closeCreatePostModal() {
     this.displayCreatePostModal.next('close');
   }
+  // settings modal
+  private displaySettingsModal: BehaviorSubject<'open' | 'close'> = 
+                   new BehaviorSubject<'open' | 'close'>('close');
+
+
+  watchSettingsModal(): Observable<'open' | 'close'> {
+    return this.displaySettingsModal.asObservable();
+  }
+
+  openSettingsModal() {
+    this.displaySettingsModal.next('open');
+  }
+
+  closeSettingsModal() {
+    this.displaySettingsModal.next('close');
+  }
 
   // edit post modal
-  private displayEditPostModal: BehaviorSubject<'open' | 'close'> = 
-                   new BehaviorSubject<'open' | 'close'>('close');
+  private displayEditPostModal: BehaviorSubject<'open' | 'close'> = new BehaviorSubject<'open' | 'close'>('close');
 
 
   watchEditPostModal(): Observable<'open' | 'close'> {
@@ -35,7 +49,6 @@ export class ModalService {
 
   openEditPostModal() {
     this.displayEditPostModal.next('open');
-    
   }
 
   closeEditPostModal() {

@@ -27,6 +27,7 @@ export class LoginComponent {
     const passcode = this.loginForm.value.passcode ?? '';
     if( this.loginForm.valid){
       this.auth.login(credential,passcode).subscribe((res: loginResponse) => {
+
         console.log('res',res)
         localStorage.setItem('token',res.token)
         localStorage.setItem('user', JSON.stringify(res.user));
@@ -38,6 +39,16 @@ export class LoginComponent {
         setTimeout(() => {
             this.route.navigateByUrl("/");
         }, 1500);
+      },
+      (error) => {
+        if (error.error === 'Email is not registered') {
+          this.toastr.error('Email is not registered!', 'Error', {
+            timeOut: 1000, 
+          });
+        } else {
+          // Handle other error cases if needed
+          console.error('Unexpected error:', error);
+        }
       });
 
       

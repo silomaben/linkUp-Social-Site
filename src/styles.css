@@ -15,9 +15,14 @@ body{
     width: 100%;
     height: 100%;
     min-height: 100vh;
-    background-color: #f0f2f5;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
+    font-family: Poppins;
+}
+
+span{
+    font-size: smaller;
 }
 
 .big-container{
@@ -159,7 +164,6 @@ body{
 }
 
 
-
 .may-know-title{
     height: 35px;
     width: 300px;
@@ -296,6 +300,57 @@ textarea {
 }
 
 
+/* settings modal */
+.settingsModal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background to overlay the entire page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: red solid 4px;
+}
+
+.settings-modal{
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-modal div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.settings-modal form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-modal form input{
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: #d6e4f5;
+    padding: 6px;
+    width: 320px;
+    height: 30px;
+}
+.save-settings-btn{
+    width: 130px;
+    border: none;
+    padding: 7px 12px;
+    background-color: #6179D4;
+    color: white;
+
+}
+
 /* modal */
 
 .fixedModal{
@@ -379,7 +434,7 @@ textarea {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     font-size: 15px;
     background-color: #6179D4;
     color:#ffffff;
@@ -391,7 +446,7 @@ textarea {
     text-decoration: none; 
     color: var(--primary-primary, #0d0a2c);
     /* Body/Medium */
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -444,7 +499,8 @@ textarea {
 .navig a {
     text-decoration: none; 
     color:  #ffffff;
-    font-family: Montserrat;
+    font-family: Poppins;
+    font-weight: bold;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -643,6 +699,7 @@ textarea {
     display: flex;
     flex-direction: column;
     gap: 7px;
+    /* width: 200px; */
 }
 
 .comment-section input {
@@ -659,7 +716,7 @@ textarea {
 
 .username{
     color: #3673B0;
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 20px;
     font-style: normal;
     font-weight: bolder;
@@ -668,7 +725,7 @@ textarea {
 
 .post-mood{
     color: #232a30;
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 10px;
     font-style: normal;
     font-weight: bold;
@@ -820,6 +877,7 @@ textarea {
     gap: 20px;
 }
 
+
 .comments-dp img{
     width: 40px;
     height: 40px;
@@ -839,7 +897,127 @@ textarea {
     border: none;
     background-color: transparent;
 }
+.single-comment{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
 
+
+
+.subcomment-container{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-start;
+}
+
+
+.comment_options {
+    display: block;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    width: 60px;
+    background-color: #dfddff;
+    color: black;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+}
+
+
+
+.comment_options p {
+    padding: 3px 4px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+.comment_options p:hover{
+    background-color: #738be3;
+}
+
+.comment_dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+    height: 20px;
+}
+.subcomment_options {
+    display: block;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    width: 60px;
+    background-color: #dfddff;
+    color: black;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+}
+
+
+
+.subcomment_options p {
+    padding: 3px 4px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+.subcomment_options p:hover{
+    background-color: #738be3;
+}
+
+.subcomment_dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+}
+.subcomment_options {
+    display: block;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    width: 60px;
+    background-color: #dfddff;
+    color: black;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+}
+
+
+
+.subcomment_options p {
+    padding: 3px 4px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+.subcomment_options p:hover{
+    background-color: #738be3;
+}
+
+.subcomment_dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+}
 
 .level-1-comment p{
     max-width: 680px;
@@ -854,8 +1032,12 @@ textarea {
     .level-1-comment p{
         max-width: 470px;
     }
+    .comments-holder{
+        width: 470px;
+    }
     .level-2-comment p{
         max-width: 425px;
+        width: 100%;
     }
 }
 
@@ -869,6 +1051,7 @@ textarea {
     }
     .level-2-comment p{
         max-width: 360px;
+        width: 100%;
     }
 }
 
@@ -883,6 +1066,7 @@ textarea {
     }
     .level-2-comment p{
         max-width: 205px;
+        width: 100%;
     }
 
 
@@ -920,6 +1104,19 @@ textarea {
     color: #0c1844;
 }
 
+.top-profile-details > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+.top-profile-details > div  h2{
+    font-size: 20px;
+    color: #071b64;
+}
+.top-profile-details > div h3{
+    font-size: 12px;
+}
+
 .top-profile-details > button{ 
     border: none;
     cursor: pointer;
@@ -934,11 +1131,11 @@ textarea {
     gap: 180px;
 }
 #users-name{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     
 }
 #user-bio{
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 15px;
     font-style: italic;
     font-weight: bolder;
@@ -1025,7 +1222,7 @@ footer a {
     text-decoration: none; 
     color: var(--primary-primary, #cecaff);
     /* Body/Medium */
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1061,7 +1258,7 @@ footer a:hover {
 
 .company-container h4{
     color:  #ffffff;
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 25px;
     font-style: normal;
     font-weight: 500;
@@ -1132,21 +1329,82 @@ footer a:hover {
     }
 }
 
+/* card container */
+
+.card {
+    width: 200px;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Card title styles */
+.card h2 {
+    color: #6179D4;
+    margin-top: 0;
+}
+
+/* Card content styles */
+.card p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Container for the cards */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: 40px;
+}
+
 
 /* edit user profile */
 
 .edit-profile{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     margin-top: 20px;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     color: #0c1844;
+}
+
+.inner-edit-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .top-edit-profile{
     display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.dp-top-edit-profile{
+    display: flex;
     flex-direction: column;
     align-items: center;
+    /* gap: 20px; */
+}
+
+.side-update{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    /* width: 400px; */
+    justify-content: flex-end;
+}
+.top-edit-profile button{
+    width: 120px;
+}
+
+.user-settings{
+    
 }
 
 .top-edit-profile img{
@@ -1196,6 +1454,12 @@ footer a:hover {
     border: none;
 }
 
+@media (max-width: 1200px) {
+    .edit-profile{
+    
+    flex-direction: column;
+    }
+}
 @media (max-width: 750px) {
     .edit-form > div{
         flex-direction: column;
@@ -1285,12 +1549,12 @@ footer a:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     border-radius: 10px;
     background-color: #d6e4f5;
     height: 60px;
     width: 80%;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     color: #0c1844;
 }
 
@@ -1302,6 +1566,14 @@ footer a:hover {
     align-items: center;
     justify-content: space-around;
     width: 90%;
+}
+.single-user-details h3{
+    font-size: 20px;
+    
+}
+.single-user-details h4{
+    font-size: 12px;
+
 }
 
 .single-user-details > div{
@@ -1339,7 +1611,6 @@ footer a:hover {
         font-size: 16px;
         margin-top: 8px;
     }
-
 }
 
 @media (max-width: 490px) {
@@ -1389,7 +1660,7 @@ footer a:hover {
 .auth-container a{
     text-decoration: none; 
     color:#283c86;
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;

@@ -61,11 +61,11 @@ export class AuthInterceptor implements HttpInterceptor {
 // like subcomment //
 // unlike subcomment //
 // verify token //
-// register 
-// reset password
-// forget password
-// update comment
-// update subcomment
+// register //
+// reset password //
+// forget password //
+// update comment //
+// update subcomment //
 // deactivate user
 // activate user
 // fetch recent posts

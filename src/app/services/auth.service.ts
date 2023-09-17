@@ -4,15 +4,19 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
 import { Store } from '@ngrx/store';
 import { login, logout } from '../user/store/actions'// Import your actions
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  constructor( private http:HttpClient,private route:Router,private store:Store) { }
+  constructor( private http:HttpClient,private route:Router,private store:Store, private toastr: ToastrService) { }
 
   
   private isAuthenticated = !!localStorage.getItem('token') && !!localStorage.getItem('user');
@@ -45,7 +49,7 @@ export class AuthService {
   }
 
   resetPassword(email:string,password:string){
-    const url = 'http://localhost:4500/auth/forgot-password'
+    const url = 'http://localhost:4500/auth/reset-password'
 
     const requestBody = {
       email: email,
@@ -65,23 +69,31 @@ export class AuthService {
       passcode: passcode
     };
 
-    return this.http.post<loginResponse>(url,requestBody)
+    return this.http.post<loginResponse>(url, requestBody).pipe(
+      catchError((error) => {
+        if (error.error.error === 'Email is not registered') {
+          this.toastr.error('Email is not registered!', 'Error', {
+            timeOut: 1000, 
+          });
+        } else {
+          console.error('Unexpected error:', error);
+        }
+        
+        return throwError(error);
+      })
+    );
   }
 
   signIn() {
-    // Implement your login logic and set isAuthenticated to true upon successful login.
     this.isAuthenticated = true;
   }
 
   signOut() {
-    // Implement your logout logic and set isAuthenticated to false upon logout.
     localStorage.clear();
     this.route.navigateByUrl("/auth/login")
     console.log('logged out');
     this.isAuthenticated = false;
     this.store.dispatch(logout());
-    
-
   }
 
   isAuthenticatedUser() {

@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'ngx-toastr/toastr';
 
 
 *{
@@ -17,6 +18,7 @@ body{
     background-color: #f0f2f5;
     display: flex;
     flex-direction: column;
+    font-family: Poppins;
 }
 
 .big-container{
@@ -163,6 +165,7 @@ body{
     height: 35px;
     width: 300px;
     background-color: #6179D4;
+    color: white;
     border-radius: 10px 10px 0px 0px;
     display: flex;
     justify-content: center;
@@ -184,6 +187,14 @@ body{
     border-radius: 10px;
     padding: 5px;
 }
+
+.persons > div button{
+    border: none;
+    margin-left: 30px;
+    border-radius: 10px;
+    padding: 7px 12px;
+}
+
 .persons img{
     width: 50px;
     border-radius: 50%;
@@ -286,9 +297,59 @@ textarea {
 }
 
 
+/* settings modal */
+.settingsModal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background to overlay the entire page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-modal{
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-modal div{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.settings-modal form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.save-settings-btn{
+    width: 130px;
+    border: none;
+    padding: 7px 12px;
+    background-color: #6179D4;
+    color: white;
+
+}
+
 /* modal */
 
+.fixedModal{
+    position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background to overlay the entire page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+}
 .topside-modal{
     display: flex;
     flex-direction: row;
@@ -302,9 +363,21 @@ textarea {
     border-radius: 50px;
 }
 
+
+
+.edit-post-modal textarea {
+    width: 300px;  
+    height: 290px; 
+    padding: 8px;
+    border: none;
+    border-radius: 30px;
+    resize: none; 
+    outline: none;
+}
+
 .add-post-modal textarea {
     width: 300px;  
-    height: 255px; 
+    height: 290px; 
     padding: 8px;
     border: none;
     border-radius: 30px;
@@ -333,6 +406,12 @@ textarea {
     align-self: flex-end;
 }
 
+@media (max-width: 767px) {
+    .add-post-modal textarea {
+        width: 190px;  
+    }
+}
+
 /********   navbar  ********/
 
 .navbar{
@@ -340,7 +419,7 @@ textarea {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     font-size: 15px;
     background-color: #6179D4;
     color:#ffffff;
@@ -352,7 +431,7 @@ textarea {
     text-decoration: none; 
     color: var(--primary-primary, #0d0a2c);
     /* Body/Medium */
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -405,7 +484,8 @@ textarea {
 .navig a {
     text-decoration: none; 
     color:  #ffffff;
-    font-family: Montserrat;
+    font-family: Poppins;
+    font-weight: bold;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -451,12 +531,30 @@ textarea {
 }
 
 .menu-options p {
-    padding: 10px 20px; /* Add padding to left and right */
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add line at the bottom */
-    cursor: pointer; /* Add cursor pointer on hover */
+    padding: 10px 20px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
 }
 .menu-options p:hover{
     background-color: #738be3;
+}
+
+.is_authenicated{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.nav-login-btn{
+    border: none;
+    padding: 7px 12px;
+    background-color: #6179D4;
+    color: white;
+}
+.nav-register-btn{
+    border: none;
+    padding: 7px 12px;
+    background-color: #e9eeff;
 }
 .navig-page{
     display: none;
@@ -479,118 +577,6 @@ textarea {
 }
 
 
-/********   feed  ********/
-/****** addPosts ******/
-
-/* 
-.add-post{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 570px;
-    height: 130px;
-    border-radius: 10px;
-    background-color:#E2E2FE;
-    margin: 40px 0px;
-}
-
-.add-post form{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-.topside{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.topside img{
-    width: 80px;
-    border-radius: 50px;
-    border: 2px solid black;
-}
-
-textarea {
-    width: 300px;  
-    height: 80px; 
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    resize: none; 
-    outline: none;
-}
-
-.bottomside{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px
-}
-
-.bottomside button{
-    background-color: #989898;
-    color: white;
-    border-radius: 10px;
-    padding: 8px 15px;
-    border: none;
-}
-
-#addPost-btn{
-    background-color: #6179D4;
-}
-
-@media (max-width: 767px) {
-    .add-post form{
-        flex-direction: column;
-    }
-
-    .add-post{
-        width: 480px;
-        height: 200px;
-    }
-
-    .bottomside{
-        flex-direction: row;
-    }
-
-}
-
-
-@media (max-width: 487px) {
-    .add-post form{
-        flex-direction: column;
-    }
-
-    .add-post{
-        width: 300px;
-        height: 250px;
-    }
-
-    .bottomside{
-        flex-direction: row;
-    }
-
-    .topside{
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .topside img{
-        width: 50px;
-    }
-
-    textarea {
-        width: 250px;
-    }
-} */
-
-
 /****** posts ******/
 
 .posts{
@@ -606,7 +592,26 @@ textarea {
     display: flex;
     flex-direction: column;  
     gap: 5px;
+    
 }
+
+.picture-post .icons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.picture-post .icons p{
+    margin-left: -15px;
+}
+.picture-post .icons button{
+    border: none;
+}
+
+.user-post-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
 .user-details{
     display: flex;
@@ -617,9 +622,43 @@ textarea {
 
 .user-details img{
     width: 50px;
+    height: 50px;
     border-radius: 50px;
 }
 
+.view-post-option-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    position: relative;
+}
+
+.post-options {
+    display: block;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    top: 100%; /* Adjust this value as needed */
+    right: 0;
+    /* padding: 1px; */
+    width: 60px;
+    background-color: #dfddff;
+    color: black;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+}
+
+
+
+.post-options p {
+    padding: 3px 4px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+}
+.post-options p:hover{
+    background-color: #738be3;
+}
 .post-pic img{
      width: 600px;     /*/88888888888888888888888888888888888888888888888888888888888888 */
     border-radius: 10px;
@@ -628,10 +667,10 @@ textarea {
 .picture-post p{
     max-width: 600px;
 }
-
-.comment-post {
-    width: 200px;
+.picture-post{
+    width: 600px;
 }
+
 
 .comment-post > button{
     background-color: transparent;
@@ -642,7 +681,6 @@ textarea {
     cursor: pointer;
 }
 .comment-section{
-    width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -662,7 +700,7 @@ textarea {
 
 .username{
     color: #3673B0;
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 20px;
     font-style: normal;
     font-weight: bolder;
@@ -671,12 +709,17 @@ textarea {
 
 .post-mood{
     color: #232a30;
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 10px;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
 }
+
+.comment-comment {
+    width: 530px;
+}
+
 .comment-section button{
     background-color: #6F8CF1;
     color: white;
@@ -689,6 +732,9 @@ textarea {
     .post-pic img{
         width: 500px;     
    }
+   .picture-post{
+    width: 500px;
+    }
    .picture-post p{
     max-width: 500px;
 }
@@ -698,6 +744,9 @@ textarea {
     .post-pic img{
         width: 430px;     
    }
+   .picture-post{
+    width: 430px;
+    }
    .picture-post p{
     max-width: 430px;
 }
@@ -706,6 +755,9 @@ textarea {
     .post-pic img{
         width: 380px;     
    }
+   .picture-post{
+    width: 380px;
+    }
    .picture-post p{
     max-width: 380px;
 }
@@ -715,6 +767,9 @@ textarea {
     .post-pic img{
         width: 780px;     
    }
+   .picture-post{
+    width: 780px;
+    }
    .picture-post p{
     max-width: 780px;
 }
@@ -724,6 +779,9 @@ textarea {
     .post-pic img{
         width: 700px;     
    }
+   .picture-post{
+    width: 700px;
+    }
    .picture-post p{
     max-width: 700px;
 }
@@ -734,6 +792,9 @@ textarea {
     .post-pic img{
         width: 700px;
     }
+    .picture-post{
+        width: 700px;
+        }
 
     .picture-post p{
         max-width: 700px;
@@ -744,6 +805,9 @@ textarea {
     .post-pic img{
         width: 500px;
     }
+    .picture-post{
+        width: 500px;
+        }
 
     .picture-post p{
         max-width: 480px;
@@ -755,6 +819,10 @@ textarea {
     .post-pic img{
         width: 290px;
     }
+
+    .picture-post{
+        width: 290px;
+        }
 
     .picture-post p{
         max-width: 270px;
@@ -795,6 +863,7 @@ textarea {
 
 .comments-dp img{
     width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 20px;
 }
@@ -818,6 +887,7 @@ textarea {
 }
 .level-2-comment p{
     max-width: 635px;
+    width: 100%;
 }
 
 @media (max-width: 850px) {
@@ -878,6 +948,7 @@ textarea {
 
 .dp img{
     width: 200px;
+    height: 200px;
     border-radius: 50%;
     border: solid #0c1844 3px;
 }
@@ -886,7 +957,7 @@ textarea {
     font-family: Poppins;
     display: flex;
     flex-direction: row;
-    gap: 300px;
+    gap: 230px;
     color: #0c1844;
 }
 
@@ -908,7 +979,7 @@ textarea {
     
 }
 #user-bio{
-    font-family: Inter;
+    font-family: Poppins;
     font-size: 15px;
     font-style: italic;
     font-weight: bolder;
@@ -943,7 +1014,7 @@ textarea {
     }
 
     .top-profile-details{
-        gap: 200px;
+        gap: 130px;
     }
 }
 
@@ -954,7 +1025,7 @@ textarea {
     }
 
     .top-profile-details{
-        gap: 120px;
+        gap: 40px;
     }
 }
 
@@ -995,7 +1066,7 @@ footer a {
     text-decoration: none; 
     color: var(--primary-primary, #cecaff);
     /* Body/Medium */
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1031,7 +1102,7 @@ footer a:hover {
 
 .company-container h4{
     color:  #ffffff;
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 25px;
     font-style: normal;
     font-weight: 500;
@@ -1102,25 +1173,87 @@ footer a:hover {
     }
 }
 
+/* card container */
+
+.card {
+    width: 200px;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Card title styles */
+.card h2 {
+    color: #6179D4;
+    margin-top: 0;
+}
+
+/* Card content styles */
+.card p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Container for the cards */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: 40px;
+}
+
 
 /* edit user profile */
 
 .edit-profile{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     margin-top: 20px;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     color: #0c1844;
 }
 
-.top-edit-profile{
+.inner-edit-profile{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.top-edit-profile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.dp-top-edit-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* gap: 20px; */
+}
+
+.side-update{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    /* width: 400px; */
+    justify-content: flex-end;
+}
+.top-edit-profile button{
+    width: 120px;
+}
+
+.user-settings{
+    
+}
+
 .top-edit-profile img{
     width: 160px;
+    height: 160px;
     border-radius: 50%;
     margin: 20px;
     box-shadow: 0 8px 9px rgba(100, 95, 136, 0.85);
@@ -1165,6 +1298,12 @@ footer a:hover {
     border: none;
 }
 
+@media (max-width: 1200px) {
+    .edit-profile{
+    
+    flex-direction: column;
+    }
+}
 @media (max-width: 750px) {
     .edit-form > div{
         flex-direction: column;
@@ -1259,7 +1398,7 @@ footer a:hover {
     background-color: #d6e4f5;
     height: 60px;
     width: 80%;
-    font-family: 'Nunito', sans-serif;
+    font-family: Poppins;
     color: #0c1844;
 }
 
@@ -1358,7 +1497,7 @@ footer a:hover {
 .auth-container a{
     text-decoration: none; 
     color:#283c86;
-    font-family: Montserrat;
+    font-family: Poppins;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1496,6 +1635,219 @@ footer a:hover {
 }
 
 
+/* forgot password */
+
+.forgot-password-container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.forgot-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 50%;
+    height: 50%;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(100, 95, 136, 0.75);
+    
+}
+.forgot-center img{
+    width: 100px;
+}
+.forgot-form form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.forgot-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+
+
+
+.forgot-form h4{
+    color: #2B59CE;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.forgot-form p{
+    color: #000000;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+}
+
+.forgot-form input{
+    margin-bottom: 20px;
+    background-color: #d6e4f5;
+    padding: 10px;
+    width: 300px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.forgot-form form > div {
+    display: flex;
+    gap: 20px;
+}
+
+.forgot-form button{
+    padding: 10px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    background-color: #6179D4;
+}
+
+@media (max-width: 405px) {
+    .forgot-form > form > div{
+        flex-direction: column;
+    }
+
+    .forgot-form form > div {
+        gap: 0px;
+    }
+
+}
+
+@media (max-width: 955px) {
+    
+}
+@media (max-width: 790px) {
+    .forgot-center{
+        width: 50%;
+    }
+}
+
+/* reset password */
+
+.reset-password-container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.reset-password{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 50%;
+    height: 70%;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(100, 95, 136, 0.75);
+    
+}
+
+.reset-password img{
+    width: 100px;
+}
+.reset-form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+
+
+
+
+.reset-form h4{
+    color: #2B59CE;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.reset-form p{
+    color: #000000;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+}
+
+.reset-form input{
+    margin-bottom: 20px;
+    background-color: #d6e4f5;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    width: 300px;
+}
+
+/* .reset-form form > div {
+    display: flex;
+    gap: 20px;
+} */
+
+.reset-form button{
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 130px;
+    background-color: #6179D4;
+}
+
+@media (max-width: 405px) {
+    .reset-form > form > div{
+        flex-direction: column;
+    }
+
+    .reset-form form > div {
+        gap: 0px;
+    }
+
+}
+
+@media (max-width: 955px) {
+    
+}
+@media (max-width: 790px) {
+    .reset-center{
+        width: 50%;
+    }
+}
+
+
+
+
 /* registration page */
 
 .left-reg{
@@ -1540,7 +1892,8 @@ footer a:hover {
     width: 50%;
     height: 100%;
     gap: 10px;
-}.right-reg img{
+}
+.right-reg img{
     width: 100px;
 }
 .reg-form form{
@@ -1559,6 +1912,15 @@ footer a:hover {
     color: #2B59CE;
     font-family: Poppins;
     font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.reg-form h4{
+    color: #2B59CE;
+    font-family: Poppins;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -1639,4 +2001,3 @@ footer a:hover {
     padding: 10px;
     cursor: pointer;
   }
-  

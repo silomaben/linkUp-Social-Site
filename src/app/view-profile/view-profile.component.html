@@ -8,7 +8,10 @@
         </div>
         <div class="profile-details">
             <div class="top-profile-details">
-                <h2>{{userProfileData?.username}}</h2>
+                <div>
+                    <h2>{{userProfileData?.first_name}} {{userProfileData?.last_name}}</h2>
+                    <h3 id="users-name">@{{userProfileData?.username}}</h3>
+                </div>
                 <!-- <p *ngIf="userProfileData?.they_follow_me">Follows You</p>
                 <p *ngIf="!userProfileData?.they_follow_me">Not Follows You</p> -->
                 <button *ngIf="userProfileData?.they_follow_me && !isMyProfile(userProfileData?.user_id)">Follows You</button>
@@ -22,7 +25,7 @@
                 <h4>190 followers</h4>
                 <h4>190 following</h4>
             </div>
-            <h3 id="users-name">{{userProfileData?.first_name}} {{userProfileData?.last_name}}</h3>
+            
             <p id="user-bio">{{userProfileData?.bio}}</p>
             <div class="social-links">
                 <!-- Facebook -->
@@ -71,16 +74,20 @@
         <input type="text">
         <button>search</button>
     </div>
-    <div class="single-user">
+    <div class="single-user" *ngFor="let user of followersNfollowing[0];">
         <div class="single-user-details">
             <div>
                 <img src="../assets/img/test_profile.jpg" alt="">
-                <h3>unregister3d_user</h3>
+                <div>
+                    <h3 (click)="viewUserProfile(user.follower_username)">{{user.name}}</h3>
+                    <h4 (click)="viewUserProfile(user.follower_username)">@{{user.follower_username}}</h4>
+                </div>
             </div>
-            <h4>unregistered user</h4>
+
+            <button *ngIf="!user.is_following && !isUsernameMine(user.follower_username)">follow</button>
+            <button *ngIf="user.is_following && !isUsernameMine(user.follower_username)">unfollow</button>
+            
         </div>
-        
-        <p>view profile</p>
     </div>
 </section>
 
@@ -91,16 +98,22 @@
         <input type="text">
         <button>search</button>
     </div>
-    <div class="single-user">
+    <div class="single-user" *ngFor="let user of followersNfollowing[1];">
         <div class="single-user-details">
             <div>
                 <img src="../assets/img/test_profile.jpg" alt="">
-                <h3>ignit3graphics</h3>
+                <div>
+                    <h3 (click)="viewUserProfile(user?.following_username)">{{user.name}}</h3>
+                    <h4 (click)="viewUserProfile(user?.following_username)">@{{user.following_username}}</h4>
+                </div>
             </div>
-            <h4>ignit3 siloma</h4>
+            <button *ngIf="!user.is_following && !isUsernameMine(user.following_username)">follow</button>
+            <button *ngIf="user.is_following && !isUsernameMine(user.following_username)">unfollow</button>
+            
         </div>
         
-        <p>view profile</p>
+        
+       
     </div>
 </section>
 

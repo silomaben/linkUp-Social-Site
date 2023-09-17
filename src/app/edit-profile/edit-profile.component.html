@@ -1,39 +1,62 @@
 <app-navbar></app-navbar>
 
 <section class="body-container">
+    
     <div class="edit-profile">
-        <div class="top-edit-profile">
-            <h3>Edit Profile</h3>
-            <img src="{{userProfileData.profile_pic_url}}" alt="">
-        </div>
         
-        <form  [formGroup]="editUserForm" (ngSubmit)="updateUserDetails()">
-            <div class="edit-form">
-                    <input type="file" style="width: 200px;" (change)="onChange($event)">
-                    <div>
-                        <input formControlName="first_name" type="text" id="first_name" name="first_name" placeholder="first_name">
-                        <input formControlName="last_name" type="text" id="last_name" name="last_name" placeholder="last_name">
-                    </div>
-                    <div>
-                        <input formControlName="username" type="text" id="username" name="username" placeholder="username">
-                        <input formControlName="website_url" type="text" id="website_url" name="website" placeholder="website">
-                    </div>
-                    <div>
-                        <input formControlName="linkedin_url" type="text" id="linkedin_url" name="linkedin" placeholder="linkedin">
-                        <input formControlName="facebook_url" type="text" id="facebook_url" name="facebook" placeholder="facebook">
-                    </div>
-                    <div>
-                        <input formControlName="instagram_url" type="text" id="instagram_url" name="instagram" placeholder="instagram">
-                        <input formControlName="twitter_url" type="text" id="twitter_url" name="twitter" placeholder="twitter">
-                    </div>
-
-                    <textarea formControlName="bio" name="" id="bio" cols="30" rows="10" placeholder="User bio"></textarea>
-
-                    <button [disabled]="disableSubmitButton" type="submit">save changes</button>
-                    <!-- <input *ngIf="disableSubmitButton" type="submit" value="submit"/> -->
-                
+        <div class="inner-edit-profile">
+            <div class="top-edit-profile">
+                <div class="dp-top-edit-profile">
+                    <h3>Edit Profile</h3>
+                    <img src="{{userProfileData.profile_pic_url}}" alt="">
+                </div>
+                <div class="side-update">
+                    
+                    <h6>Update profile picture</h6>
+                    <input  type="file" style="width: 200px; padding-bottom: 15px;" (change)="onChange($event)">
+                    <button class="user-settings" (click)="openSettingsModal()"><i class="fas fa-cog fa-lg"></i> open account settings</button>
+                </div>
             </div>
-        </form>
+            
+            <form  [formGroup]="editUserForm" (ngSubmit)="updateUserDetails()">
+                <div class="edit-form">
+                        <div>
+                            <input formControlName="first_name" type="text" id="first_name" name="first_name" placeholder="first_name">
+                            <input formControlName="last_name" type="text" id="last_name" name="last_name" placeholder="last_name">
+                        </div>
+                        <div>
+                            <input formControlName="username" type="text" id="username" name="username" placeholder="username">
+                            <input formControlName="website_url" type="text" id="website_url" name="website" placeholder="website">
+                        </div>
+                        <div>
+                            <input formControlName="linkedin_url" type="text" id="linkedin_url" name="linkedin" placeholder="linkedin">
+                            <input formControlName="facebook_url" type="text" id="facebook_url" name="facebook" placeholder="facebook">
+                        </div>
+                        <div>
+                            <input formControlName="instagram_url" type="text" id="instagram_url" name="instagram" placeholder="instagram">
+                            <input formControlName="twitter_url" type="text" id="twitter_url" name="twitter" placeholder="twitter">
+                        </div>
+
+                        <textarea formControlName="bio" name="" id="bio" cols="30" rows="10" placeholder="User bio"></textarea>
+
+                        <button [disabled]="disableSubmitButton" type="submit">save changes</button>
+                        <!-- <input *ngIf="disableSubmitButton" type="submit" value="submit"/> -->
+                    
+                </div>
+                
+            </form>
+        </div>
+        <div class="card-container">
+            <div class="card">
+                <h2>Enhance Your Profile</h2>
+                <p>Adding your website and social links to your profile can help others learn more about you and your interests. It's a great way to showcase your online presence.</p>
+            </div>
+
+            <div class="card">
+                <h2>Connect with Others</h2>
+                <p>By providing your website and social links, you can easily connect with like-minded individuals, expand your network, and engage in meaningful conversations.</p>
+            </div>
+        </div>
     </div>
 
 </section>

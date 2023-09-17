@@ -3,7 +3,7 @@ import { PostsService } from '../services/posts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../services/modal.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgConfirmService } from 'ng-confirm-box';
 
 
@@ -14,18 +14,43 @@ import { NgConfirmService } from 'ng-confirm-box';
 })
 
 export class SinglePostComponent {
-
-  singlePost: any = {};
-  showCommentForm: boolean = false;
-  postOptionsVisibility: boolean[] = [];
-
-   // my forms
-   commentPostForm = this.formBuilder.group({
+  // my forms
+  commentPostForm = this.formBuilder.group({
     body: new FormControl('',[Validators.required])
   })
    subCommentForm = this.formBuilder.group({
     body: new FormControl('',[Validators.required])
   })
+
+
+  singlePost: any = {};
+  postOptionsVisibility: boolean[] = [];
+  commentOptionsVisibility: boolean[] = [];
+  subcommentOptionsVisibility: boolean[] = [];
+  commentForms: FormGroup[] = [];
+   
+
+  // comment, subcomment edit  state manager
+  isEditingComment: boolean[] = []; 
+  isEditingSubcomment: boolean[] = [];
+
+
+  closeEditComment() {
+    this.isEditingComment.fill(false);
+  }
+
+  closeEditSubcomment() {
+  this.isEditingSubcomment.fill(false);
+  }
+  toggleEditComment(index: number) {
+    this.isEditingComment.fill(false);
+    this.isEditingComment[index] = !this.isEditingComment[index];
+  }
+
+  toggleEditSubcomment(subcommentIndex: number) {
+  this.isEditingSubcomment.fill(false);
+    this.isEditingSubcomment[subcommentIndex] = !this.isEditingSubcomment[subcommentIndex];
+  }
 
   constructor(
     private posts:PostsService,
@@ -267,7 +292,7 @@ export class SinglePostComponent {
       const storedUser = localStorage.getItem('user');
     
       if (storedUser) {
-        console.log('delete no clicked');
+        // console.log('delete no clicked');
         const user = JSON.parse(storedUser);
         const user_id = user.user_id;
         
@@ -285,7 +310,7 @@ export class SinglePostComponent {
     },
     () => {
       console.log('no ');
-      console.log('delete no clicked');
+      // console.log('delete no clicked');
       
     })
 
@@ -294,6 +319,58 @@ export class SinglePostComponent {
     
   }
 
+  updateCommentFormSubmit(event: Event, comment_id: string, post_id: string) {
+    event.preventDefault();
+    console.log(comment_id, post_id);
+    
+    const storedUser = localStorage.getItem('user');
+    
+      if (storedUser) {
+        // console.log('delete no clicked');
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
+
+        const bodyInput = document.querySelector(`#comment-input-${comment_id}`) as HTMLInputElement
+        const body = bodyInput.value;
+        console.log( user_id);
+        
+        this.posts.editComment(comment_id,post_id,user_id,body).subscribe((response)=>{
+          console.log(response);
+          
+
+        })
+      }
+  }
+
+  updateSubcommentFormSubmit(event: Event, subcomment_id: string, comment_id: string) {
+    event.preventDefault();
+    console.log(subcomment_id, comment_id);
+    
+    const storedUser = localStorage.getItem('user');
+    
+      if (storedUser) {
+        // console.log('delete no clicked');
+        const user = JSON.parse(storedUser);
+        const user_id = user.user_id;
+
+        const bodyInput = document.querySelector(`#subcomment-input-${subcomment_id}`) as HTMLInputElement
+        
+        const body = bodyInput.value;
+
+
+        console.log( body);
+        
+        this.posts.editSubcomment(subcomment_id,comment_id,user_id,body).subscribe((response)=>{
+          console.log(response);
+          
+
+        })
+      }
+  }
+
+
+  
+
 
   @HostListener('document:click', ['$event'])
   handleClick(event: Event): void {
@@ -301,6 +378,9 @@ export class SinglePostComponent {
     for (let i = 0; i < this.postOptionsVisibility.length; i++) {
       this.postOptionsVisibility[i] = false;
     }
+    
+    this.subcommentOptionsVisibility.fill(false);
+    this.commentOptionsVisibility.fill(false);
   }
 
   handleContainerClick(event: Event): void {
@@ -328,13 +408,28 @@ export class SinglePostComponent {
     this.modalService.closeEditPostModal();
   }
 
-  // view post options function{toggle open and close}
   togglePostOptions(index: number) {
     this.postOptionsVisibility[index] = !this.postOptionsVisibility[index];
   }
   closePostOptions(index: number): void {
     this.postOptionsVisibility[index] = false;
   }
+
+  toggleCommentOptions(index: number) {
+    this.commentOptionsVisibility[index] = !this.commentOptionsVisibility[index];
+  }
+  closeCommentOptions(index: number): void {
+    this.commentOptionsVisibility[index] = false;
+  }
+
+  toggleSubcommentOptions(index: number) {
+    this.subcommentOptionsVisibility[index] = !this.subcommentOptionsVisibility[index];
+  }
+  closeSubcommentOptions(index: number): void {
+    this.subcommentOptionsVisibility[index] = false;
+  }
+
+  
 
 
   // post: {

@@ -32,6 +32,7 @@ export interface loginRequest {
 export interface loginResponse 
 {
   message: string,
+  error: string,
   token: string,
   user: {
     user_id: string,

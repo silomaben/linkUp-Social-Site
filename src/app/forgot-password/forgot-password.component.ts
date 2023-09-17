@@ -25,7 +25,10 @@ export class ForgotPasswordComponent {
   haveForgottenPassword(){
     const email = this.forgotPasswordForm.value.email ?? '';
     if( this.forgotPasswordForm.valid){
+
+
       this.auth.forgotPassword(email).subscribe((res: any) => {
+        localStorage.setItem('emailrecovery',res.email)
         this.toastr.success(`Password reset link has been sent to ${email}`, 'Success', {
           timeOut: 1000, 
         });

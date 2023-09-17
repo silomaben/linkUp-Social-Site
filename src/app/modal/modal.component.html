@@ -42,3 +42,28 @@
       </div>
     </section>
   </ng-container>
+
+<ng-container *ngIf="displaySettingsModal$ | async as display" class="settingsModal">
+    <section [class.open]="display === 'open'" (click)="closeSettingsModal()">
+      <div (click)="$event.stopPropagation()" >
+        <button class="close" type="button" (click)="closeSettingsModal()">X</button>
+                <div class="settings-modal">
+                  <!-- <div class="settings-modal"> -->
+                    <br>
+                    <br><br>
+                    <form >
+                      <h3>Settings</h3>
+                      <br>
+                      <p>To deactivate account, enter your password to confirm the deactivation.</p>
+                      <br>
+                      <label for="confirmPassword"></label>
+                      <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                      <br>
+                      
+                      <button  class="save-settings-btn">Deactivate Account</button>
+                    
+                  </form>
+                </div>
+      </div>
+    </section>
+  </ng-container>

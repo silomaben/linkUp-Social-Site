@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,11 +13,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent {
-  constructor(private User:UserService,
+  constructor(
+    private User:UserService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService,
     ){}
 
   editUserForm!:FormGroup
@@ -120,8 +123,26 @@ export class EditProfileComponent {
     }
   }
 
-  updateUserDetails(){
+   // open and close create post modal
+   openSettingsModal() {
+    this.modalService.openSettingsModal();
+    console.log('open settings');
+  }
+  closeSettingsModal() {
+    
+    this.modalService.closeSettingsModal();
+  }
 
+  // closeSettingsModal() {
+  //   this.modalService.closeSettingsModal();
+  // }
+  // openSettingsModal() {
+  //   console.log('open settings');
+    
+  //   this.modalService.openSettingsModal();
+  // }
+
+  updateUserDetails(){
     console.log(this.editUserForm.value);
     
 

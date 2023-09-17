@@ -36,6 +36,8 @@ export class PostsService {
         user_id: user_id
       }
 
+      
+
       return this.http.post<any>(url,requestBody)
     }
 
@@ -172,6 +174,40 @@ export class PostsService {
 
       return this.http.post<any>(url,requestBody)
     };
+
+    editComment(comment_id:string,post_id:string,user_id:string,body:string): Observable<any> {
+      const url = 'http://localhost:4500/posts/updateComment';
+
+      comment_id = comment_id.toString()
+      
+      const requestBody = {
+        comment_id: comment_id,
+        post_id: post_id,
+        user_id: user_id,
+        body: body,
+    }    
+
+      return this.http.post<any>(url,requestBody)
+    }
+
+    editSubcomment(subcomment_id:string,comment_id:string,user_id:string,body:string): Observable<any> {
+      const url = 'http://localhost:4500/posts/updateSubcomment';
+
+      // comment_id = comment_id.toString()
+      // subcomment_id = comment_id.toString()
+      
+      const requestBody = {
+        subcomment_id: subcomment_id,
+        comment_id: comment_id,
+        user_id: user_id,
+        body: body,
+    }    
+
+    console.log();
+    
+
+      return this.http.post<any>(url,requestBody)
+    }
 
 
 

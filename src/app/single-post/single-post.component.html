@@ -8,7 +8,7 @@
         <br>
 
         <div class="picture-post">
-            <div class="user-post-container" >
+            <div class="user-post-container">
                 <div class="user-details">
                     <img (click)="viewUserProfile(singlePost.post[0].user_name)" src="{{singlePost.post[0].user_dp}}" alt="">
                     <div>
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="view-post-option-div"  #mainContainer (click)="handleContainerClick($event)">
-                    <button class="view-post-options"(click)="togglePostOptions(0)">[ooo]</button>
+                    <button class="view-post-options"(click)="togglePostOptions(0)"><i class="fas fa-ellipsis-h"></i></button>
                     <div  class="post-options" *ngIf="postOptionsVisibility[0]">
                         <p>report</p>
                         <p  *ngIf="isMyPost(singlePost.post[0].user_id)" >archive</p>
@@ -56,52 +56,91 @@
 
 
             
-            <div *ngFor="let comment of this.singlePost.comments" class="level-1-comment">
-                <div class="comments-dp">
-                    <img src="{{comment.user_dp}}" alt="">
-                </div>
-                <div>
-                    <h4 class="username">{{ comment.username }}</h4>
-                    <p>{{ comment.body }}</p>
-                    <div class="comment-icons">
-                        <div *ngIf="!comment.has_liked"><button (click)="likeComment(comment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
-                        <div *ngIf="comment.has_liked"><button (click)="likeComment(comment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
-                        <div><button><i class="fas fa-reply"></i></button><span> reply</span></div>
+            <div *ngFor="let comment of this.singlePost.comments, let i = index" class="level-1-comment">
+                    <div class="comments-dp">
+                        <img src="{{comment.user_dp}}" alt="">
                     </div>
-                    <div class="comment-comment">
-                <form method="POST" [formGroup]="subCommentForm" (click)="addSubComment(comment.comment_id)">
-                    <div class="comment-section" >
-                        <div>
-                            <input formControlName="body" type="text">
-                        </div>
-                        <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
-                    </div>
-                    
-                </form>
-
-            </div>
-                    <div *ngIf="comment.subcomments.length > 0" class="level-2-comments">
-                        <div *ngFor="let subcomment of comment.subcomments" class="level-2-comment">
-                        
-                            <div class="level-2-comment">
-                                <div class="comments-dp">
-                                    <img src="{{ subcomment.user_dp }}" alt="">
+                    <div class="comments-holder" >
+                        <div class="single-comment">
+                            <div class="comment-box">
+                                <h4 style="font-size: 14px; font-weight: bold; color: #000000;"  class="username">{{ comment.full_name }}</h4>
+                                <h6 style="font-size: 10px; color: #4f4f4f; margin-top: -5px;"  class="username">@{{ comment.username }}</h6>
+                                <p  *ngIf="!isEditingComment[i]">{{ comment.body }}</p>
+                                <div *ngIf="isEditingComment[i]">
+                                    <form (submit)="updateCommentFormSubmit($event, comment.comment_id, singlePost.post[0].post_id)">
+                                        <input id="comment-input-{{comment.comment_id}}" value="{{comment.body}}" name="body" type="text">
+                                        <button type="submit">save changes</button>
+                                        <button (click)="closeEditComment()">close</button>
+                                    </form>
                                 </div>
-                                <div>
-                                    <h4 class="username">{{ subcomment.username }}</h4>
-                                    <p>{{ subcomment.body }}</p>
-                                    <div class="comment-icons">
-                                        <div *ngIf="!subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} like</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
-                                        <div *ngIf="subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} likes</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
-                                        <!-- <div><button><i class="fas fa-reply"></i></button><span> reply</span></div> -->
+                                
+                                
+                                <div class="comment-icons">
+                                    <div *ngIf="!comment.has_liked"><button (click)="likeComment(comment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
+                                    <div *ngIf="comment.has_liked"><button (click)="likeComment(comment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="comment.like_count === 0"> like</span><span *ngIf="comment.like_count == 1"> {{ comment.like_count }} like</span><span *ngIf="comment.like_count > 1"> {{ comment.like_count }} likes</span></div>
+                                    <div><button><i class="fas fa-reply"></i></button><span> reply</span></div>
+                                </div>
+                            </div>
+                            <div *ngIf="isMyPost(comment.user_id)" class="comment_dropdown" #mainContainer (click)="handleContainerClick($event)" >
+                                <button (click)="toggleCommentOptions(i)"><i class="fas fa-ellipsis-h"></i></button>
+                                <div class="comment_options" *ngIf="commentOptionsVisibility[i]">
+                                    <p (click)="toggleEditComment(i)">edit</p>
+                                    <p>delete</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-comment">
+                            <form  method="POST" [formGroup]="subCommentForm" (click)="addSubComment(comment.comment_id)">
+                                <div class="comment-section" >
+                                    <div>
+                                        <input formControlName="body" type="text">
+                                    </div>
+                                    <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
+                                </div>
+                                
+                            </form>
+
+                        </div>
+                        <div *ngIf="comment.subcomments.length > 0" class="level-2-comments">
+                            <div *ngFor="let subcomment of comment.subcomments,let j = index" class="level-2-comment">
+                            
+                                <div class="subcomment-container">
+                                    <div class="level-2-comment">
+                                        <div class="comments-dp">
+                                            <img src="{{ subcomment.user_dp }}" alt="">
+                                        </div>
+                                        <div>
+                                            <h4 style="font-size: 16px; color: #000000;"  class="username">{{ subcomment.full_name }}</h4>
+                                            <h6 style="font-size: 10px;  margin-top: -5px; color: #4f4f4f;" class="username">@{{ subcomment.username }}</h6>
+                                            <p *ngIf="!isEditingSubcomment[j]">{{ subcomment.body }} </p>
+                                            <div *ngIf="isEditingSubcomment[j]" >
+                                                <form (submit)="updateSubcommentFormSubmit($event, subcomment.subcomment_id,  comment.comment_id)">
+                                                    <input value="{{ subcomment.body }}" type="text" id="subcomment-input-{{subcomment.subcomment_id}}" >
+                                                    <button>update </button>
+                                                </form>
+                                            </div>
+
+                                            <div class="comment-icons">
+                                                <div *ngIf="!subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i class="far fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} like</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
+                                                <div *ngIf="subcomment.has_liked"><button (click)="likeSubcomment(subcomment)"><i style="color: red;" class="fas fa-heart fa-lg"></i></button><span *ngIf="subcomment.like_count === 0"> like</span><span *ngIf="subcomment.like_count === 1"> {{ subcomment.like_count }} likes</span><span *ngIf="subcomment.like_count > 1"> {{ subcomment.like_count }} likes</span></div>
+                                                <!-- <div><button><i class="fas fa-reply"></i></button><span> reply</span></div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="isMyPost(subcomment.user_id)" class="subcomment_dropdown" #mainContainer (click)="handleContainerClick($event)" >
+                                        <button (click)="toggleSubcommentOptions(j)"><i class="fas fa-ellipsis-h"></i></button>
+                                        <div class="subcomment_options" *ngIf="subcommentOptionsVisibility[j]">
+                                            <p (click)='toggleEditSubcomment(j)'>edit</p>
+                                            <p>delete</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
-            </div>
+        </div>
 
         
     </div>
