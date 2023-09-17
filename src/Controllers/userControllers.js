@@ -122,6 +122,32 @@ const activateUserAccount = async(req, res)=>{
 
 }
 
+// view users followers and following
+const fetchUsers = async (req,res)=>{
+    try {
+
+        const viewed_username = req.params.username;
+        
+
+        const pool = await mssql.connect(sqlConfig)
+
+        if(pool.connected){
+            const posts = await pool.request()
+            .input('viewed_username',mssql.VarChar, viewed_username)
+            .execute('fetchPostsForSingleUserProc')
+            
+
+        
+        return res.json({
+            posts: posts.recordset
+        })
+
+        }
+        
+    } catch (error) {
+        return res.json({Error:error.message})
+    }
+}
 
 
 
@@ -217,8 +243,14 @@ const viewUser = async (req,res)=>{
             .input('them', mssql.VarChar,them_username)
             .execute('viewUserProc')
 
-        console.log(result);
-        return res.json({message: result.recordset})
+            const friends = await pool.request()
+            .input('me',mssql.VarChar, me_id)
+            .input('them', mssql.VarChar,them_username)
+            .execute('getUserFollowersAndFollowing')
+
+            
+        // console.log(friends.recordsets);
+        return res.json({message: result.recordset,friends:friends.recordsets })
          
         }
         

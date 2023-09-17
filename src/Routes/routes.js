@@ -49,7 +49,7 @@ router.post('/auth/login',login);
 router.post('/auth/deactivate',verifyLoginToken,deactivateUserAccount);
 router.post('/auth/activate',activateUserAccount);
 router.post('/auth/forgot-password',forgotPassword);
-router.post('/auth/verify-token',verifyToken);
+router.get('/auth/verify-token/:token/:email',verifyToken);
 router.post('/auth/reset-password',resetPassword);
 
 

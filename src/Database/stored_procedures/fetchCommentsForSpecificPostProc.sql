@@ -24,6 +24,7 @@ BEGIN
     SELECT C.comment_id,
            C.user_id,
            U.username, 
+           CONCAT(U.first_name, ' ', U.last_name) AS full_name, 
            U.profile_pic_url, 
            C.body,
            C.datetime,
@@ -38,7 +39,7 @@ BEGIN
     LEFT JOIN CommentLikes AS CL ON C.comment_id = CL.comment_id
     INNER JOIN Users AS U ON C.user_id = U.user_id  
     WHERE C.post_id = @post_id
-    GROUP BY C.comment_id, C.user_id, U.username, U.profile_pic_url, C.body, C.datetime, C.post_id;
+    GROUP BY C.comment_id, C.user_id, U.username, U.profile_pic_url,U.first_name, U.last_name, C.body, C.datetime, C.post_id;
 END;
 
 

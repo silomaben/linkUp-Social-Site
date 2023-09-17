@@ -21,6 +21,7 @@ BEGIN
         P.post_id,
         P.user_id,
         U.username AS user_name,
+        CONCAT(U.first_name, ' ', U.last_name) AS full_name, 
         U.profile_pic_url AS user_dp,
         P.image,
         P.body,

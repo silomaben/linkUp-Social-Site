@@ -152,15 +152,12 @@ const fetchPostsBasedOnPerfomance = async (req,res)=>{
     try {
 
         const user_id = req.params.id;
-        
         const pool = await mssql.connect(sqlConfig)
 
         if(pool.connected){
             const posts = await pool.request()
             .input('user_id',mssql.VarChar, user_id)
             .execute('fetchPostsBasedOnPerfomanceProc')
-            
-
         
         return res.json({
             posts: posts.recordset
@@ -226,12 +223,13 @@ const fetchRecentPosts = async (req,res)=>{
 // update comment
 const updateComment = async (req,res)=>{
     try {
-        const {post_id,user_id,body} = req.body
+        const {comment_id,post_id,user_id,body} = req.body
 
         const pool = await mssql.connect(sqlConfig)
 
         if(pool.connected){
             const result = await pool.request()
+            .input('comment_id',mssql.VarChar, comment_id)
             .input('post_id',mssql.VarChar, post_id)
             .input('user_id',mssql.VarChar, user_id)
             .input('body', mssql.Text, body)
@@ -248,7 +246,7 @@ const updateComment = async (req,res)=>{
         }
         
     } catch (error) {
-        return res.json({error})
+        return res.json({error:error.message})
     }
 }
 
@@ -260,7 +258,8 @@ const updateComment = async (req,res)=>{
 const updateSubcomment = async (req, res) => {
     try {
         const { subcomment_id,comment_id, user_id, body } = req.body;
-
+        
+        console.log(subcomment_id,comment_id, user_id, body );
         const pool = await mssql.connect(sqlConfig);
 
         if (pool.connected) {
@@ -567,6 +566,7 @@ const viewSinglePost = async (req, res) => {
 
                     commentObjects.push({
                         comment_id: comment.comment_id,
+                        full_name: comment.full_name,
                         user_id: comment.user_id,
                         username: comment.username,
                         user_dp: comment.profile_pic_url,

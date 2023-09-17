@@ -92,13 +92,9 @@ Content-Type: application/json
 
 ###
 #verify token
-POST http://localhost:4500/auth/verify-token
+GET http://localhost:4500/auth/verify-token/da3eaa08faf81db85d92516f5570b350b58766d7/kaybernard449@gmail.com
 Content-Type: application/json
 
-{
-    "token": "e8b46fb03a5e64092f39318c64e95059e09ae253",
-    "email": "kaybernard449@gmail.com"
-}
 
 
 ###
@@ -257,12 +253,13 @@ Content-Type: application/json
 #update comment
 POST http://localhost:4500/posts/updateComment
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE2OTQ5MzI0NDQsImV4cCI6MTY5NDkzNjA0NH0.JHTl4VlHlKSUIEKoqR2Bom3__de4BmX6DXaGE_qWAOU
 
 {
-    "comment_id": "1",
-    "post_id": "90af0c8b-7ee7-48a8-a494-927c82598db3",
-    "user_id": "be6feb2f-4195-40b3-8d65-39403d5f37e4",
-    "body": "comment updated bruv on sunday test indeed"
+    "comment_id": "17",
+    "post_id": "36750ae1-bdda-4fbe-bae4-005da346fd55",
+    "user_id": "b991bde8-ec68-4259-9b4e-f9d76a132ebc",
+    "body": "comment sunday test indeed"
 }
 
 

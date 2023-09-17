@@ -9,8 +9,8 @@ module.exports.sendResetToken= async (email,token) => {
             const message = {
               from: process.env.EMAIL_USER,
               to: email,
-              subject: `LinkUp Password Reset`,
-              text: `Please use the token we've sent you to change your password. \n Token: ${token}`
+              subject: `LinkUp Password Reset`, 
+              text: `Click on this link to reset your password http://localhost:4500/auth/verify-token/${token}/kaybernard449@gmail.com`
             };
             try {
               

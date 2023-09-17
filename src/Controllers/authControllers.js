@@ -6,20 +6,13 @@ const crypto = require('crypto')
 const { sqlConfig } = require('../Config/config');
 const { loginSchema } = require('../utils/validators');
 const { sendResetToken } = require('../EmailService/sendResetToken');
-
-
-
-
-
-
-
+const path = require('path');
 
 
 
 // register a user
 const registerUser = async (req,res)=>{
     try {
-        console.log('got data');
         const user_id = v4();
         
         const { first_name, last_name, username, email,  password, profile_pic_url } = req.body;
@@ -33,7 +26,7 @@ const registerUser = async (req,res)=>{
             .input('email', email)
             .execute('fetchUserByEmailProc')
 
-            console.log('bellowfetch');
+            
 
             if(confirmEmailExists.recordset.length > 0){
                 return res.status(409).json({error: 'The email provided is already registered.'})
@@ -57,14 +50,6 @@ const registerUser = async (req,res)=>{
                         message: "User registration was successful"
                     })
                 }
-        // if(result.rowsAffected==1){
-        //     return res.json({
-        //         message: "User registration was successful"
-        //     })
-        // }else{
-        //     return res.json({message: "User registration failed"})
-        // }
-        
 
     } catch (error) {
         return res.json({Error:error.message})
@@ -176,7 +161,7 @@ const forgotPassword = async(req, res)=>{
         const sent = sendResetToken(email,token)
         console.log(sent);
 
-        res.status(200).json({message: 'Password reset email sent'})
+        res.status(200).json({message: 'Password reset email sent',email:email})
         
 
     } catch (error) {
@@ -188,7 +173,7 @@ const forgotPassword = async(req, res)=>{
 // verifytoken
 const verifyToken = async(req, res)=>{
     try {
-        const {token, email} = req.body
+        const { token, email } = req.params;
 
         const pool = await mssql.connect(sqlConfig)
         const checkEmailQuery = await pool
@@ -201,9 +186,12 @@ const verifyToken = async(req, res)=>{
         }
         
         if(checkEmailQuery.recordset[0].password_reset_token == token ){
-            return res.status(200).json({message: `Token is Valid`})
+            const filePath = path.join(__dirname, 'password-reset-redirect.html');
+            return res.status(200).sendFile(filePath);
         }
-        return res.status(400).json({error: 'Invalid token or token expired'})
+        
+        const filePath = path.join(__dirname,'invalid-expired-token.html');
+        return res.status(200).sendFile(filePath);
     } catch (error) {
         return res.status(500).json({error: `Internal server error: ${error.message}`})
     }
