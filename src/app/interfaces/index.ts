@@ -42,6 +42,7 @@ export interface loginResponse
     user_id: string,
     first_name: string,
     last_name: string,
+    deactivated_status: string,
     username: string,
     email: string,
     profile_pic_url: string,

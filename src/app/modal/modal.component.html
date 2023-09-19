@@ -65,7 +65,7 @@
                 <div class="settings-modal">
                     <br>
                     <br><br>
-                    <form [formGroup]="deactivateAccount" (ngSubmit)="deactivate()">
+                    <form data-cy="deactivate-account-form" [formGroup]="deactivateAccount" (ngSubmit)="deactivate()">
                       <h3>Settings</h3>
                       <br>
                       <p>To deactivate account, enter your password to confirm the deactivation.</p>
@@ -74,7 +74,7 @@
                       <input formControlName="password" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
                       <br>
                       
-                      <button  class="deactivate-settings-btn">Deactivate Account</button>
+                      <button  data-cy="deactivate-settings-btn" class="deactivate-settings-btn">Deactivate Account</button>
                     
                   </form>
                 </div>

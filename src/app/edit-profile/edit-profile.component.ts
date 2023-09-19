@@ -36,7 +36,7 @@ export class EditProfileComponent {
       last_name: [null, Validators.required],
       username: [null, Validators.required],
       profile_pic_url: [null, Validators.required], 
-      bio: [null, Validators.required], 
+      bio: [Validators.required], 
       linkedin_url: [null, Validators.required], 
       facebook_url: [null, Validators.required], 
       website_url: [null, Validators.required], 
@@ -149,13 +149,34 @@ export class EditProfileComponent {
     // console.log(first_name,last_name,username,profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url)
     // console.log("this"+ this.editUserForm.value);
 
-    if(first_name.length<1 ,last_name.length<1 ,username.length<1){return}
+    if(first_name.length < 3){
+      this.toastr.warning('Firstname must be more than 3 characters!', 'Invalid form', {
+        timeOut: 1000,
+      });
+      return
+    } else if(last_name.length < 3){
+      this.toastr.warning('Last name must be more than 3 characters!', 'Invalid form', {
+        timeOut: 1000,
+      });
+      return
+    } else if(username.length < 3){
+      this.toastr.warning('Username must be more than 3 characters!', 'Invalid form', {
+        timeOut: 1000,
+      });
+      return
+    }
+
+    if(this.editUserForm.valid){
+      this.User.updateUserInfo(this.userProfileData.user_id,first_name,last_name,username,profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url).subscribe((response) =>{
+        console.log(response.message)
+        this.toastr.success('Profile updated successfully')
+        this.router.navigate(['/profile', username]);
+      }) 
+    } else {
+      this.toastr.warning('Please provide a bio for other users to connect and Link Up with you!')
+    }
     
-    this.User.updateUserInfo(this.userProfileData.user_id,first_name,last_name,username,profile_pic_url,bio,linkedin_url,facebook_url,website_url,instagram_url,twitter_url).subscribe((response) =>{
-      console.log(response.message)
-      this.toastr.success('Profile updated successfully')
-      this.router.navigate(['/profile', username]);
-    })    
+      
   }
 
 

@@ -23,7 +23,7 @@ export class LoginComponent {
   constructor(private toastr: ToastrService,private auth:AuthService,private route:Router, private store: Store) {}
   
   submitLoginForm(){
-    const credential = this.loginForm.value.credential ?? '';
+    const credential = (this.loginForm.value.credential ?? '').toLowerCase();
     const passcode = this.loginForm.value.passcode ?? '';
 
     if(credential.length <= 0){
@@ -34,20 +34,36 @@ export class LoginComponent {
       this.toastr.error('Please enter your password!');
     }
 
+    
+
     if( this.loginForm.valid){
       this.auth.login(credential,passcode).subscribe((res: loginResponse) => {
-
-        console.log('res',res)
-        localStorage.setItem('token',res.token)
-        localStorage.setItem('user', JSON.stringify(res.user));
-        this.auth.signIn()
-        this.store.dispatch(login({ userDetails: res.user }));
-        this.toastr.success('Login successful!', 'Success', {
-          timeOut: 1000, 
-        });
-        setTimeout(() => {
-            this.route.navigateByUrl("/");
-        }, 1500);
+        if(res.user.deactivated_status=="was off"){
+          console.log('res',res)
+          localStorage.setItem('token',res.token)
+          localStorage.setItem('user', JSON.stringify(res.user));
+          this.auth.signIn()
+          this.store.dispatch(login({ userDetails: res.user }));
+          this.toastr.success('Login successful!', 'Success', {
+            timeOut: 1000, 
+          });
+          setTimeout(() => {
+              this.route.navigateByUrl("/");
+          }, 1500);
+        } else if(res.user.deactivated_status=="was on"){
+          console.log('res',res)
+          localStorage.setItem('token',res.token)
+          localStorage.setItem('user', JSON.stringify(res.user));
+          this.auth.signIn()
+          this.store.dispatch(login({ userDetails: res.user }));
+          this.toastr.success('Your acount has been reactivated', 'Welcome back', {
+            timeOut: 1000, 
+          });
+          setTimeout(() => {
+              this.route.navigateByUrl("/");
+          }, 1500);
+        }
+        
       },
       (error) => {
         if (error.error === 'Email is not registered') {

@@ -13,7 +13,7 @@
                 <div class="side-update">
                     
                     <h6>Update profile picture</h6>
-                    <input  type="file" style="width: 200px; padding-bottom: 15px;" (change)="onChange($event)">
+                    <input id="change-profile-pic"  type="file" style="width: 200px; padding-bottom: 15px;" (change)="onChange($event)">
                     <button class="user-settings" (click)="openSettingsModal()"><i class="fas fa-cog fa-lg"></i> open account settings</button>
                 </div>
             </div>
@@ -39,7 +39,7 @@
 
                         <textarea formControlName="bio" name="" id="bio" cols="30" rows="10" placeholder="User bio"></textarea>
 
-                        <button [disabled]="disableSubmitButton" type="submit">save changes</button>
+                        <button id="submit-profile-update" [disabled]="disableSubmitButton" type="submit">save changes</button>
                         <!-- <input *ngIf="disableSubmitButton" type="submit" value="submit"/> -->
                     
                 </div>

@@ -159,18 +159,25 @@ export class ModalComponent implements OnInit {
         console.log(response);
         if ('' == ''){
           this.toastr.info('Account deactivated successfully,Loging you out', 'Goodbye', {
-            timeOut: 1000, 
+            timeOut: 3000, 
           });
           setTimeout(() => {
             localStorage.clear();
             let modal = document.querySelector('.open') as HTMLDivElement
             modal.className='close'
             this.auth.signOut()
-          }, 1500); 
+          }, 2500); 
           this.deactivateAccount.get('password')?.setValue('');
-
         }
-        
+      },
+      (error) => {
+        if (error.error.error === 'Invalid deactivate credentials') {
+          this.toastr.error('Invalid password. Please enter correct password', 'Error', {
+            timeOut: 3000, 
+          });
+        } else {
+          console.error('Unexpected error:', error);
+        }
       })
     }
   }

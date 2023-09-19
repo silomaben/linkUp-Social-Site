@@ -3,15 +3,15 @@
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    customCommand(param: any): typeof customCommand;
+  }
+}
 //
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
+function customCommand(param: any): void {
+  console.warn(param);
+}
 //
 // NOTE: You can use it like so:
 // Cypress.Commands.add('customCommand', customCommand);
@@ -42,12 +42,13 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+function Login (username: string, password: string):void{
+    cy.visit('http://localhost:5500/client/auth/html/login.html');
+    cy.get('#email').type(username);
+    cy.get('#password').type(password);
+    cy.get('#submit').click();
+}
 
-// Cypress.Commands.add('login', (username: string, password: string) => {
-//     cy.visit('http://localhost:5500/client/auth/html/login.html');
-//     cy.get('#email').type(username);
-//     cy.get('#password').type(password);
-//     cy.get('#submit').click();
-//   });
+Cypress.Commands.add("login", Login)
   
   
