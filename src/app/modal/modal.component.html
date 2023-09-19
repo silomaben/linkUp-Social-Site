@@ -9,7 +9,7 @@
                         <div class="topside-modal">
                             <img src="../../assets/img/test_profile.jpg" alt="">
                         </div>
-                        <textarea formControlName="body" id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                        <textarea data-cy="add-post-textarea" formControlName="body" id="postText" name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
                         
                        
                         <div class="tagged-users">
@@ -19,13 +19,16 @@
                           </div>
                         </div>
 
+                        <label for="select-image_input" class="custom-file-upload" style="font-size: smaller;">
+                          Click "choose file" to select an image
+                        </label>
                         <input id="select-image_input" type="file"  (change)="onChange($event)">
 
                         
                         
                         <div class="bottomside-modal">
-                            <button>image</button>
-                            <button (click)="sendPost()" id="addPost-btn-modal" [disabled]="disableSubmitButton">submit</button>
+                            <!-- <button>image</button> -->
+                            <button data-cy="add-post-submit" (click)="sendPost()" id="addPost-btn-modal" [disabled]="disableSubmitButton">submit</button>
                         </div>
                     </form>
                 </div>

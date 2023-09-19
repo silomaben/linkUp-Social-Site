@@ -45,6 +45,8 @@ export class SearchComponent {
       this.userService.getAllUsers(user_id).subscribe((response) => {
         this.fetchedUsers = response.users;
         this.filteredSearch = this.fetchedUsers;
+        // console.log(this.filteredSearch);
+        
       });
     }
   }

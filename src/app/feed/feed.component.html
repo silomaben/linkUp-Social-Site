@@ -6,15 +6,15 @@
     <div class="display-card">
         <div class="profile-display">
             <img id="header-image" src="../../assets/img/bg-blog.jpg" alt="">
-            <img id="dp-image" src="../../assets/img/test_profile.jpg" alt="">
+            <img id="dp-image" src="{{getUserProfilePic()}}" alt="">
         </div>
         <div  class="profile-display-skills">
-            <p>| Python | Django | MEAN Stack (MSSQL | Angular | Express | Nodejs) | Photoshop | Illustrator | Aftereffects</p>
+            <p>Welcome, {{getUsername()}}</p>
         </div>
         <br>
-        <p class="profile-display-bio">bio</p>
+        <!-- <p class="profile-display-bio">bio</p> -->
         <div class="contacts">
-            <p>email</p>
+            <p>Others users can reach you via {{getEmailname()}}</p>
         </div>
     </div>
 </section>
@@ -27,17 +27,24 @@
     <div class="add-post">
             <div class="topside">
                 <img src="../../assets/img/test_profile.jpg" alt="">
-                <textarea  (click)="openCreatePostModal()"  name="postText" rows="4" cols="50" placeholder="What’s on your mind, kay?"></textarea>
+                <textarea data-cy="add-a-post"  (click)="openCreatePostModal()"  name="postText" rows="4" cols="50" placeholder="What’s on your mind, {{getUsername()}}?"></textarea>
             </div>
             <div class="bottomside">
-                <button>image</button>
-                <button id="addPost-btn">submit</button>
+                <button (click)="openCreatePostModal()">add image</button>
+                <button (click)="openCreatePostModal()" id="addPost-btn">add post</button>
             </div>
         <!-- </form> -->
     </div>
 
-    <div class="posts">
-        <!-- <h1>recent posts</h1> -->
+      <div class="content-navigation">
+        <button [ngClass]="{ 'active-button-navigation': navigateTo === 'popular', 'inactive-button-navigation': navigateTo !== 'popular' }" (click)="setActiveTab('popular')"> Popular</button>
+        <button [ngClass]="{ 'active-button-navigation': navigateTo === 'recent', 'inactive-button-navigation': navigateTo !== 'recent' }" (click)="setActiveTab('recent')">Recent</button>
+      </div>
+      
+      
+
+    <div class="posts" *ngIf="navigateTo=='popular'" >
+        <!-- <h1>popular posts</h1> -->
         <br>
 
         <div class="picture-post" *ngFor="let post of allpost;  let i = index">
@@ -52,7 +59,7 @@
                     
                 </div>
                 <div class="view-post-option-div"  #mainContainer (click)="handleContainerClick($event)">
-                    <button class="view-post-options"(click)="togglePostOptions(i)">[ooo]</button>
+                    <button class="view-post-options"(click)="togglePostOptions(i)"><i class="fas fa-ellipsis-h"></i></button>
                     <div  class="post-options" *ngIf="postOptionsVisibility[i]">
                         <p>report</p>
                         <p  *ngIf="isMyPost(post.user_id)" >archive</p>
@@ -67,15 +74,98 @@
             <div class="post-pic">
                 <img src="{{post['image']}}" alt="">
             </div>
-            <div class="icons">
-                <button (click)="likePost(post)" *ngIf="!post.has_liked"><i id="like-btn-{{post.post_id}}" class="far fa-heart fa-lg"></i></button>
-                <button (click)="likePost(post)" *ngIf="post.has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
-                    <p  *ngIf="post['like_count'] === 1">{{post['like_count']}} like</p>
-                        <p *ngIf="post['like_count'] > 1"> {{post['like_count']}} likes</p>
-                    
-                <i class="fas fa-comment fa-lg"></i>
+            <div class="icons-parent">
+                <div class="icons">
+                    <button data-cy="like-btn-feed" (click)="likePost(post)" *ngIf="!post.has_liked"><i id="like-btn-{{post.post_id}}" class="far fa-heart fa-lg"></i></button>
+                    <button data-cy="like-btn-feed" (click)="likePost(post)" *ngIf="post.has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
+                        <p data-cy="like-count" class="comment-like-count"  *ngIf="post['like_count'] === 0">like</p>
+                        <p data-cy="like-count" class="comment-like-count"  *ngIf="post['like_count'] === 1">{{post['like_count']}} like</p>
+                            <p data-cy="like-count" class="comment-like-count" *ngIf="post['like_count'] > 1"> {{post['like_count']}} likes</p>
+                        
+                    <i class="fas fa-comment fa-lg"></i>
+                    <p class="comment-like-count"  *ngIf="post.comment_count === 1">{{post.comment_count}} comment</p>
+                            <p class="comment-like-count" *ngIf="post.comment_count > 1"> {{post.comment_count}} comments</p>
 
+
+                        
+
+                        
+                </div>
+                <div>
+                    <p class="comment-like-count">{{ datePosted(post.datetime) }}</p>
+                </div>
+            </div>
+            <!-- <h4 class="username">{{post['user_name']}}</h4> -->
+            
+
+            <div class="comment-post">
+                <button (click)="viewComments(post.post_id)" routerLink="view-post">view comments</button>
+                <form action="" [formGroup]="commentPostForm" (submit)="postComment(post.post_id)">
+                    <div class="comment-section" >
+                        <div>
+                            <input formControlName="body" id="comment-input-feed" type="text">
+                        </div>
+                        <button class="btn btn-secondary" style="align-self: flex-end; ">Add Comment</button>
+                    </div>
                     
+                </form>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="posts" *ngIf="navigateTo=='recent'" >
+        <!-- <h1>recent posts</h1> -->
+        <br>
+
+        <div class="picture-post" *ngFor="let post of allRecentPost;  let i = index">
+            <div class="user-post-container" >
+                <div class="user-details">
+                    <img (click)="viewUserProfile(post.user_name)" src="{{post.user_dp}}" alt="">
+                    <div>
+                        <h3 class="fullname" (click)="viewUserProfile(post.user_name)">{{post.full_name}}</h3>
+                        <h5 class="username" (click)="viewUserProfile(post.user_name)">@{{post['user_name']}}</h5>
+                        <h6 *ngIf="post.tagged_users.length > 0" class="post-mood">{{ post.tagged_users.split(',')[0] }} and {{ post.tagged_users.split(',').length}} other have been tagged</h6>
+                    </div>
+                    
+                </div>
+                <div class="view-post-option-div"  #mainContainer (click)="handleContainerClick($event)">
+                    <button class="view-post-options"(click)="togglePostOptions(i)"><i class="fas fa-ellipsis-h"></i></button>
+                    <div  class="post-options" *ngIf="postOptionsVisibility[i]">
+                        <p>report</p>
+                        <p  *ngIf="isMyPost(post.user_id)" >archive</p>
+                        <p  *ngIf="isAdmin()" >suspend</p>
+
+                        <p  *ngIf="isMyPost(post.user_id)" (click)="openEditPostModal(i,post.post_id)">edit</p>
+                        <p *ngIf="isMyPost(post.user_id)" (click)="deleteCurrentPost(post.post_id)" class="login-btn">delete</p>
+                    </div>
+                </div>
+            </div>
+            <p id="post-body-{{post.post_id}}">{{post['body']}}</p>
+            <div class="post-pic">
+                <img src="{{post['image']}}" alt="">
+            </div>
+            <div class="icons-parent">
+                <div class="icons">
+                    <button (click)="likePost(post)" *ngIf="!post.has_liked"><i id="like-btn-{{post.post_id}}" class="far fa-heart fa-lg"></i></button>
+                    <button (click)="likePost(post)" *ngIf="post.has_liked"><i  class="fas fa-heart fa-lg" style="color: red;"></i></button>
+                        <p class="comment-like-count"  *ngIf="post['like_count'] === 0">like</p>
+                        <p class="comment-like-count"  *ngIf="post['like_count'] === 1">{{post['like_count']}} like</p>
+                            <p class="comment-like-count" *ngIf="post['like_count'] > 1"> {{post['like_count']}} likes</p>
+                        
+                    <i class="fas fa-comment fa-lg"></i>
+                    <p class="comment-like-count"  *ngIf="post.comment_count === 1">{{post.comment_count}} comment</p>
+                            <p class="comment-like-count" *ngIf="post.comment_count > 1"> {{post.comment_count}} comments</p>
+
+
+                        
+
+                        
+                </div>
+                <div>
+                    <p class="comment-like-count">{{ datePosted(post.datetime) }}</p>
+                </div>
             </div>
             <!-- <h4 class="username">{{post['user_name']}}</h4> -->
             

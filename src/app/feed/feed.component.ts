@@ -21,7 +21,13 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent {
- 
+
+
+ // Function n variable to change the active tab
+navigateTo: string = 'recent'; 
+ setActiveTab(tab: string) {
+  this.navigateTo = tab;
+}
 
 
   constructor(
@@ -38,6 +44,7 @@ export class FeedComponent {
     // private likingPost:PostsService,
     ) { }
     allpost: post[] = [];
+    allRecentPost: post[] = [];
 
     postOptionsVisibility: boolean[] = [];
 
@@ -49,6 +56,7 @@ export class FeedComponent {
     // my functions
     ngOnInit(): void {
       this.getPosts()
+      this.getRecentPosts()
       this.User.refreshEvent.subscribe(() => {
         this.refresh();
       });
@@ -56,7 +64,34 @@ export class FeedComponent {
 
     refresh(){
       this.getPosts()
+      this.getRecentPosts()
     }
+
+    getUsername(){
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const username = user.username;
+        return username
+      }
+    }
+    getEmailname(){
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const email = user.email;
+        return email
+      }
+    }
+    getUserProfilePic(){
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        const user_dp = user.profile_pic_url;
+        return user_dp
+      }
+    }
+    
 
     getPosts(){
       
@@ -65,6 +100,16 @@ export class FeedComponent {
         if (data && data.posts) {
           this.allpost = data.posts;
           console.log(this.allpost);
+        }
+      });
+    }
+    getRecentPosts(){
+      
+      this.posts.getRecentPosts().subscribe((data: PostResponse) => {
+        this.postOptionsVisibility = new Array(this.allpost.length).fill(false);
+        if (data && data.posts) {
+          this.allRecentPost = data.posts;
+          console.log("recent" + this.allRecentPost);
         }
       });
     }
@@ -131,7 +176,31 @@ export class FeedComponent {
       
       
     }
- 
+
+    datePosted(datetime: Date) {
+      const postDate = new Date(datetime);
+      const currentDate = new Date();
+    
+      const timeDifference = currentDate.getTime() - postDate.getTime();
+      const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+      const hoursDifference = Math.floor(timeDifference / (1000 * 3600));
+      const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+    
+      if (minutesDifference < 1) {
+        return 'Just now';
+      } else if (minutesDifference < 60) {
+        return `${minutesDifference} minute${minutesDifference === 1 ? '' : 's'} ago`;
+      } else if (hoursDifference < 24) {
+        return `${hoursDifference} hour${hoursDifference === 1 ? '' : 's'} ago`;
+      } else if (daysDifference <= 5) {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        return `Posted on ${postDate.toLocaleDateString(undefined, options)}`;
+      } else {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        return `Posted on ${postDate.toLocaleDateString(undefined, options)}`;
+      }
+    }
+    
   
   @HostListener('document:click', ['$event'])
   handleClick(event: Event): void {

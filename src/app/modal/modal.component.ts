@@ -98,7 +98,7 @@ export class ModalComponent implements OnInit {
           
           if(response.message=="Posted successfully"){
             this.closeCreatePostModal()
-            this.toastr.success('Post uploaded successfully!', 'Success');
+            this.toastr.success('Post uploaded successfully', 'Success');
             this.router.navigateByUrl("");
             this.User.triggerRefresh()
             // this.router.navigateByUrl("/login");

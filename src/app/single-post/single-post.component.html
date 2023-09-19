@@ -11,15 +11,17 @@
                 <div class="user-details">
                     <img (click)="viewUserProfile(singlePost.post[0].user_name)" src="{{singlePost.post[0].user_dp}}" alt="">
                     <div>
-                        <h3 class="username" (click)="viewUserProfile(singlePost.post[0].user_name)">{{singlePost.post[0].user_name}}</h3>
-                        <h5 class="post-mood">feeling sijui niaje with 17 others</h5>
+                        <!-- <h3 class="username" (click)="viewUserProfile(singlePost.post[0].user_name)">{{singlePost.post[0].user_name}}</h3>-->
+                        <h3 class="fullname" (click)="viewUserProfile(singlePost.post[0].user_name)">{{singlePost.post[0].full_name}}</h3>
+                        <h5 class="username" (click)="viewUserProfile(singlePost.post[0].user_name)">@{{singlePost.post[0].user_name}}</h5> 
+                        <h6 *ngIf="singlePost.post[0].tagged_users.length > 0" class="post-mood">{{ singlePost.post[0].tagged_users.split(',')[0] }} and {{singlePost.post[0].tagged_users.split(',').length}} other have been tagged</h6>
                     </div>
                 </div>
                 <div class="view-post-option-div"  #mainContainer (click)="handleContainerClick($event)">
                     <button class="view-post-options"(click)="togglePostOptions(0)"><i class="fas fa-ellipsis-h"></i></button>
                     <div  class="post-options" *ngIf="postOptionsVisibility[0]">
                         <p>report</p>
-                        <p  *ngIf="isMyPost(singlePost.post[0].user_id)" >archive</p>
+                        <!-- <p  *ngIf="isMyPost(singlePost.post[0].user_id)" >archive</p> -->
                         <p  *ngIf="isAdmin()" >suspend</p>
 
                         <p  *ngIf="isMyPost(singlePost.post[0].user_id)" (click)="openEditPostModal(0,singlePost.post[0].post_id)">edit</p>
@@ -37,7 +39,7 @@
                     <p *ngIf="singlePost.post[0].likes_count === 1">{{singlePost.post[0].likes_count}} like</p>
                         <p  *ngIf="singlePost.post[0].likes_count > 1">{{singlePost.post[0].likes_count}}  likes</p>
                     
-                <i class="fas fa-comment fa-lg"></i>                   
+                <i  class="fas fa-comment fa-lg"></i>                   
             </div>
 
             <div class="comment-post">
@@ -90,7 +92,7 @@
                         </div>
 
                         <div class="comment-comment">
-                            <form  method="POST" [formGroup]="subCommentForm" (click)="addSubComment(comment.comment_id)">
+                            <form [formGroup]="subCommentForm" (submit)="addSubComment(comment.comment_id)">
                                 <div class="comment-section" >
                                     <div>
                                         <input formControlName="body" type="text">
@@ -116,6 +118,7 @@
                                                 <form (submit)="updateSubcommentFormSubmit($event, subcomment.subcomment_id,  comment.comment_id)">
                                                     <input value="{{ subcomment.body }}" type="text" id="subcomment-input-{{subcomment.subcomment_id}}" >
                                                     <button>update </button>
+                                                    <button>close </button>
                                                 </form>
                                             </div>
 
@@ -127,7 +130,7 @@
                                         </div>
                                     </div>
                                     <div *ngIf="isMyPost(subcomment.user_id)" class="subcomment_dropdown" #mainContainer (click)="handleContainerClick($event)" >
-                                        <button (click)="toggleSubcommentOptions(j)"><i class="fas fa-ellipsis-h"></i></button>
+                                        <button style="border: none;" (click)="toggleSubcommentOptions(j)"><i class="fas fa-ellipsis-h"></i></button>
                                         <div class="subcomment_options" *ngIf="subcommentOptionsVisibility[j]">
                                             <p (click)='toggleEditSubcomment(j)'>edit</p>
                                             <p>delete</p>

@@ -29,6 +29,25 @@ export class PostsService {
       return this.http.get<PostResponse>(url); 
     }
 
+    getRecentPosts(): Observable<PostResponse> {
+
+        const storedUser = localStorage.getItem('user');
+        let user_id = null
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        user_id = user.user_id;
+      }
+
+      let url = null
+      if(user_id){
+        url = `http://localhost:4500/posts/fetchRecentPosts/${user_id}`;
+      } else {
+        url = `http://localhost:4500/posts/fetchRecentPosts/234a7d37-d622-47da-b41a-e314cd619b7e`
+      }
+    
+      return this.http.get<PostResponse>(url); 
+    }
+
     getSinglePost(post_id:string,user_id:string){
       const url = `http://localhost:4500/posts/viewSinglePost/${post_id}`
 

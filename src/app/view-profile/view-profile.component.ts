@@ -31,8 +31,8 @@ export class ViewProfileComponent implements OnInit {
     body: new FormControl('',[Validators.required])
   })
 
-  //this is for switching in between the profile (posts||followers||following)
-    navigateTo: string = 'posts'; // Default to 'posts'
+  //this var is for switching in between the profile (posts||followers||following)
+    navigateTo: string = 'posts'; 
 
     // Function to change the active tab
     setActiveTab(tab: string) {
@@ -83,10 +83,35 @@ export class ViewProfileComponent implements OnInit {
         this.userProfileData = response.message[0];
         this.followersNfollowing = response.friends
         
-        console.log(response)
+        // console.log(this.userProfileData)
       })
     }
   }
+
+  datePosted(datetime: Date) {
+    const postDate = new Date(datetime);
+    const currentDate = new Date();
+  
+    const timeDifference = currentDate.getTime() - postDate.getTime();
+    const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+    const hoursDifference = Math.floor(timeDifference / (1000 * 3600));
+    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+  
+    if (minutesDifference < 1) {
+      return 'Just now';
+    } else if (minutesDifference < 60) {
+      return `${minutesDifference} minute${minutesDifference === 1 ? '' : 's'} ago`;
+    } else if (hoursDifference < 24) {
+      return `${hoursDifference} hour${hoursDifference === 1 ? '' : 's'} ago`;
+    } else if (daysDifference <= 5) {
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+      return `Posted on ${postDate.toLocaleDateString(undefined, options)}`;
+    } else {
+      const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+      return `Posted on ${postDate.toLocaleDateString(undefined, options)}`;
+    }
+  }
+  
 
 
   fetchUserPosts(){
@@ -104,6 +129,9 @@ export class ViewProfileComponent implements OnInit {
       this.User.getPostsForUser(urlUsername,user_id).subscribe((data)=>{
         if (data && data.posts) {
           this.singleUserPosts = data.posts;
+
+          console.log(this.singleUserPosts);
+          
 
         }
 

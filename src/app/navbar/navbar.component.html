@@ -6,10 +6,10 @@
         <p><a routerLink="">Home</a></p>
         <p><a [routerLink]="['/search']">Search</a></p>
         <!-- <p><a routerLink="/about-us">About</a></p> -->
-        <p><a routerLink="/contact-us">Contact</a></p>
+        <!-- <p><a routerLink="/contact-us">Contact</a></p> -->
     </div>
     <div *ngIf="authenticationService.isAuthenticatedUser()"  class="nav-profile">
-        <img src="../assets/img/test_profile.jpg" alt="">
+        <img src="{{getUserProfile()}}" alt="">
         <div class="hamburger-click">
             <p>Welcome, {{ getUsername() }}</p>
             <div class="humburger" id="hamburger">
@@ -19,7 +19,7 @@
         <div  class="menu-options">
             <p class="navig-page"><a routerLink="">Home</a></p>
             <!-- <p class="navig-page"><a routerLink="/about-us">About</a></p> -->
-            <p class="navig-page"><a routerLink="/contact-us">Contact</a></p>
+            <!-- <p class="navig-page"><a routerLink="/contact-us">Contact</a></p> -->
             <p><a routerLink="/edit-profile">edit-profile</a></p>
             <p><a (click)="viewUserProfile()">View-profile</a></p>
             <p class="login-btn"><a  (click)="authenticationService.signOut()">Logout</a></p>

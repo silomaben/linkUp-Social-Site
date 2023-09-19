@@ -18,4 +18,23 @@ describe('NavbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should toggle menuOptions display on hamburger click', () => {
+    const hamburger = fixture.nativeElement.querySelector('.hamburger-click');
+    const menuOptions = fixture.nativeElement.querySelector('.menu-options');
+    
+  
+    expect(menuOptions.style.display).toBe('none');
+    
+    hamburger.click();
+    fixture.detectChanges();
+
+    expect(menuOptions.style.display).toBe('block');
+    
+    hamburger.click();
+    fixture.detectChanges();
+  
+    expect(menuOptions.style.display).toBe('none');
+  });
+  
 });

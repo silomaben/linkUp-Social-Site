@@ -14,16 +14,16 @@
         <div class="login-form">
             <h3>Login</h3>
             <form action="" [formGroup]="loginForm" (submit)="submitLoginForm()">
-                <input formControlName="credential" type="text" placeholder="Username/email">
-                <input formControlName="passcode" type="password" placeholder="Password">
-                <button style="color: white;">Login</button>
+                <input formControlName="credential" type="text" placeholder="email"  data-cy="login-email">
+                <input formControlName="passcode" type="password" placeholder="Password" data-cy="login-password">
+                <button data-cy="submit-login-form" style="color: white;">Login</button>
             </form>
             <p>New here? Register with us</p>
-            <a [routerLink]="['/auth/register']">Register</a>
+            <a  [routerLink]="['/auth/register']">Register</a>
 
-            <a [routerLink]="['/auth/forgot-password']">forgot password</a>
+            <a data-cy="forgot-password" [routerLink]="['/auth/forgot-password']">forgot password</a>
         </div>
-        <p class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
+        <p data-cy="skip-to-feed" class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
 
     </div>
 </div>

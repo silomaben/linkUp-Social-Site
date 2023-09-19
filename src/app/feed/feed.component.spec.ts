@@ -18,4 +18,10 @@ describe('FeedComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set the active tab', () => {
+    const tab = 'recent';
+    component.setActiveTab(tab);
+    expect(component.navigateTo).toBe(tab);
+  });
 });

@@ -24,8 +24,8 @@
             <button class="user-profile-btns" (click)="openUnbarnUserModal(userProfileData?.user_id)" *ngIf="isAdmin() && !isMyProfile(userProfileData?.user_id) && userProfileData?.is_deleted">Unsuspend</button>
             <div class="mid-profile-details">
                 <h4 (click)="setActiveTab('posts')">{{singleUserPosts.length}} posts</h4>
-                <h4 (click)="setActiveTab('followers')">{{followersNfollowing[1].length}} following</h4>
-                <h4 (click)="setActiveTab('following')">{{followersNfollowing[0].length}} followers</h4>
+                <h4 (click)="setActiveTab('following')">{{followersNfollowing[1].length}} following</h4>
+                <h4 (click)="setActiveTab('followers')">{{followersNfollowing[0].length}} followers</h4>
             </div>
             <br>
             
@@ -69,10 +69,10 @@
 </section>
 
 <div class="content-navigation">
-    <button (click)="setActiveTab('posts')">Posts</button>
-    <button (click)="setActiveTab('following')">Following</button>
-    <button (click)="setActiveTab('followers')">Followers</button>
-</div>
+    <button [ngClass]="{ 'active-button-navigation': navigateTo === 'posts', 'inactive-button-navigation': navigateTo !== 'posts' }" (click)="setActiveTab('posts')"> Posts</button>
+    <button [ngClass]="{ 'active-button-navigation': navigateTo === 'following', 'inactive-button-navigation': navigateTo !== 'following' }" (click)="setActiveTab('following')"> Following</button>
+    <button [ngClass]="{ 'active-button-navigation': navigateTo === 'followers', 'inactive-button-navigation': navigateTo !== 'followers' }" (click)="setActiveTab('followers')"> Followers</button>
+    </div>
 
 <section class="body-container" *ngIf="navigateTo=='followers'" id="followers">
     <br>
@@ -137,13 +137,15 @@
             <div class="user-details">
                 <img  src="{{post.user_dp}}" alt="">
                 <div>
-                    <h3 class="username" >{{post?.user_name}}</h3>
-                    <h5 class="post-mood">feeling sijui aje with 17 others</h5>
+                    <!-- <h3 class="username" >{{post?.user_name}}</h3> -->
+                    <h3 class="fullname" (click)="viewUserProfile(post.user_name)">{{post?.full_name}}</h3>
+                    <h5 class="username" (click)="viewUserProfile(post.user_name)">@{{post?.user_name}}</h5> 
+                    <h6 *ngIf="post.tagged_users.length > 0" class="post-mood">{{ post.tagged_users.split(',')[0] }} and {{post.tagged_users.split(',').length}} other have been tagged</h6>
                 </div>
                 
             </div>
             <div class="view-post-option-div" #mainContainer (click)="handleContainerClick($event)">
-                <button class="view-post-options" (click)="togglePostOptions(i)">[ooo]</button>
+                <button class="view-post-options" (click)="togglePostOptions(i)"><i class="fas fa-ellipsis-h"></i></button>
                 <div  class="post-options" *ngIf="postOptionsVisibility[i]">
                     <p>report</p>
                     <p  *ngIf="isMyPost(post.user_id)" >archive</p>

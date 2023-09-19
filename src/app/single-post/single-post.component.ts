@@ -272,6 +272,10 @@ export class SinglePostComponent {
         })
       }
   }
+  
+ 
+  
+
   addSubComment(post_id:string){
     const storedUser = localStorage.getItem('user');
       
@@ -348,6 +352,8 @@ export class SinglePostComponent {
         this.posts.editComment(comment_id,post_id,user_id,body).subscribe((response)=>{
           console.log(response);
           this.User.triggerRefresh()
+          this.toastr.success('comment updated');
+          this.closeEditComment()
           
 
         })
@@ -375,6 +381,7 @@ export class SinglePostComponent {
         this.posts.editSubcomment(subcomment_id,comment_id,user_id,body).subscribe((response)=>{
           console.log(response);
           this.User.triggerRefresh()
+          this.toastr.success('comment updated');
         })
       }
   }

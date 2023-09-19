@@ -1,6 +1,8 @@
 export interface post{
     post_id: string,
     user_id: string,
+    first_name: string,
+    last_name: string,
     full_name: string,
     user_name: string,
     image:string,
@@ -9,6 +11,7 @@ export interface post{
     datetime: Date,
     tagged_users: string,
     has_liked: boolean,
+    comment_count: number,
     like_count: number,
   }
 

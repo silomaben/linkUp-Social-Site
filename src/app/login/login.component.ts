@@ -25,6 +25,15 @@ export class LoginComponent {
   submitLoginForm(){
     const credential = this.loginForm.value.credential ?? '';
     const passcode = this.loginForm.value.passcode ?? '';
+
+    if(credential.length <= 0){
+      this.toastr.error('Please type an email!');
+    }
+
+    if(passcode.length <= 0){
+      this.toastr.error('Please enter your password!');
+    }
+
     if( this.loginForm.valid){
       this.auth.login(credential,passcode).subscribe((res: loginResponse) => {
 
@@ -46,7 +55,6 @@ export class LoginComponent {
             timeOut: 1000, 
           });
         } else {
-          // Handle other error cases if needed
           console.error('Unexpected error:', error);
         }
       });
@@ -55,8 +63,8 @@ export class LoginComponent {
       
     } else {
 
-      this.toastr.error('Please check the form for errors.', 'Invalid Form');
-      console.log(`error in form`)
+      this.toastr.error('Please enter valid email address!', 'Invalid Form');
+      // console.log(`error in form`)
     }
     
   }

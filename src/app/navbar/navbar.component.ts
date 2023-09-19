@@ -45,6 +45,15 @@ export class NavbarComponent implements AfterViewInit {
     }
   }
 
+  getUserProfile(){
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const user_profile_pic = user.profile_pic_url;
+      return user_profile_pic
+    }
+  }
+
   viewUserProfile(){
     const storedUser = localStorage.getItem('user');
     

@@ -6,19 +6,19 @@
             <h3>Register</h3>
             <form [formGroup]="registerForm" (ngSubmit)="submitRegistrationForm()">
                 <div>
-                    <input formControlName="first_name" type="text" placeholder="First Name">
-                    <input formControlName="last_name" type="text" placeholder="Last Name">
+                    <input  data-cy="reg-firstname" formControlName="first_name" type="text" placeholder="First Name">
+                    <input data-cy="reg-lastname" formControlName="last_name" type="text" placeholder="Last Name">
                 </div>
-                <input formControlName="username" type="text" placeholder="Username">
-                <input formControlName="email" type="text" placeholder="Email">
-                <input formControlName="password" type="text" placeholder="Password">
-                <input formControlName="confirmPassword" type="text" placeholder="Confirm password">
-                <button style="color: white;"  type="submit">Register</button>
+                <input data-cy="reg-username" formControlName="username" type="text" placeholder="Username">
+                <input data-cy="reg-email" formControlName="email" type="text" placeholder="Email">
+                <input data-cy="reg-password" formControlName="password" type="password" placeholder="Password">
+                <input data-cy="reg-confirm-password" formControlName="confirmPassword" type="password" placeholder="Confirm password">
+                <button data-cy="reg-btn"  style="color: white;"  type="submit">Register</button>
             </form>
             <p>Already Have an Account?</p>
-            <a [routerLink]="['/auth/login']">Login</a>
+            <a id="go-to-login"  [routerLink]="['/auth/login']">Login</a>
         </div>
-        <p class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
+        <p data-cy="skip-to-feed" class="skip-btn"><a [routerLink]="['']">skip to feed</a></p>
 
     </div>
     <div class="left-reg">

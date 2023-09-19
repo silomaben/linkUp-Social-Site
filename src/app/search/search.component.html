@@ -13,7 +13,7 @@
     <div class="single-user" *ngFor="let user of filteredSearch">
         <div class="single-user-detail" (click)="viewUserProfile(user.username)">
             <div class="search-display-pic">
-                <img src="../assets/img/test_profile.jpg" alt="">
+                <img src="{{user.user_dp}}" alt="">
             </div>
             <div class="search-display-names">
                 <h3>{{user.first_name}} {{user.last_name}}</h3>
